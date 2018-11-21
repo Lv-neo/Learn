@@ -22,7 +22,7 @@ title: 学习资料整理
     - [elk](#)
     - [zabbix](#)
     - [walle](#)
-    - [jumperserve](#)
+    - [jumpserver](#)
 - [数据库与缓存](#)
     - [redis](#)
     - [mysql](#)
