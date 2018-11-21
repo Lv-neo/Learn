@@ -13,9 +13,9 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://lv-neo.github.io/Learn/
-root: /Learn/
-permalink: :year/:month/:day/:title/
+url: https://lv-neo.github.io/Learn
+root: /
+permalink: :title/
 permalink_defaults:
 
 # Directory
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: anodyne
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
