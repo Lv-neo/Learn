@@ -1,6 +1,4 @@
----
-title: 资料目录
----
+# blog目录
 
 - [语言类](#)
     - [java](https://lv-neo.github.io/Learn-Java/)
@@ -15,7 +13,7 @@ title: 资料目录
     - [android](#)
 - [运维类](#)
     - [docker](#)
-    - [k8s](/k8s/README/)
+    - [k8s](#)
     - [swarm](#)
     - [elk](#)
     - [zabbix](#)

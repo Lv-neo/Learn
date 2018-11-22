@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: anodyne
+theme: material-x
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -89,3 +89,19 @@ server:
 
 toc:
   maxDepth: 3
+
+
+
+# >> 主题配置 ---------------------------------------------------------------------
+
+# 页脚社交信息的写法示例
+social:
+  - icon: fas fa-envelope
+    url: mailto:neo.shilong.xu@gmail.com
+  - icon: fab fa-github
+    url: https://github.com/Lv-neo/Learn
+
+# 博主信息的写法示例
+avatar: /img/me.jpg
+# title: neo's blog
+motto: 下班？不存在的
