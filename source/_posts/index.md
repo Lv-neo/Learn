@@ -15,7 +15,7 @@ title: 资料目录
     - [android](#)
 - [运维类](#)
     - [docker](#)
-    - [k8s](/k8s/README/)
+    - [k8s](/Learn/k8s/README/)
     - [swarm](#)
     - [elk](#)
     - [zabbix](#)
