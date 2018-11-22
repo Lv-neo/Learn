@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: neo's blog
 subtitle:
 description:
 keywords:
@@ -102,6 +102,6 @@ social:
     url: https://github.com/Lv-neo/Learn
 
 # 博主信息的写法示例
-avatar: /img/me.jpg
+avatar: https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true
 # title: neo's blog
 motto: 下班？不存在的
