@@ -1,11 +1,11 @@
 ---
-title: K8s学习指南
+title: K8s学习
 categories: k8s
 tags:
   - k8s
 ---
 
-# K8s学习指南
+# K8s学习
 
 * [K8s学习](#)
 * [安装k8s(3master+etcd+node)](/Learn/k8s/k8s-install/)

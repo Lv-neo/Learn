@@ -167,7 +167,7 @@ content_after_post:
 
 # default cover image
 # example: animated gif as header
-cover_default_img: /Learn/img/sky-clouds-moon-horizon.jpg?h=350&auto=compress&cs=tinysrgb
+cover_default_img: https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg
 
 
 # Table Of Contents in the Sidebar

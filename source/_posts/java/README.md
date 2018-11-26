@@ -1,10 +1,11 @@
+---
+title: java学习
+categories: java
+tags:
+  - java
+---
+
 # java学习
-
-## [blog地址](https://lv-neo.github.io/Learn-Java/)
-
-```
-https://lv-neo.github.io/Learn-Java/
-```
 
 ## 目录
 * [java环境](source/_posts/base/env.md)
