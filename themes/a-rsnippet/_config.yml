@@ -2,30 +2,31 @@
 # Site Information Settings
 # ---------------------------------------------------------------
 # title can include HTML code.
-title: Neo's Blog
-description: 欢迎光临Neo的博客
-author: Neo
-language: zh-cn
+title: A-RSnippet <a class="github-button" href="https://github.com/huyingjie/hexo-theme-A-RSnippet" data-icon="octicon-star" data-show-count="true" aria-label="Star huyingjie/hexo-theme-A-RSnippet on GitHub">Star</a>
+description: A website for A-RSnippet Hexo Theme
+author: Yingjie Hu
+language: en
 timezone:
 
 # custom Site settings
-SEOTitle: Neo's Blog 
-keyword: "" # seo key words
+SEOTitle: An A-RSnippet Hexo Theme
+keyword: "hexo, hexo theme, A-RSnippet, responsive, bootstrap" # seo key words
 
 favicon: # your favicon png
 # custom end
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://lv-neo.github.io/Learn/
-root: /Learn/
+url: http://yoursite.com
+root: /
+# :year/:month/:day/:title/
 permalink: :title/
 permalink_defaults:
 
 footer:
 # Specify the date when the site was setup.
 # If not defined, current year will be used.
-  since: 2018
+  since: 2015
 
   # Icon between year and copyright info.
   # From: http://fontawesome.io/
@@ -33,7 +34,7 @@ footer:
   icon: heart
 
   # If not defined, will be used `author` from Hexo main config.
-  copyright: neo
+  copyright:
   # -------------------------------------------------------------
   # Hexo link (Powered by Hexo).
   powered: true
@@ -49,15 +50,14 @@ footer:
 # ---------------------------------------------------------------
 menu:
   home: /
-  # Tutorial: /tutorial/
-  # LeetCode-category: /leetcode-category/
-  # LeetCode-tag: /leetcode-tag/
+  Tutorial: /tutorial/
+  LeetCode-category: /leetcode-category/
+  LeetCode-tag: /leetcode-tag/
   archives: /archives/
   tags: /tags/
-  categories: /categories/
-  # projects: /portfolio-slim/
-  # support: /support/
-  # RSS: /atom.xml
+  projects: /portfolio-slim/
+  support: /support/
+  RSS: /atom.xml
 
 # ---------------------------------------------------------------
 # SNS settings
@@ -66,14 +66,14 @@ menu:
 # Leave url as empty to use site's feed link.
 # Set url to specific value if you have burned your feed already.
 rss:
-  enable: false
+  enable: true
   url:                    # if empty, use default url, root_path/atom.xml
 
 # email: xxx@gmail.com
 # weibo_username:
 # zhihu_username:
-# github_username: huyingjie
-# twitter_username: yingjieYJH
+github_username: huyingjie
+twitter_username: yingjieYJH
 # facebook_username:
 # linkedin_username:
 
@@ -82,8 +82,8 @@ rss:
 # ---------------------------------------------------------------
 sidebar: true
 sidebar-about-description: data scientist
-sidebar-avatar-url: https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true
-sidebar-description-after-icons: #
+sidebar-avatar-url: https://avatars3.githubusercontent.com/u/4664280?s=460&v=4
+sidebar-description-after-icons: <a href="https://www.patreon.com/arsnippet" target="_blank"><img src="/img/patreon.png" alt="support my work at patron"></a><br><br><a href="https://arsnippet.freeflarum.com/" target="_blank"><img src="/img/forum.jpg" alt="support my work at patron"></a><br><br><a href="https://discord.gg/CB6CPzq" target="_blank"><img src="/img/discord.png" alt="Join the Discord"></a>
 
 # ---------------------------------------------------------------
 # Hexo official settings
@@ -137,14 +137,10 @@ theme: a-rsnippet
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: git@github.com:Lv-neo/Learn.git
-  branch: gh-pages
-  name: 
-  email: 
+  type:
+  repo:
+  branch:
 
-server:
-  port: 8080
 
 # ---------------------------------------------------------------
 # Layout settings: homepage
@@ -160,14 +156,14 @@ post_update_date_enable: true
 
 # Can contain HTML
 # Appear at the begginning of the post
-content_before_post: 
+content_before_post: <div class="subscribe"><a href="http://eepurl.com/dh6iCD" target="_blank">Get Updated for Each Release!</a></div><p>
 # Can contain HTML
 # Appear at the end of the post
-content_after_post: 
+content_after_post: <a href="https://www.patreon.com/arsnippet" target="_blank"><img src="/img/patreon.png" alt="support my work at patron"></a> <a href="https://arsnippet.freeflarum.com/" target="_blank"><img src="/img/forum.jpg" alt="support my work at patron"></a> <a href="https://discord.gg/CB6CPzq" target="_blank"><img src="/img/discord.png" alt="Join the Discord"></a>
 
 # default cover image
 # example: animated gif as header
-cover_default_img: /Learn/img/sky-clouds-moon-horizon.jpg?h=350&auto=compress&cs=tinysrgb
+cover_default_img: /img/sky-clouds-moon-horizon.jpg?h=350&auto=compress&cs=tinysrgb
 
 
 # Table Of Contents in the Sidebar
@@ -223,9 +219,9 @@ archive:
 #################################################################
 # MathJax Support
 mathjax:
-  enable: false
-  # per_page: true
-  # cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  enable: true
+  #per_page: true
+  cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 # ---------------------------------------------------------------
 # Comment settings
@@ -243,21 +239,21 @@ disqus_shortname: hexo-a-rsnippet
 # Baidu Analytics
 baidu_analytics:
 # Google Analytics
-# google_analytics: UA-38355881-1            # Format: UA-xxxxxx-xx
+google_analytics: UA-38355881-1            # Format: UA-xxxxxx-xx
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
 # Click "Alternative methods" => Select "HTML tag" => copy the string in the "content" property of "meta" element
 # <meta name="google-site-verification" content="xxxxxx" />
 # Input xxxxxx below
-# google_site_verification: wtCjI-zcpr2FYwWS3sI4OWzMK9e7VomDrZyxpVUUIng
+google_site_verification: wtCjI-zcpr2FYwWS3sI4OWzMK9e7VomDrZyxpVUUIng
 
-# bing_site_verification:
-# yandex_site_verification:
+bing_site_verification:
+yandex_site_verification:
 
 # ---------------------------------------------------------------
 # Share
 # ---------------------------------------------------------------
-# add_this_id: ra-5272bc2a7b3c1ddc
+add_this_id: ra-5272bc2a7b3c1ddc
 # Enable/Disable Update date
 
 # ---------------------------------------------------------------

@@ -12,7 +12,7 @@ https://lv-neo.github.io/Learn-Java/
 * [JVM](http://wiki.jikexueyuan.com/project/java-vm/)
 	* [jvm内存](source/_posts/jvm/mem.md)
 * [语法糖](#)
-	* [面向对象](source/_posts/http://wiki.jikexueyuan.com/project/java/inheritance.html)
+	* [面向对象](http://wiki.jikexueyuan.com/project/java/inheritance.html)
 	* [Java Bean](source/_posts/) 
 	* [8种基本类型](source/_posts/syntax/primitiveType.md)
 	* [集合](#)
