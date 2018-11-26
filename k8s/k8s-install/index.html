@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="欢迎光临Neo的博客">
+    <meta name="author" content="Neo">
+    <meta name="keyword" content="">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/k8s/k8s-install/">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        安装k8s(3master+etcd+node)｜Neo&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/Learn/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/Learn/css/highlight.css">
+    
+
+    
+      <script id="dsq-count-scr" src="//hexo-a-rsnippet.disqus.com/count.js" async></script>
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/Learn/css/arsnippet.css">
+    <script src="/Learn/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/Learn/">
+            Neo's Blog
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/Learn/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/tags/">tags</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/categories/">categories</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>安装k8s(3master+etcd+node)</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Neo</span>
+                               <span class="meta-item">Date: Nov 26, 2018</span>
+                               
+                                 <span class="meta-item">Updated On: Nov 26, 2018</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/Learn/categories/#k8s" title="k8s">k8s</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/Learn/tags/#k8s" title="k8s">k8s</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          
+          <!-- toc -->
+<ul>
+<li><a href="#安装k8s3masteretcdnode">安装k8s(3master+etcd+node)</a><ul>
+<li><a href="#安装步骤">安装步骤</a><ul>
+<li><a href="#设置主机名">设置主机名</a></li>
+<li><a href="#配置host和节点追加host">配置host和节点，追加host</a></li>
+<li><a href="#master1配置ssh手动添加keycopy-id到其他机器">master1配置ssh，手动添加key，copy-id到其他机器</a></li>
+<li><a href="#停防火墙-关闭swap-关闭selinux-设置内核-k8s的yum源-安装依赖包-配置ntp配置完后建议重启一次">停防火墙、关闭Swap、关闭Selinux、设置内核、K8S的yum源、安装依赖包、配置ntp（配置完后建议重启一次）</a></li>
+<li><a href="#设置cfssl环境master1">设置cfssl环境（master1）</a></li>
+<li><a href="#创建etcd">创建etcd</a><ul>
+<li><a href="#创建证书master1上执行即可">创建证书(master1上执行即可)</a><ul>
+<li><a href="#创建ca-configjson与ca-csrjson文件并从-csr-json-产生-ca-keys-与-certificate">创建ca-config.json与ca-csr.json文件，并从 CSR json 产生 CA keys 与 Certificate：</a></li>
+</ul>
+</li>
+<li><a href="#分发证书">分发证书</a></li>
+<li><a href="#安装配置etcd-三主节点">安装配置etcd (三主节点）</a><ul>
+<li><a href="#master1的etcdservice">master1的etcd.service</a></li>
+<li><a href="#master2的etcdservice">master2的etcd.service</a></li>
+<li><a href="#master3的etcdservice">master3的etcd.service</a></li>
+</ul>
+</li>
+<li><a href="#添加自启动etcd至少2个节点启动才能正常工作">添加自启动(etcd至少2个节点启动才能正常工作)</a></li>
+<li><a href="#三个节点分别执行">三个节点分别执行</a></li>
+</ul>
+</li>
+<li><a href="#安装docker所有节点">安装docker(所有节点)</a></li>
+<li><a href="#安装kubeadm">安装kubeadm</a><ul>
+<li><a href="#配置源下载kubeadmdocker和相关工具包">配置源，下载kubeadm，docker和相关工具包</a></li>
+<li><a href="#修改配置">修改配置</a></li>
+</ul>
+</li>
+<li><a href="#初始化集群master">初始化集群(master)</a><ul>
+<li><a href="#记录初始化结果正常情况">记录初始化结果(正常情况)</a></li>
+<li><a href="#初始化失败后处理办法">初始化失败后处理办法</a></li>
+<li><a href="#按照提示执行">按照提示执行</a></li>
+<li><a href="#kubeadm生成证书密码文件分发到master2和master3上面去">kubeadm生成证书密码文件分发到master2和master3上面去</a></li>
+</ul>
+</li>
+<li><a href="#部署flannel网络只需要在master1执行就行">部署flannel网络，只需要在master1执行就行</a></li>
+<li><a href="#部署kubernetes-dashboard">部署kubernetes-dashboard</a><ul>
+<li><a href="#获取token通过令牌登陆">获取token,通过令牌登陆</a></li>
+<li><a href="#通过ip访问">通过ip访问</a></li>
+<li><a href="#记录令牌">记录令牌</a></li>
+</ul>
+</li>
+<li><a href="#安装heapsterinfluxdb和grafana">安装heapster，InfluxDB和Grafana</a><ul>
+<li><a href="#推荐使用">推荐使用</a></li>
+<li><a href="#也可以试试这个作者没装上">也可以试试这个，作者没装上</a></li>
+</ul>
+</li>
+<li><a href="#在master2和master3分别执行初始化">在master2和master3分别执行初始化</a></li>
+<li><a href="#添加node1到集群">添加node1到集群</a></li>
+<li><a href="#让master也运行pod默认master不运行pod">让master也运行pod（默认master不运行pod）</a></li>
+<li><a href="#清除命令">清除命令</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1><span id="安装k8s3masteretcdnode">安装k8s(3master+etcd+node)</span></h1><h2><span id="安装步骤">安装步骤</span></h2><h3><span id="设置主机名">设置主机名</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname master1</span><br><span class="line">hostnamectl set-hostname master2</span><br><span class="line">hostnamectl set-hostname master3</span><br><span class="line">hostnamectl set-hostname node1</span><br></pre></td></tr></table></figure>
+<h3><span id="配置host和节点追加host">配置host和节点，追加host</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;10.45.180.73 master1&quot; &gt;&gt; /etc/hosts </span><br><span class="line">echo &quot;10.66.93.21 master2&quot; &gt;&gt; /etc/hosts </span><br><span class="line">echo &quot;10.80.240.214 master3&quot; &gt;&gt; /etc/hosts </span><br><span class="line">echo &quot;10.81.126.152 node1&quot; &gt;&gt; /etc/hosts </span><br><span class="line">cat /etc/hosts</span><br></pre></td></tr></table></figure>
+<h3><span id="master1配置ssh手动添加keycopy-id到其他机器">master1配置ssh，手动添加key，copy-id到其他机器</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#一路回车即可</span><br><span class="line">ssh-keygen  </span><br><span class="line"></span><br><span class="line">#手动copy public key 到其他机器</span><br><span class="line">ssh-copy-id  master2</span><br><span class="line">ssh-copy-id  master3</span><br><span class="line">ssh-copy-id  node1</span><br></pre></td></tr></table></figure>
+<h3><span id="停防火墙-关闭swap-关闭selinux-设置内核-k8s的yum源-安装依赖包-配置ntp配置完后建议重启一次">停防火墙、关闭Swap、关闭Selinux、设置内核、K8S的yum源、安装依赖包、配置ntp（配置完后建议重启一次）</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">#停防火墙</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"></span><br><span class="line">#关闭Swap</span><br><span class="line">swapoff -a </span><br><span class="line">sed -i &apos;s/.*swap.*/#&amp;/&apos; /etc/fstab</span><br><span class="line"></span><br><span class="line">#关闭Selinux</span><br><span class="line">setenforce  0 </span><br><span class="line">sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/sysconfig/selinux </span><br><span class="line">sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/selinux/config </span><br><span class="line">sed -i &quot;s/^SELINUX=permissive/SELINUX=disabled/g&quot; /etc/sysconfig/selinux </span><br><span class="line">sed -i &quot;s/^SELINUX=permissive/SELINUX=disabled/g&quot; /etc/selinux/config  </span><br><span class="line"></span><br><span class="line">#配置网桥</span><br><span class="line">modprobe br_netfilter</span><br><span class="line">cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl -p /etc/sysctl.d/k8s.conf</span><br><span class="line">ls /proc/sys/net/bridge</span><br><span class="line"></span><br><span class="line">#K8S的yum源</span><br><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#安装依赖包</span><br><span class="line">yum install -y epel-release</span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2 net-tools conntrack-tools wget vim  ntpdate libseccomp libtool-ltdl </span><br><span class="line"></span><br><span class="line">#配置ntp</span><br><span class="line">systemctl enable ntpdate.service</span><br><span class="line">echo &apos;*/30 * * * * /usr/sbin/ntpdate time7.aliyun.com &gt;/dev/null 2&gt;&amp;1&apos; &gt; /tmp/crontab2.tmp</span><br><span class="line">crontab /tmp/crontab2.tmp</span><br><span class="line">systemctl start ntpdate.service</span><br><span class="line"> </span><br><span class="line">#设置内核</span><br><span class="line">echo &quot;* soft nofile 65536&quot; &gt;&gt; /etc/security/limits.conf</span><br><span class="line">echo &quot;* hard nofile 65536&quot; &gt;&gt; /etc/security/limits.conf</span><br><span class="line">echo &quot;* soft nproc 65536&quot;  &gt;&gt; /etc/security/limits.conf</span><br><span class="line">echo &quot;* hard nproc 65536&quot;  &gt;&gt; /etc/security/limits.conf</span><br><span class="line">echo &quot;* soft  memlock  unlimited&quot;  &gt;&gt; /etc/security/limits.conf</span><br><span class="line">echo &quot;* hard memlock  unlimited&quot;  &gt;&gt; /etc/security/limits.conf</span><br></pre></td></tr></table></figure>
+<h3><span id="设置cfssl环境master1">设置cfssl环境（master1）</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64</span><br><span class="line">wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64</span><br><span class="line">wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64</span><br><span class="line">chmod +x cfssl_linux-amd64</span><br><span class="line">mv cfssl_linux-amd64 /usr/local/bin/cfssl</span><br><span class="line">chmod +x cfssljson_linux-amd64</span><br><span class="line">mv cfssljson_linux-amd64 /usr/local/bin/cfssljson</span><br><span class="line">chmod +x cfssl-certinfo_linux-amd64</span><br><span class="line">mv cfssl-certinfo_linux-amd64 /usr/local/bin/cfssl-certinfo</span><br><span class="line">export PATH=/usr/local/bin:$PATH</span><br></pre></td></tr></table></figure>
+<h3><span id="创建etcd">创建etcd</span></h3><h4><span id="创建证书master1上执行即可">创建证书(master1上执行即可)</span></h4><h5><span id="创建ca-configjson与ca-csrjson文件并从-csr-json-产生-ca-keys-与-certificate">创建ca-config.json与ca-csr.json文件，并从 CSR json 产生 CA keys 与 Certificate：</span></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/etcd/ssl</span><br><span class="line">cd /etc/etcd/ssl</span><br><span class="line">cat &gt; ca-config.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">&quot;signing&quot;: &#123;</span><br><span class="line">&quot;default&quot;: &#123;</span><br><span class="line">  &quot;expiry&quot;: &quot;8760h&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&quot;profiles&quot;: &#123;</span><br><span class="line">  &quot;kubernetes-Soulmate&quot;: &#123;</span><br><span class="line">    &quot;usages&quot;: [</span><br><span class="line">        &quot;signing&quot;,</span><br><span class="line">        &quot;key encipherment&quot;,</span><br><span class="line">        &quot;server auth&quot;,</span><br><span class="line">        &quot;client auth&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;expiry&quot;: &quot;8760h&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; ca-csr.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">&quot;CN&quot;: &quot;kubernetes-Soulmate&quot;,</span><br><span class="line">&quot;key&quot;: &#123;</span><br><span class="line">&quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">&quot;size&quot;: 2048</span><br><span class="line">&#125;,</span><br><span class="line">&quot;names&quot;: [</span><br><span class="line">&#123;</span><br><span class="line">  &quot;C&quot;: &quot;CN&quot;,</span><br><span class="line">  &quot;ST&quot;: &quot;shanghai&quot;,</span><br><span class="line">  &quot;L&quot;: &quot;shanghai&quot;,</span><br><span class="line">  &quot;O&quot;: &quot;k8s&quot;,</span><br><span class="line">  &quot;OU&quot;: &quot;System&quot;</span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cfssl gencert -initca ca-csr.json | cfssljson -bare ca</span><br><span class="line"></span><br><span class="line">cat &gt; etcd-csr.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;CN&quot;: &quot;etcd&quot;,</span><br><span class="line">  &quot;hosts&quot;: [</span><br><span class="line">    &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;10.45.180.73&quot;,</span><br><span class="line">    &quot;10.66.93.21&quot;,</span><br><span class="line">    &quot;10.80.240.214&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;key&quot;: &#123;</span><br><span class="line">    &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">    &quot;size&quot;: 2048</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;names&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;C&quot;: &quot;CN&quot;,</span><br><span class="line">      &quot;ST&quot;: &quot;shanghai&quot;,</span><br><span class="line">      &quot;L&quot;: &quot;shanghai&quot;,</span><br><span class="line">      &quot;O&quot;: &quot;k8s&quot;,</span><br><span class="line">      &quot;OU&quot;: &quot;System&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cfssl gencert -ca=ca.pem \</span><br><span class="line">  -ca-key=ca-key.pem \</span><br><span class="line">  -config=ca-config.json \</span><br><span class="line">  -profile=kubernetes-Soulmate etcd-csr.json | cfssljson -bare etcd</span><br><span class="line"></span><br><span class="line">#完成后删除不必要文件：</span><br><span class="line">rm -rf *.json *.csr</span><br><span class="line"></span><br><span class="line">#展示证书文件</span><br><span class="line">ll /etc/etcd/ssl</span><br></pre></td></tr></table></figure>
+<h4><span id="分发证书">分发证书</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh -n master2 &quot;mkdir -p /etc/etcd/ssl &amp;&amp; exit&quot;</span><br><span class="line">ssh -n master3 &quot;mkdir -p /etc/etcd/ssl &amp;&amp; exit&quot;</span><br><span class="line">scp -r /etc/etcd/ssl/*.pem master2:/etc/etcd/ssl/</span><br><span class="line">scp -r /etc/etcd/ssl/*.pem master3:/etc/etcd/ssl/</span><br></pre></td></tr></table></figure>
+<h4><span id="安装配置etcd-三主节点">安装配置etcd (三主节点）</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install etcd -y</span><br><span class="line">mkdir -p /var/lib/etcd</span><br></pre></td></tr></table></figure>
+<h5><span id="master1的etcdservice">master1的etcd.service</span></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt;/etc/systemd/system/etcd.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Etcd Server</span><br><span class="line">After=network.target</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line">Documentation=https://github.com/coreos</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">WorkingDirectory=/var/lib/etcd/</span><br><span class="line">ExecStart=/usr/bin/etcd \</span><br><span class="line">  --name master1 \</span><br><span class="line">  --cert-file=/etc/etcd/ssl/etcd.pem \</span><br><span class="line">  --key-file=/etc/etcd/ssl/etcd-key.pem \</span><br><span class="line">  --peer-cert-file=/etc/etcd/ssl/etcd.pem \</span><br><span class="line">  --peer-key-file=/etc/etcd/ssl/etcd-key.pem \</span><br><span class="line">  --trusted-ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">  --peer-trusted-ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">  --initial-advertise-peer-urls https://10.45.180.73:2380 \</span><br><span class="line">  --listen-peer-urls https://10.45.180.73:2380 \</span><br><span class="line">  --listen-client-urls https://10.45.180.73:2379,http://127.0.0.1:2379 \</span><br><span class="line">  --advertise-client-urls https://10.45.180.73:2379 \</span><br><span class="line">  --initial-cluster-token etcd-cluster-0 \</span><br><span class="line">  --initial-cluster master1=https://10.45.180.73:2380,master2=https://10.66.93.21:2380,master3=https://10.80.240.214:2380 \</span><br><span class="line">  --initial-cluster-state new \</span><br><span class="line">  --data-dir=/var/lib/etcd</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5</span><br><span class="line">LimitNOFILE=65536</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h5><span id="master2的etcdservice">master2的etcd.service</span></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt;/etc/systemd/system/etcd.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Etcd Server</span><br><span class="line">After=network.target</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line">Documentation=https://github.com/coreos</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">WorkingDirectory=/var/lib/etcd/</span><br><span class="line">ExecStart=/usr/bin/etcd \</span><br><span class="line">  --name master2 \</span><br><span class="line">  --cert-file=/etc/etcd/ssl/etcd.pem \</span><br><span class="line">  --key-file=/etc/etcd/ssl/etcd-key.pem \</span><br><span class="line">  --peer-cert-file=/etc/etcd/ssl/etcd.pem \</span><br><span class="line">  --peer-key-file=/etc/etcd/ssl/etcd-key.pem \</span><br><span class="line">  --trusted-ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">  --peer-trusted-ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">  --initial-advertise-peer-urls https://10.66.93.21:2380 \</span><br><span class="line">  --listen-peer-urls https://10.66.93.21:2380 \</span><br><span class="line">  --listen-client-urls https://10.66.93.21:2379,http://127.0.0.1:2379 \</span><br><span class="line">  --advertise-client-urls https://10.66.93.21:2379 \</span><br><span class="line">  --initial-cluster-token etcd-cluster-0 \</span><br><span class="line">  --initial-cluster master1=https://10.45.180.73:2380,master2=https://10.66.93.21:2380,master3=https://10.80.240.214:2380 \</span><br><span class="line">  --initial-cluster-state new \</span><br><span class="line">  --data-dir=/var/lib/etcd</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5</span><br><span class="line">LimitNOFILE=65536</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h5><span id="master3的etcdservice">master3的etcd.service</span></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt;/etc/systemd/system/etcd.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Etcd Server</span><br><span class="line">After=network.target</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line">Documentation=https://github.com/coreos</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">WorkingDirectory=/var/lib/etcd/</span><br><span class="line">ExecStart=/usr/bin/etcd \</span><br><span class="line">  --name master3 \</span><br><span class="line">  --cert-file=/etc/etcd/ssl/etcd.pem \</span><br><span class="line">  --key-file=/etc/etcd/ssl/etcd-key.pem \</span><br><span class="line">  --peer-cert-file=/etc/etcd/ssl/etcd.pem \</span><br><span class="line">  --peer-key-file=/etc/etcd/ssl/etcd-key.pem \</span><br><span class="line">  --trusted-ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">  --peer-trusted-ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">  --initial-advertise-peer-urls https://10.80.240.214:2380 \</span><br><span class="line">  --listen-peer-urls https://10.80.240.214:2380 \</span><br><span class="line">  --listen-client-urls https://10.80.240.214:2379,http://127.0.0.1:2379 \</span><br><span class="line">  --advertise-client-urls https://10.80.240.214:2379 \</span><br><span class="line">  --initial-cluster-token etcd-cluster-0 \</span><br><span class="line">--initial-cluster master1=https://10.45.180.73:2380,master2=https://10.66.93.21:2380,master3=https://10.80.240.214:2380 \</span><br><span class="line">  --initial-cluster-state new \</span><br><span class="line">  --data-dir=/var/lib/etcd</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5</span><br><span class="line">LimitNOFILE=65536</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h4><span id="添加自启动etcd至少2个节点启动才能正常工作">添加自启动(etcd至少2个节点启动才能正常工作)</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl enable etcd</span><br><span class="line">systemctl start etcd</span><br><span class="line">systemctl status etcd</span><br></pre></td></tr></table></figure>
+<h4><span id="三个节点分别执行">三个节点分别执行</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">etcdctl --endpoints=https://10.45.180.73:2379,https://10.66.93.21:2379,https://10.80.240.214:2379 \</span><br><span class="line">  --ca-file=/etc/etcd/ssl/ca.pem \</span><br><span class="line">  --cert-file=/etc/etcd/ssl/etcd.pem \</span><br><span class="line">  --key-file=/etc/etcd/ssl/etcd-key.pem  cluster-health</span><br></pre></td></tr></table></figure>
+<h3><span id="安装docker所有节点">安装docker(所有节点)</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yum install https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch.rpm  -y</span><br><span class="line">yum install https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-17.03.2.ce-1.el7.centos.x86_64.rpm  -y</span><br><span class="line"></span><br><span class="line">#设置docker源</span><br><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&apos;EOF&apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://kn6xpwo2.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl enable docker</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h3><span id="安装kubeadm">安装kubeadm</span></h3><h4><span id="配置源下载kubeadmdocker和相关工具包">配置源，下载kubeadm，docker和相关工具包</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#设置Kubernetesyum源</span><br><span class="line">#cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">#[kubernetes]</span><br><span class="line">#name=Kubernetes</span><br><span class="line">#baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/#kubernetes-el7-x86_64</span><br><span class="line">#enabled=1</span><br><span class="line">#gpgcheck=0</span><br><span class="line">#EOF</span><br><span class="line">#yum -y install epel-release</span><br><span class="line">#yum clean all</span><br><span class="line">#yum makecache</span><br><span class="line"></span><br><span class="line">#kubeadm和相关工具包</span><br><span class="line">#master</span><br><span class="line">yum -y install kubelet kubeadm kubectl</span><br><span class="line">#node</span><br><span class="line">yum -y install kubelet kubeadm</span><br></pre></td></tr></table></figure>
+<h4><span id="修改配置">修改配置</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf</span><br><span class="line"></span><br><span class="line">#修改这一行</span><br><span class="line">Environment=&quot;KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs&quot;</span><br><span class="line">#添加这一行</span><br><span class="line">Environment=&quot;KUBELET_EXTRA_ARGS=--v=2 --fail-swap-on=false --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/k8sth/pause-amd64:3.0&quot;</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl enable kubelet</span><br></pre></td></tr></table></figure>
+<h3><span id="初始化集群master">初始化集群(master)</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; /etc/kubernetes/config.yaml </span><br><span class="line">apiVersion: kubeadm.k8s.io/v1alpha1</span><br><span class="line">kind: MasterConfiguration</span><br><span class="line">etcd:</span><br><span class="line">  endpoints:</span><br><span class="line">  - https://10.45.180.73:2379</span><br><span class="line">  - https://10.66.93.21:2379</span><br><span class="line">  - https://10.80.240.214:2379</span><br><span class="line">  caFile: /etc/etcd/ssl/ca.pem</span><br><span class="line">  certFile: /etc/etcd/ssl/etcd.pem</span><br><span class="line">  keyFile: /etc/etcd/ssl/etcd-key.pem</span><br><span class="line">  dataDir: /var/lib/etcd</span><br><span class="line">networking:</span><br><span class="line">  podSubnet: 10.244.0.0/16</span><br><span class="line">kubernetesVersion: 1.10.0</span><br><span class="line">api:</span><br><span class="line">  advertiseAddress: &quot;10.45.180.73&quot;</span><br><span class="line">token: &quot;b99a00.a144ef80536d4344&quot;</span><br><span class="line">tokenTTL: &quot;0s&quot;</span><br><span class="line">apiServerCertSANs:</span><br><span class="line">- master1</span><br><span class="line">- master2</span><br><span class="line">- master3</span><br><span class="line">- 10.45.180.73</span><br><span class="line">- 10.66.93.21</span><br><span class="line">- 10.80.240.214</span><br><span class="line">- 10.81.126.152</span><br><span class="line">featureGates:</span><br><span class="line">  CoreDNS: true</span><br><span class="line">imageRepository: &quot;registry.cn-hangzhou.aliyuncs.com/k8sth&quot;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --config /etc/kubernetes/config.yaml</span><br></pre></td></tr></table></figure>
+<h4><span id="记录初始化结果正常情况">记录初始化结果(正常情况)</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Your Kubernetes master has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  mkdir -p $HOME/.kube</span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:</span><br><span class="line">  https://kubernetes.io/docs/concepts/cluster-administration/addons/</span><br><span class="line"></span><br><span class="line">You can now join any number of machines by running the following on each node</span><br><span class="line">as root:</span><br><span class="line"></span><br><span class="line">  kubeadm join 10.45.180.73:6443 --token b99a00.a144ef80536d4344 --discovery-token-ca-cert-hash sha256:51bac855420a83d635d97bc4ab819a1c9d524232c3e735888297c261dad69349</span><br></pre></td></tr></table></figure>
+<h4><span id="初始化失败后处理办法">初始化失败后处理办法</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubeadm reset</span><br><span class="line">#或</span><br><span class="line">rm -rf /etc/kubernetes/*.conf</span><br><span class="line">rm -rf /etc/kubernetes/manifests/*.yaml</span><br><span class="line">docker ps -a |awk &apos;&#123;print $1&#125;&apos; |xargs docker rm -f</span><br><span class="line">systemctl  stop kubelet</span><br></pre></td></tr></table></figure>
+<h4><span id="按照提示执行">按照提示执行</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p $HOME/.kube</span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure>
+<h4><span id="kubeadm生成证书密码文件分发到master2和master3上面去">kubeadm生成证书密码文件分发到master2和master3上面去</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp -r /etc/kubernetes/pki  master2:/etc/kubernetes/</span><br><span class="line">scp -r /etc/kubernetes/pki  master3:/etc/kubernetes/</span><br></pre></td></tr></table></figure>
+<h3><span id="部署flannel网络只需要在master1执行就行">部署flannel网络，只需要在master1执行就行</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br><span class="line">#版本信息：quay.io/coreos/flannel:v0.10.0-amd64</span><br><span class="line"></span><br><span class="line">kubectl create -f  /etc/kubernetes/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+<h3><span id="部署kubernetes-dashboard">部署kubernetes-dashboard</span></h3><p><a href="yaml/kubernetes-dashboard.yaml">kubernetes-dashboard</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f /etc/kubernetes/kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
+<h4><span id="获取token通过令牌登陆">获取token,通过令牌登陆</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk &apos;&#123;print $1&#125;&apos;)</span><br></pre></td></tr></table></figure>
+<h4><span id="通过ip访问">通过ip访问</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://112.74.128.10:30000/</span><br></pre></td></tr></table></figure>
+<h4><span id="记录令牌">记录令牌</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWt4NmpqIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJkODg3ZDNkNi01NTEyLTExZTgtYWUzMy0wMDE2M2UwNmEyOTQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.H21qS_xBTE5sbGXl5TlTFhg6GnDHP9qOh98FgcOZFeqvj9THT3mfyPDk6VOHLRONf7sxjEhx7Ag8jxuMQSYIkVkCTKGc6LkA8wJ_v26aaW_dU8EtaqUrdkrlURckWRfHo77MB5-fvfY4V-8u6qG6Kh70Q-Nj53FVaagTXI_x_vF3PLWYWuEjF8p5oA2tTOvK4297KfGaBhhG1w4rfOlq_tqALU-IcSSbNoeB9s5cDP_rsKt1Kdh5RA7T9XhVgr67dR90ZH_vAD3z_upfzkOubmWZwWJ9TDMe8wF5X1R8_svL1FrgzRIOOuE-BfH249Y1SRUmY78BhLAubkOwMUrTww</span><br></pre></td></tr></table></figure>
+<h3><span id="安装heapsterinfluxdb和grafana">安装heapster，InfluxDB和Grafana</span></h3><h4><span id="推荐使用">推荐使用</span></h4><p><a href="yaml/kube-monitor.yml.conf">kube-monitor.yml.conf</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f /etc/kubernetes/kube-monitor.yml.conf</span><br></pre></td></tr></table></figure>
+<h4><span id="也可以试试这个作者没装上">也可以试试这个，作者没装上</span></h4><p><a href="yaml/kube-heapster/influxdb/grafana.yaml">grafana.yaml</a><br><a href="yaml/kube-heapster/influxdb/heapster.yaml">heapster.yaml</a><br><a href="yaml/kube-heapster/influxdb/influxdb.yaml">influxdb.yaml</a><br><a href="yaml/kube-heapster/rbac/heapster-rbac.yaml">heapster-rbac.yaml</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f /etc/kubernetes/kube-heapster/influxdb/</span><br><span class="line">kubectl create -f /etc/kubernetes/kube-heapster/rbac/</span><br></pre></td></tr></table></figure>
+<h3><span id="在master2和master3分别执行初始化">在master2和master3分别执行初始化</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --config config.yaml</span><br><span class="line">#初始化的结果和master1的结果完全一样</span><br><span class="line">mkdir -p $HOME/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure>
+<h3><span id="添加node1到集群">添加node1到集群</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm join 10.45.180.73:6443 --token b99a00.a144ef80536d4344 --discovery-token-ca-cert-hash sha256:18cf256c72fe6e8918d961b6070e4dce2e59c4a0db7a9a492adbad463357dea9</span><br></pre></td></tr></table></figure>
+<h3><span id="让master也运行pod默认master不运行pod">让master也运行pod（默认master不运行pod）</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes --all node-role.kubernetes.io/master-</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>学习blog <a href="https://www.kubernetes.org.cn/3808.html" target="_blank" rel="noopener">https://www.kubernetes.org.cn/3808.html</a></p>
+</blockquote>
+<h3><span id="清除命令">清除命令</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete -f /etc/kubernetes/kube-heapster/rbac/</span><br><span class="line">kubectl delete -f /etc/kubernetes/kube-heapster/influxdb/</span><br><span class="line">kubectl delete -f /etc/kubernetes/etc/kubernetes/kubernetes-dashboard.yaml</span><br><span class="line">kubectl delete -f /etc/kubernetes/etc/kubernetes/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/Learn/k8s/namespace/" data-toggle="tooltip" data-placement="left" title="namespace简介">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/Learn/k8s/ignress/https/" data-toggle="tooltip" data-placement="top" title="ignress https证书配置">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+  <!-- disqus start -->
+  <div class="comment">
+    <div id="disqus_thread" class="disqus-thread"></div>
+      <script>
+      var disqus_shortname = 'hexo-a-rsnippet';
+      
+      var disqus_url = 'https://lv-neo.github.io/Learn/k8s/k8s-install/';
+      
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  <!-- disqus end -->
+  
+
+  
+  
+
+
+      </div>
+      <!-- sidebar-profile.ejs -->
+<div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+    <section class="visible-md visible-lg" style="padding: 0 18px">
+        <div class="short-about">
+            
+                <img src="https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true" class="avatar">
+            
+            <h3>Neo</h3>
+            
+                <p>data scientist</p>
+            
+            <hr>
+            <ul class="list-inline">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
+            
+        </div>
+    </section>
+</div>
+
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">安装k8s(3master+etcd+node)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.</span> <span class="toc-text">设置主机名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.2.</span> <span class="toc-text">配置host和节点，追加host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.3.</span> <span class="toc-text">master1配置ssh，手动添加key，copy-id到其他机器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.4.</span> <span class="toc-text">停防火墙、关闭Swap、关闭Selinux、设置内核、K8S的yum源、安装依赖包、配置ntp（配置完后建议重启一次）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.5.</span> <span class="toc-text">设置cfssl环境（master1）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.</span> <span class="toc-text">创建etcd</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.1.</span> <span class="toc-text">创建证书(master1上执行即可)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.1.1.</span> <span class="toc-text">创建ca-config.json与ca-csr.json文件，并从 CSR json 产生 CA keys 与 Certificate：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.2.</span> <span class="toc-text">分发证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.</span> <span class="toc-text">安装配置etcd (三主节点）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.1.</span> <span class="toc-text">master1的etcd.service</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.2.</span> <span class="toc-text">master2的etcd.service</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.3.</span> <span class="toc-text">master3的etcd.service</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.4.</span> <span class="toc-text">添加自启动(etcd至少2个节点启动才能正常工作)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.5.</span> <span class="toc-text">三个节点分别执行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.7.</span> <span class="toc-text">安装docker(所有节点)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.8.</span> <span class="toc-text">安装kubeadm</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.8.1.</span> <span class="toc-text">配置源，下载kubeadm，docker和相关工具包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.8.2.</span> <span class="toc-text">修改配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.</span> <span class="toc-text">初始化集群(master)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.1.</span> <span class="toc-text">记录初始化结果(正常情况)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.2.</span> <span class="toc-text">初始化失败后处理办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.3.</span> <span class="toc-text">按照提示执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.4.</span> <span class="toc-text">kubeadm生成证书密码文件分发到master2和master3上面去</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.10.</span> <span class="toc-text">部署flannel网络，只需要在master1执行就行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.</span> <span class="toc-text">部署kubernetes-dashboard</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.1.</span> <span class="toc-text">获取token,通过令牌登陆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.2.</span> <span class="toc-text">通过ip访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.3.</span> <span class="toc-text">记录令牌</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.12.</span> <span class="toc-text">安装heapster，InfluxDB和Grafana</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.12.1.</span> <span class="toc-text">推荐使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.12.2.</span> <span class="toc-text">也可以试试这个，作者没装上</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.13.</span> <span class="toc-text">在master2和master3分别执行初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.14.</span> <span class="toc-text">添加node1到集群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.15.</span> <span class="toc-text">让master也运行pod（默认master不运行pod）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.16.</span> <span class="toc-text">清除命令</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+          
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            neo
+        <br>
+          
+              Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+          
+          
+            |
+          
+          
+              Theme - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/Learn/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

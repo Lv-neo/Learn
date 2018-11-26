@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="欢迎光临Neo的博客">
+    <meta name="author" content="Neo">
+    <meta name="keyword" content="">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/java/README/">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        java学习｜Neo&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/Learn/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/Learn/css/highlight.css">
+    
+
+    
+      <script id="dsq-count-scr" src="//hexo-a-rsnippet.disqus.com/count.js" async></script>
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/Learn/css/arsnippet.css">
+    <script src="/Learn/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/Learn/">
+            Neo's Blog
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/Learn/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/tags/">tags</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/categories/">categories</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>java学习</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Neo</span>
+                               <span class="meta-item">Date: Nov 26, 2018</span>
+                               
+                                 <span class="meta-item">Updated On: Nov 26, 2018</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/Learn/categories/#java" title="java">java</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/Learn/tags/#java" title="java">java</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          
+          <h1><span id="java学习">java学习</span></h1><h2><span id="目录">目录</span></h2><ul>
+<li><a href="source/_posts/base/env.md">java环境</a></li>
+<li><a href="source/_posts/base/jdk.md">JDK</a></li>
+<li><a href="http://wiki.jikexueyuan.com/project/java-vm/" target="_blank" rel="noopener">JVM</a><ul>
+<li><a href="source/_posts/jvm/mem.md">jvm内存</a></li>
+</ul>
+</li>
+<li><a href="#">语法糖</a><ul>
+<li><a href="http://wiki.jikexueyuan.com/project/java/inheritance.html" target="_blank" rel="noopener">面向对象</a></li>
+<li><a href="source/_posts/">Java Bean</a> </li>
+<li><a href="source/_posts/syntax/primitiveType.md">8种基本类型</a></li>
+<li><a href="#">集合</a><ul>
+<li><a href="source/_posts/Collection/README.md">java容器类简介</a></li>
+<li><a href="source/_posts/lang/Serializable.md">Serializable</a> </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#">多线程</a><ul>
+<li><a href="#">线程</a><ul>
+<li><a href="source/_posts/thread/thread.md">什么是线程</a></li>
+<li><a href="source/_posts/thread/java.md">Java线程基础</a></li>
+<li><a href="source/_posts/thread/shared.md">共享对数据的访问</a></li>
+<li><a href="source/_posts/thread/synchronized.md">线程同步详解</a></li>
+<li><a href="source/_posts/thread/controller.md">线程的控制</a></li>
+<li><a href="source/_posts/thread/communication.md">线程间通讯(source/_posts/未编写)</a></li>
+<li><a href="source/_posts/thread/threadgroup.md">线程组(source/_posts/未编写)</a></li>
+<li><a href="source/_posts/thread/safe.md">线程安全(source/_posts/未编写)</a></li>
+<li><a href="source/_posts/thread/daemon.md">守护线程(source/_posts/未编写)</a></li>
+<li><a href="source/_posts/thread/lock.md">java并发-读写锁(source/_posts/未编写)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="source/_posts/">IO</a><ul>
+<li><a href="source/_posts/IO/stream.md">流</a></li>
+<li><a href="source/_posts/NIO/README.md">NIO</a><ul>
+<li><a href="source/_posts/NIO/IO.md">输入输出</a></li>
+<li><a href="source/_posts/NIO/channel_buffer.md">通道和缓冲区</a></li>
+<li><a href="source/_posts/NIO/read_write.md">NIO 中的读和写</a></li>
+<li><a href="source/_posts/NIO/buffer.md">缓冲区内部细节</a></li>
+<li><a href="source/_posts/NIO/no-async-io.md">异步IO</a></li>
+<li><a href="source/_posts/NIO/Reactor.md">Reactor模式详解</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#">网络编程</a><ul>
+<li><a href="source/_posts/network/tcpip.md">TCP/IP协议</a></li>
+<li><a href="source/_posts/network/upd.md">UPD协议</a></li>
+<li><a href="source/_posts/network/socket.md">Socket</a></li>
+<li><a href="source/_posts/Netty/README.md">Netty</a></li>
+<li><a href="source/_posts/https://waylau.com/essential-netty-in-action/">Netty In Action 中文版</a></li>
+</ul>
+</li>
+<li><a href="#">性能优化</a></li>
+<li><a href="source/_posts/exception/README.md">Java异常处理</a></li>
+<li><a href="#">测试</a></li>
+<li><a href="#">Java Web</a><ul>
+<li><a href="source/_posts/Servlet/README.md">Servlet</a><ul>
+<li><a href="source/_posts/Servlet/baseFramework.md">基本架构</a></li>
+<li>[API的使用]</li>
+<li>[生命周期和工作原理]</li>
+</ul>
+</li>
+<li><a href="#">http</a><ul>
+<li><a href="source/_posts/java-http/httpClient.md">httpClient基本概念</a></li>
+<li><a href="source/_posts/java-http/connect.md">httpClient连接管理</a></li>
+<li><a href="source/_posts/java-http/auth.md">Http认证</a></li>
+<li><a href="source/_posts/java-http/httpUtil.md">httpClient简单封装</a></li>
+</ul>
+</li>
+<li><a href="#">tomcat</a><ul>
+<li><a href="source/_posts/tomcat/virtual.md">tomcat虚拟目录</a> </li>
+<li><a href="source/_posts/tomcat/performance.md">tomcat性能优化</a></li>
+</ul>
+</li>
+<li><a href="source/_posts/JSP/README.md">JSP</a><ul>
+<li><a href="source/_posts/JSP/BasicSyntax.md">基本语法</a></li>
+<li><a href="source/_posts/JSP/order.md">指令</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#">数据库</a><ul>
+<li><a href="source/_posts/jdbc/README.md">jdbc简介</a></li>
+<li><a href="source/_posts/">mybaits</a><ul>
+<li><a href="source/_posts/mybaits/conf.md">配置简介</a></li>
+<li><a href="source/_posts/mybaits/README.md">连接超时配置</a></li>
+</ul>
+</li>
+<li><a href="source/_posts/hibernate/README.md">hibernate</a> </li>
+</ul>
+</li>
+<li><a href="source/_posts/gradle/README.md">gradle</a><ul>
+<li><a href="source/_posts/gradle/install.md">安装</a></li>
+<li><a href="source/_posts/gradle/des.md">基础</a></li>
+</ul>
+</li>
+<li><a href="source/_posts/maven/README.md">maven</a><ul>
+<li><a href="source/_posts/maven/shell.md">常用命令</a></li>
+<li><a href="source/_posts/maven/install.md">安装</a> </li>
+<li><a href="source/_posts/maven/java.md">使用maven创建java项目</a></li>
+<li><a href="source/_posts/maven/web.md">使用maven创建Web应用程序</a></li>
+<li><a href="source/_posts/maven/evn.md">使用maven profile实现多环境可移植构建</a></li>
+<li><a href="source/_posts/maven/jar.md">将jar文件添加到Maven的local repository</a></li>
+</ul>
+</li>
+<li><a href="source/_posts/jmeter.md">Jmeter</a></li>
+<li><a href="source/_posts/quartz/README.md">任务调度</a><ul>
+<li><a href="source/_posts/">quartz</a> <ul>
+<li><a href="source/_posts/quartz/Quartz-meituan.md">美团点评技术-Quartz应用与集群原理分析</a></li>
+</ul>
+</li>
+<li><a href="source/_posts/">xxl-job</a></li>
+</ul>
+</li>
+</ul>
+
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/Learn/index/" data-toggle="tooltip" data-placement="left" title="资料目录">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/Learn/k8s-hpa-md/" data-toggle="tooltip" data-placement="top" title="k8s/hpa.md">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+  <!-- disqus start -->
+  <div class="comment">
+    <div id="disqus_thread" class="disqus-thread"></div>
+      <script>
+      var disqus_shortname = 'hexo-a-rsnippet';
+      
+      var disqus_url = 'https://lv-neo.github.io/Learn/java/README/';
+      
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  <!-- disqus end -->
+  
+
+  
+  
+
+
+      </div>
+      <!-- sidebar-profile.ejs -->
+<div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+    <section class="visible-md visible-lg" style="padding: 0 18px">
+        <div class="short-about">
+            
+                <img src="https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true" class="avatar">
+            
+            <h3>Neo</h3>
+            
+                <p>data scientist</p>
+            
+            <hr>
+            <ul class="list-inline">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
+            
+        </div>
+    </section>
+</div>
+
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">java学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+          
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            neo
+        <br>
+          
+              Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+          
+          
+            |
+          
+          
+              Theme - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/Learn/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
