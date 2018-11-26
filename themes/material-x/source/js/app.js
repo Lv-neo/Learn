@@ -227,8 +227,8 @@ var customSearch;
 		$(".article .video-container").fitVids();
 
 		setTimeout(function () {
-			$('#loading-bar-wrapper').fadeOut(500);
-		}, 300);
+			$('#loading-bar-wrapper').fadeOut(1000);
+		}, 500);
 
 		if (SEARCH_SERVICE === 'google') {
 			customSearch = new GoogleCustomSearch({
