@@ -124,19 +124,19 @@
                         
                         
                           <span class="meta">
-                               <span class="meta-item">博主: Neo</span>
-                               <span class="meta-item">创建于: Dec 12, 2018</span>
+                               <span class="meta-item">Author: Neo</span>
+                               <span class="meta-item">Date: Dec 12, 2018</span>
                                
-                                 <span class="meta-item">更新于: Dec 12, 2018</span>
+                                 <span class="meta-item">Updated On: Dec 12, 2018</span>
                                
                           </span>
                           <div class="tags text-center">
-                              分类: 
+                              Categories: 
                               <a class="tag" href="/Learn/categories/#k8s" title="k8s">k8s</a>
                               
                           </div>
                           <div class="tags text-center">
-                              标签: 
+                              Tags: 
                               <a class="tag" href="/Learn/tags/#k8s" title="k8s">k8s</a>
                               
                           </div>
@@ -157,7 +157,14 @@
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
           
-          <h1><span id="kubernetes-滚动更新发布及回滚">kubernetes 滚动更新发布及回滚</span></h1><h2><span id="针对deployment记录record">针对deployment记录record</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl  apply -f **** --record</span><br></pre></td></tr></table></figure>
+          <h1><span id="kubernetes-滚动更新发布及回滚">kubernetes 滚动更新发布及回滚</span></h1><p>可以处理的资源</p>
+<ul>
+<li>deployments  </li>
+<li>daemonsets  </li>
+<li>statefulsets</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Available Commands:</span><br><span class="line">  history     View rollout history</span><br><span class="line">  pause       Mark the provided resource as paused</span><br><span class="line">  resume      Resume a paused resource</span><br><span class="line">  status      Show the status of the rollout</span><br><span class="line">  undo        Undo a previous rollout</span><br></pre></td></tr></table></figure>
+<h2><span id="针对deployment记录record">针对deployment记录record</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl  apply -f **** --record</span><br></pre></td></tr></table></figure>
 <h2><span id="查看当前状态">查看当前状态</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout status deployment/[DEPLOYMENT NAME] -w -n=[NAMESPACE]</span><br></pre></td></tr></table></figure>
 <h2><span id="查看历史">查看历史</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout history deployment/[DEPLOYMENT NAME] -n=[NAMESPACE]</span><br></pre></td></tr></table></figure>
 <h2><span id="回滚到指定版本">回滚到指定版本</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout undo deployment/[DEPLOYMENT NAME] --to-revision=[VERSION ID] -n=[NAMESPACE]</span><br></pre></td></tr></table></figure>
@@ -167,7 +174,7 @@
               
               
               <li class="next">
-                  <a href="/Learn/ops/log/" data-toggle="tooltip" data-placement="top" title="日志服务">下一篇&rarr;</a>
+                  <a href="/Learn/ops/log/" data-toggle="tooltip" data-placement="top" title="日志服务">Next Post&rarr;</a>
               </li>
               
           </ul>
@@ -242,7 +249,7 @@
       
   <div class="hidden-xs col-sm-3 toc-col">
     <div class="toc-wrap">
-        目录
+        Table of Contents
         
           <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">kubernetes 滚动更新发布及回滚</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">针对deployment记录record</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">查看当前状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">查看历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">回滚到指定版本</span></a></li></ol></li></ol>
         
@@ -284,13 +291,13 @@
             neo
         <br>
           
-              由 <a target="_blank" href="https://hexo.io">Hexo</a> 强力驱动
+              Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
           
           
             |
           
           
-              主题 - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+              Theme - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
           
           
       </div>

@@ -124,19 +124,19 @@
                         
                         
                           <span class="meta">
-                               <span class="meta-item">博主: Neo</span>
-                               <span class="meta-item">创建于: Nov 26, 2018</span>
+                               <span class="meta-item">Author: Neo</span>
+                               <span class="meta-item">Date: Nov 26, 2018</span>
                                
-                                 <span class="meta-item">更新于: Nov 26, 2018</span>
+                                 <span class="meta-item">Updated On: Nov 26, 2018</span>
                                
                           </span>
                           <div class="tags text-center">
-                              分类: 
+                              Categories: 
                               <a class="tag" href="/Learn/categories/#k8s" title="k8s">k8s</a>
                               
                           </div>
                           <div class="tags text-center">
-                              标签: 
+                              Tags: 
                               <a class="tag" href="/Learn/tags/#k8s" title="k8s">k8s</a>
                               
                           </div>
@@ -262,12 +262,12 @@
           <ul class="pager">
               
               <li class="previous">
-                  <a href="/Learn/k8s/namespace/" data-toggle="tooltip" data-placement="left" title="namespace简介">&larr; 上一篇</a>
+                  <a href="/Learn/k8s/namespace/" data-toggle="tooltip" data-placement="left" title="namespace简介">&larr; Previous Post</a>
               </li>
               
               
               <li class="next">
-                  <a href="/Learn/k8s/ignress/https/" data-toggle="tooltip" data-placement="top" title="ignress https证书配置">下一篇&rarr;</a>
+                  <a href="/Learn/k8s/ignress/https/" data-toggle="tooltip" data-placement="top" title="ignress https证书配置">Next Post&rarr;</a>
               </li>
               
           </ul>
@@ -342,7 +342,7 @@
       
   <div class="hidden-xs col-sm-3 toc-col">
     <div class="toc-wrap">
-        目录
+        Table of Contents
         
           <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">安装k8s(3master+etcd+node)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.</span> <span class="toc-text">设置主机名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.2.</span> <span class="toc-text">配置host和节点，追加host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.3.</span> <span class="toc-text">master1配置ssh，手动添加key，copy-id到其他机器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.4.</span> <span class="toc-text">停防火墙、关闭Swap、关闭Selinux、设置内核、K8S的yum源、安装依赖包、配置ntp（配置完后建议重启一次）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.5.</span> <span class="toc-text">设置cfssl环境（master1）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.</span> <span class="toc-text">创建etcd</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.1.</span> <span class="toc-text">创建证书(master1上执行即可)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.1.1.</span> <span class="toc-text">创建ca-config.json与ca-csr.json文件，并从 CSR json 产生 CA keys 与 Certificate：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.2.</span> <span class="toc-text">分发证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.</span> <span class="toc-text">安装配置etcd (三主节点）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.1.</span> <span class="toc-text">master1的etcd.service</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.2.</span> <span class="toc-text">master2的etcd.service</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.3.3.</span> <span class="toc-text">master3的etcd.service</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.4.</span> <span class="toc-text">添加自启动(etcd至少2个节点启动才能正常工作)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.6.5.</span> <span class="toc-text">三个节点分别执行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.7.</span> <span class="toc-text">安装docker(所有节点)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.8.</span> <span class="toc-text">安装kubeadm</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.8.1.</span> <span class="toc-text">配置源，下载kubeadm，docker和相关工具包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.8.2.</span> <span class="toc-text">修改配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.</span> <span class="toc-text">初始化集群(master)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.1.</span> <span class="toc-text">记录初始化结果(正常情况)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.2.</span> <span class="toc-text">初始化失败后处理办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.3.</span> <span class="toc-text">按照提示执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.9.4.</span> <span class="toc-text">kubeadm生成证书密码文件分发到master2和master3上面去</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.10.</span> <span class="toc-text">部署flannel网络，只需要在master1执行就行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.</span> <span class="toc-text">部署kubernetes-dashboard</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.1.</span> <span class="toc-text">获取token,通过令牌登陆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.2.</span> <span class="toc-text">通过ip访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.11.3.</span> <span class="toc-text">记录令牌</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.12.</span> <span class="toc-text">安装heapster，InfluxDB和Grafana</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.12.1.</span> <span class="toc-text">推荐使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.12.2.</span> <span class="toc-text">也可以试试这个，作者没装上</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.13.</span> <span class="toc-text">在master2和master3分别执行初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.14.</span> <span class="toc-text">添加node1到集群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.15.</span> <span class="toc-text">让master也运行pod（默认master不运行pod）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.16.</span> <span class="toc-text">清除命令</span></a></li></ol></li></ol></li></ol>
         
@@ -384,13 +384,13 @@
             neo
         <br>
           
-              由 <a target="_blank" href="https://hexo.io">Hexo</a> 强力驱动
+              Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
           
           
             |
           
           
-              主题 - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+              Theme - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
           
           
       </div>
