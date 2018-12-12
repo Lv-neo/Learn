@@ -9,7 +9,7 @@
     <meta name="description" content="欢迎光临Neo的博客">
     <meta name="author" content="Neo">
     <meta name="keyword" content="">
-    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/tags/ignress/">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/k8s/rollout/">
     <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -21,7 +21,7 @@
 
     <title>
         
-        Neo&#39;s Blog
+        kubernetes 滚动更新发布及回滚｜Neo&#39;s Blog
         
     </title>
 
@@ -68,7 +68,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <header>
-  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="false" data-istags="true" data-ishome="false">
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
     <div class="container-fluid">
       <div class="navbar-header page-scroll">
         <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
@@ -120,8 +120,26 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                     <div class="site-heading">
-                        <h1>未命名</h1>
+                        <h1>kubernetes 滚动更新发布及回滚</h1>
                         
+                        
+                          <span class="meta">
+                               <span class="meta-item">博主: Neo</span>
+                               <span class="meta-item">创建于: Dec 12, 2018</span>
+                               
+                                 <span class="meta-item">更新于: Dec 12, 2018</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              分类: 
+                              <a class="tag" href="/Learn/categories/#k8s" title="k8s">k8s</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              标签: 
+                              <a class="tag" href="/Learn/tags/#k8s" title="k8s">k8s</a>
+                              
+                          </div>
                         
                     </div>
                 </div>
@@ -133,149 +151,106 @@
 
 
 <!-- Main Content -->
-<article class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <div id="tag_cloud">
-                
-                  <a href="#k8s" title="k8s" rel="7">k8s</a>
-                
-                  <a href="#java" title="java" rel="1">java</a>
-                
-                  <a href="#hap" title="hap" rel="1">hap</a>
-                
-                  <a href="#log" title="log" rel="1">log</a>
-                
-                  <a href="#ignress" title="ignress" rel="1">ignress</a>
-                
-            </div>
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          
+          <h1><span id="kubernetes-滚动更新发布及回滚">kubernetes 滚动更新发布及回滚</span></h1><h2><span id="针对deployment记录record">针对deployment记录record</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl  apply -f **** --record</span><br></pre></td></tr></table></figure>
+<h2><span id="查看当前状态">查看当前状态</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout status deployment/[DEPLOYMENT NAME] -w -n=[NAMESPACE]</span><br></pre></td></tr></table></figure>
+<h2><span id="查看历史">查看历史</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout history deployment/[DEPLOYMENT NAME] -n=[NAMESPACE]</span><br></pre></td></tr></table></figure>
+<h2><span id="回滚到指定版本">回滚到指定版本</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout undo deployment/[DEPLOYMENT NAME] --to-revision=[VERSION ID] -n=[NAMESPACE]</span><br></pre></td></tr></table></figure>
+          
+          <hr>
+          <ul class="pager">
+              
+              
+              <li class="next">
+                  <a href="/Learn/ops/log/" data-toggle="tooltip" data-placement="top" title="日志服务">下一篇&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+  <!-- disqus start -->
+  <div class="comment">
+    <div id="disqus_thread" class="disqus-thread"></div>
+      <script>
+      var disqus_shortname = 'hexo-a-rsnippet';
+      
+      var disqus_url = 'https://lv-neo.github.io/Learn/k8s/rollout/';
+      
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  <!-- disqus end -->
+  
 
+  
+  
+
+
+      </div>
+      <!-- sidebar-profile.ejs -->
+<div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+    <section class="visible-md visible-lg" style="padding: 0 18px">
+        <div class="short-about">
             
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="k8s">
-                      <span class="tag-text">k8s</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/README/">
-                            <h2 class="tag-post-title">K8s学习</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/namespace/">
-                            <h2 class="tag-post-title">namespace简介</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/rollout/">
-                            <h2 class="tag-post-title">kubernetes 滚动更新发布及回滚</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/hpa/">
-                            <h2 class="tag-post-title">Horizontal Pod Autoscaling</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/k8s-install/">
-                            <h2 class="tag-post-title">安装k8s(3master+etcd+node)</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/aliyun/private_secret/">
-                            <h2 class="tag-post-title">如何支持私有镜像</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/ignress/https/">
-                            <h2 class="tag-post-title">ignress https证书配置</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
+                <img src="https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true" class="avatar">
             
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="java">
-                      <span class="tag-text">java</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/Learn/java/README/">
-                            <h2 class="tag-post-title">java学习</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
+            <h3>Neo</h3>
             
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="hap">
-                      <span class="tag-text">hap</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/hpa/">
-                            <h2 class="tag-post-title">Horizontal Pod Autoscaling</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
+                <p>data scientist</p>
             
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="log">
-                      <span class="tag-text">log</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/Learn/ops/log/">
-                            <h2 class="tag-post-title">日志服务</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
+            <hr>
+            <ul class="list-inline">
                 
-              </div>
-            
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="ignress">
-                      <span class="tag-text">ignress</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/Learn/k8s/ignress/https/">
-                            <h2 class="tag-post-title">ignress https证书配置</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
                 
-              </div>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
             
         </div>
+    </section>
+</div>
+
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        目录
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">kubernetes 滚动更新发布及回滚</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">针对deployment记录record</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">查看当前状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">查看历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">回滚到指定版本</span></a></li></ol></li></ol>
+        
     </div>
+  </div>
+
+
+  </div>
 </article>
 
 <!-- Footer -->
