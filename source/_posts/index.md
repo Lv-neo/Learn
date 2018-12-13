@@ -23,6 +23,8 @@ title: 资料目录
     - [zabbix](#)
     - [walle](#)
     - [jumpserver](#)
+    - [ssh](#)
+      - [客户端解决ssh连接断开的问题](/Learn/ssh/ssh_connect)
 - [数据库与缓存](#)
     - [redis](#)
     - [mysql](#)
