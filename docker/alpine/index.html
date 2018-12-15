@@ -9,7 +9,7 @@
     <meta name="description" content="欢迎光临Neo的博客">
     <meta name="author" content="Neo">
     <meta name="keyword" content="">
-    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/java/README/">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/docker/alpine/">
     <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -21,7 +21,7 @@
 
     <title>
         
-        java学习｜Neo&#39;s Blog
+        docker alpine源｜Neo&#39;s Blog
         
     </title>
 
@@ -120,24 +120,24 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                     <div class="site-heading">
-                        <h1>java学习</h1>
+                        <h1>docker alpine源</h1>
                         
                         
                           <span class="meta">
                                <span class="meta-item">Author: Neo</span>
-                               <span class="meta-item">Date: Nov 26, 2018</span>
+                               <span class="meta-item">Date: Dec 13, 2018</span>
                                
-                                 <span class="meta-item">Updated On: Dec 12, 2018</span>
+                                 <span class="meta-item">Updated On: Dec 15, 2018</span>
                                
                           </span>
                           <div class="tags text-center">
                               Categories: 
-                              <a class="tag" href="/Learn/categories/#java" title="java">java</a>
+                              <a class="tag" href="/Learn/categories/#docker" title="docker">docker</a>
                               
                           </div>
                           <div class="tags text-center">
                               Tags: 
-                              <a class="tag" href="/Learn/tags/#java" title="java">java</a>
+                              <a class="tag" href="/Learn/tags/#-docker -alpine" title="-docker -alpine">-docker -alpine</a>
                               
                           </div>
                         
@@ -157,131 +157,35 @@
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
           
-          <h1><span id="java学习">java学习</span></h1><h2><span id="目录">目录</span></h2><ul>
-<li><a href="http://wiki.jikexueyuan.com/project/java-vm/" target="_blank" rel="noopener">JVM</a><ul>
-<li><a href="source/_posts/jvm/mem.md">jvm内存</a></li>
-</ul>
-</li>
-<li><a href="#">语法糖</a><ul>
-<li><a href="http://wiki.jikexueyuan.com/project/java/inheritance.html" target="_blank" rel="noopener">面向对象</a></li>
-<li><a href="source/_posts/">Java Bean</a> </li>
-<li><a href="source/_posts/syntax/primitiveType.md">8种基本类型</a></li>
-<li><a href="#">集合</a><ul>
-<li><a href="source/_posts/Collection/README.md">java容器类简介</a></li>
-<li><a href="source/_posts/lang/Serializable.md">Serializable</a> </li>
+          <!-- toc -->
+<ul>
+<li><a href="#docker-alpine源">docker alpine源</a><ul>
+<li><a href="#常用工具安装">常用工具安装</a><ul>
+<li><a href="#安装curl">安装curl</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#">多线程</a><ul>
-<li><a href="#">线程</a><ul>
-<li><a href="source/_posts/thread/thread.md">什么是线程</a></li>
-<li><a href="source/_posts/thread/java.md">Java线程基础</a></li>
-<li><a href="source/_posts/thread/shared.md">共享对数据的访问</a></li>
-<li><a href="source/_posts/thread/synchronized.md">线程同步详解</a></li>
-<li><a href="source/_posts/thread/controller.md">线程的控制</a></li>
-<li><a href="source/_posts/thread/communication.md">线程间通讯(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/threadgroup.md">线程组(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/safe.md">线程安全(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/daemon.md">守护线程(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/lock.md">java并发-读写锁(source/_posts/未编写)</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li><a href="source/_posts/">IO</a><ul>
-<li><a href="source/_posts/IO/stream.md">流</a></li>
-<li><a href="source/_posts/NIO/README.md">NIO</a><ul>
-<li><a href="source/_posts/NIO/IO.md">输入输出</a></li>
-<li><a href="source/_posts/NIO/channel_buffer.md">通道和缓冲区</a></li>
-<li><a href="source/_posts/NIO/read_write.md">NIO 中的读和写</a></li>
-<li><a href="source/_posts/NIO/buffer.md">缓冲区内部细节</a></li>
-<li><a href="source/_posts/NIO/no-async-io.md">异步IO</a></li>
-<li><a href="source/_posts/NIO/Reactor.md">Reactor模式详解</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#">网络编程</a><ul>
-<li><a href="source/_posts/network/tcpip.md">TCP/IP协议</a></li>
-<li><a href="source/_posts/network/upd.md">UPD协议</a></li>
-<li><a href="source/_posts/network/socket.md">Socket</a></li>
-<li><a href="source/_posts/Netty/README.md">Netty</a></li>
-<li><a href="source/_posts/https://waylau.com/essential-netty-in-action/">Netty In Action 中文版</a></li>
-</ul>
-</li>
-<li><a href="#">性能优化</a></li>
-<li><a href="source/_posts/exception/README.md">Java异常处理</a></li>
-<li><a href="#">测试</a></li>
-<li><a href="#">Java Web</a><ul>
-<li><a href="source/_posts/Servlet/README.md">Servlet</a><ul>
-<li><a href="source/_posts/Servlet/baseFramework.md">基本架构</a></li>
-<li>[API的使用]</li>
-<li>[生命周期和工作原理]</li>
-</ul>
-</li>
-<li><a href="#">http</a><ul>
-<li><a href="source/_posts/java-http/httpClient.md">httpClient基本概念</a></li>
-<li><a href="source/_posts/java-http/connect.md">httpClient连接管理</a></li>
-<li><a href="source/_posts/java-http/auth.md">Http认证</a></li>
-<li><a href="source/_posts/java-http/httpUtil.md">httpClient简单封装</a></li>
-</ul>
-</li>
-<li><a href="#">tomcat</a><ul>
-<li><a href="source/_posts/tomcat/virtual.md">tomcat虚拟目录</a> </li>
-<li><a href="source/_posts/tomcat/performance.md">tomcat性能优化</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/JSP/README.md">JSP</a><ul>
-<li><a href="source/_posts/JSP/BasicSyntax.md">基本语法</a></li>
-<li><a href="source/_posts/JSP/order.md">指令</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#">数据库</a><ul>
-<li><a href="source/_posts/jdbc/README.md">jdbc简介</a></li>
-<li><a href="source/_posts/">mybaits</a><ul>
-<li><a href="source/_posts/mybaits/conf.md">配置简介</a></li>
-<li><a href="source/_posts/mybaits/README.md">连接超时配置</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/hibernate/README.md">hibernate</a> </li>
-</ul>
-</li>
-<li><a href="source/_posts/gradle/README.md">gradle</a><ul>
-<li><a href="source/_posts/gradle/install.md">安装</a></li>
-<li><a href="source/_posts/gradle/des.md">基础</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/maven/README.md">maven</a><ul>
-<li><a href="source/_posts/maven/shell.md">常用命令</a></li>
-<li><a href="source/_posts/maven/install.md">安装</a> </li>
-<li><a href="source/_posts/maven/java.md">使用maven创建java项目</a></li>
-<li><a href="source/_posts/maven/web.md">使用maven创建Web应用程序</a></li>
-<li><a href="source/_posts/maven/evn.md">使用maven profile实现多环境可移植构建</a></li>
-<li><a href="source/_posts/maven/jar.md">将jar文件添加到Maven的local repository</a></li>
-</ul>
-</li>
-<li><a href="/Learn/java/jemter">Jmeter-未完成</a></li>
-<li><a href="source/_posts/quartz/README.md">任务调度</a><ul>
-<li><a href="source/_posts/">quartz</a> <ul>
-<li><a href="source/_posts/quartz/Quartz-meituan.md">美团点评技术-Quartz应用与集群原理分析</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/">xxl-job</a></li>
-</ul>
-</li>
-</ul>
+<!-- tocstop -->
+<h1><span id="docker-alpine源">docker alpine源</span></h1><p>Alpine 操作系统是一个面向安全的轻型 Linux 发行版。它不同于通常 Linux 发行版，Alpine 采用了 musl libc 和 busybox 以减小系统的体积和运行时资源消耗，但功能上比 busybox 又完善的多，因此得到开源社区越来越多的青睐。在保持瘦身的同时，Alpine 还提供了自己的包管理工具 apk，可以通过 <a href="https://pkgs.alpinelinux.org/packages" target="_blank" rel="noopener">https://pkgs.alpinelinux.org/packages</a> 网站上查询包信息，也可以直接通过 apk 命令直接查询和安装各种软件。</p>
+<p>Alpine 由非商业组织维护的，支持广泛场景的 Linux发行版，它特别为资深/重度Linux用户而优化，关注安全，性能和资源效能。Alpine 镜像可以适用于更多常用场景，并且是一个优秀的可以适用于生产的基础系统/环境。</p>
+<p>Alpine Docker 镜像也继承了 Alpine Linux 发行版的这些优势。相比于其他 Docker 镜像，它的容量非常小，仅仅只有 5 MB 左右（对比 Ubuntu 系列镜像接近 200 MB），且拥有非常友好的包管理机制。官方镜像来自 docker-alpine 项目。</p>
+<p>目前 Docker 官方已开始推荐使用 Alpine 替代之前的 Ubuntu 做为基础镜像环境。这样会带来多个好处。包括镜像下载速度加快，镜像安全性提高，主机之间的切换更方便，占用更少磁盘空间等。</p>
+<h2><span id="常用工具安装">常用工具安装</span></h2><h3><span id="安装curl">安装curl</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&apos; /etc/apk/repositories &amp;&amp; apk update &amp;&amp; apk add curl</span><br></pre></td></tr></table></figure>
 
           
           <hr>
           <ul class="pager">
               
               <li class="previous">
-                  <a href="/Learn/k8s/README/" data-toggle="tooltip" data-placement="left" title="K8s学习">&larr; Previous Post</a>
+                  <a href="/Learn/docker/busybox/" data-toggle="tooltip" data-placement="left" title="busybox">&larr; Previous Post</a>
               </li>
               
+              
+              <li class="next">
+                  <a href="/Learn/java/jemter/" data-toggle="tooltip" data-placement="top" title="jemter">Next Post&rarr;</a>
+              </li>
               
           </ul>
         
@@ -293,7 +197,7 @@
       <script>
       var disqus_shortname = 'hexo-a-rsnippet';
       
-      var disqus_url = 'https://lv-neo.github.io/Learn/java/README/';
+      var disqus_url = 'https://lv-neo.github.io/Learn/docker/alpine/';
       
       (function(){
         var dsq = document.createElement('script');
@@ -357,7 +261,7 @@
     <div class="toc-wrap">
         Table of Contents
         
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">java学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">docker alpine源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">常用工具安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装curl</span></a></li></ol></li></ol></li></ol>
         
     </div>
   </div>

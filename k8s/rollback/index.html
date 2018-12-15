@@ -9,7 +9,7 @@
     <meta name="description" content="欢迎光临Neo的博客">
     <meta name="author" content="Neo">
     <meta name="keyword" content="">
-    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/java/README/">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/k8s/rollback/">
     <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -21,7 +21,7 @@
 
     <title>
         
-        java学习｜Neo&#39;s Blog
+        回滚方案和思路｜Neo&#39;s Blog
         
     </title>
 
@@ -120,24 +120,24 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                     <div class="site-heading">
-                        <h1>java学习</h1>
+                        <h1>回滚方案和思路</h1>
                         
                         
                           <span class="meta">
                                <span class="meta-item">Author: Neo</span>
-                               <span class="meta-item">Date: Nov 26, 2018</span>
+                               <span class="meta-item">Date: Dec 12, 2018</span>
                                
                                  <span class="meta-item">Updated On: Dec 12, 2018</span>
                                
                           </span>
                           <div class="tags text-center">
                               Categories: 
-                              <a class="tag" href="/Learn/categories/#java" title="java">java</a>
+                              <a class="tag" href="/Learn/categories/#k8s" title="k8s">k8s</a>
                               
                           </div>
                           <div class="tags text-center">
                               Tags: 
-                              <a class="tag" href="/Learn/tags/#java" title="java">java</a>
+                              <a class="tag" href="/Learn/tags/#k8s" title="k8s">k8s</a>
                               
                           </div>
                         
@@ -157,131 +157,51 @@
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
           
-          <h1><span id="java学习">java学习</span></h1><h2><span id="目录">目录</span></h2><ul>
-<li><a href="http://wiki.jikexueyuan.com/project/java-vm/" target="_blank" rel="noopener">JVM</a><ul>
-<li><a href="source/_posts/jvm/mem.md">jvm内存</a></li>
+          <h1><span id="k8s回滚方案和思路">k8s回滚方案和思路</span></h1><ul>
+<li>deployment（官方推荐）<ul>
+<li>apply imgaeId</li>
 </ul>
 </li>
-<li><a href="#">语法糖</a><ul>
-<li><a href="http://wiki.jikexueyuan.com/project/java/inheritance.html" target="_blank" rel="noopener">面向对象</a></li>
-<li><a href="source/_posts/">Java Bean</a> </li>
-<li><a href="source/_posts/syntax/primitiveType.md">8种基本类型</a></li>
-<li><a href="#">集合</a><ul>
-<li><a href="source/_posts/Collection/README.md">java容器类简介</a></li>
-<li><a href="source/_posts/lang/Serializable.md">Serializable</a> </li>
+<li>ReplicationController<ul>
+<li>RollingUpdate</li>
 </ul>
 </li>
 </ul>
-</li>
-<li><a href="#">多线程</a><ul>
-<li><a href="#">线程</a><ul>
-<li><a href="source/_posts/thread/thread.md">什么是线程</a></li>
-<li><a href="source/_posts/thread/java.md">Java线程基础</a></li>
-<li><a href="source/_posts/thread/shared.md">共享对数据的访问</a></li>
-<li><a href="source/_posts/thread/synchronized.md">线程同步详解</a></li>
-<li><a href="source/_posts/thread/controller.md">线程的控制</a></li>
-<li><a href="source/_posts/thread/communication.md">线程间通讯(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/threadgroup.md">线程组(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/safe.md">线程安全(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/daemon.md">守护线程(source/_posts/未编写)</a></li>
-<li><a href="source/_posts/thread/lock.md">java并发-读写锁(source/_posts/未编写)</a></li>
+<p>如果你使用ReplicationController创建的pod可以使用kubectl rollingupdate命令滚动升级，如果使用的是Deployment创建的Pod可以直接修改yaml文件后执行kubectl apply即可。</p>
+<h2><span id="replicationcontroller">ReplicationController</span></h2><p>Replication Controller为Kubernetes的一个核心内容，应用托管到Kubernetes之后，需要保证应用能够持续的运行，Replication Controller就是这个保证的key，主要的功能如下：</p>
+<ul>
+<li>确保pod数量：它会确保Kubernetes中有指定数量的Pod在运行。如果少于指定数量的pod，Replication Controller会创建新的，反之则会删除掉多余的以保证Pod数量不变。</li>
+<li>确保pod健康：当pod不健康，运行出错或者无法提供服务时，Replication Controller也会杀死不健康的pod，重新创建新的。</li>
+<li>弹性伸缩 ：在业务高峰或者低峰期的时候，可以通过Replication Controller动态的调整pod的数量来提高资源的利用率。同时，配置相应的监控功能（Hroizontal Pod Autoscaler），会定时自动从监控平台获取Replication Controller关联pod的整体资源使用情况，做到自动伸缩。</li>
+<li>滚动升级：滚动升级为一种平滑的升级方式，通过逐步替换的策略，保证整体系统的稳定，在初始化升级的时候就可以及时发现和解决问题，避免问题不断扩大。</li>
 </ul>
-</li>
+<p>Deployment<br>Deployment同样为Kubernetes的一个核心内容，主要职责同样是为了保证pod的数量和健康，90%的功能与Replication Controller完全一样，可以看做新一代的Replication Controller。但是，它又具备了Replication Controller之外的新特性：</p>
+<ul>
+<li>Replication Controller全部功能：Deployment继承了上面描述的Replication Controller全部功能。</li>
+<li>事件和状态查看：可以查看Deployment的升级详细进度和状态。</li>
+<li>回滚：当升级pod镜像或者相关参数的时候发现问题，可以使用回滚操作回滚到上一个稳定的版本或者指定的版本。</li>
+<li>版本记录: 每一次对Deployment的操作，都能保存下来，给予后续可能的回滚使用。</li>
+<li>暂停和启动：对于每一次升级，都能够随时暂停和启动。</li>
+<li>多种升级方案：Recreate：删除所有已存在的pod,重新创建新的; RollingUpdate：滚动升级，逐步替换的策略，同时滚动升级时，支持更多的附加参数，例如设置最大不可用pod数量，最小升级间隔时间等等。</li>
 </ul>
-</li>
-<li><a href="source/_posts/">IO</a><ul>
-<li><a href="source/_posts/IO/stream.md">流</a></li>
-<li><a href="source/_posts/NIO/README.md">NIO</a><ul>
-<li><a href="source/_posts/NIO/IO.md">输入输出</a></li>
-<li><a href="source/_posts/NIO/channel_buffer.md">通道和缓冲区</a></li>
-<li><a href="source/_posts/NIO/read_write.md">NIO 中的读和写</a></li>
-<li><a href="source/_posts/NIO/buffer.md">缓冲区内部细节</a></li>
-<li><a href="source/_posts/NIO/no-async-io.md">异步IO</a></li>
-<li><a href="source/_posts/NIO/Reactor.md">Reactor模式详解</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#">网络编程</a><ul>
-<li><a href="source/_posts/network/tcpip.md">TCP/IP协议</a></li>
-<li><a href="source/_posts/network/upd.md">UPD协议</a></li>
-<li><a href="source/_posts/network/socket.md">Socket</a></li>
-<li><a href="source/_posts/Netty/README.md">Netty</a></li>
-<li><a href="source/_posts/https://waylau.com/essential-netty-in-action/">Netty In Action 中文版</a></li>
-</ul>
-</li>
-<li><a href="#">性能优化</a></li>
-<li><a href="source/_posts/exception/README.md">Java异常处理</a></li>
-<li><a href="#">测试</a></li>
-<li><a href="#">Java Web</a><ul>
-<li><a href="source/_posts/Servlet/README.md">Servlet</a><ul>
-<li><a href="source/_posts/Servlet/baseFramework.md">基本架构</a></li>
-<li>[API的使用]</li>
-<li>[生命周期和工作原理]</li>
-</ul>
-</li>
-<li><a href="#">http</a><ul>
-<li><a href="source/_posts/java-http/httpClient.md">httpClient基本概念</a></li>
-<li><a href="source/_posts/java-http/connect.md">httpClient连接管理</a></li>
-<li><a href="source/_posts/java-http/auth.md">Http认证</a></li>
-<li><a href="source/_posts/java-http/httpUtil.md">httpClient简单封装</a></li>
-</ul>
-</li>
-<li><a href="#">tomcat</a><ul>
-<li><a href="source/_posts/tomcat/virtual.md">tomcat虚拟目录</a> </li>
-<li><a href="source/_posts/tomcat/performance.md">tomcat性能优化</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/JSP/README.md">JSP</a><ul>
-<li><a href="source/_posts/JSP/BasicSyntax.md">基本语法</a></li>
-<li><a href="source/_posts/JSP/order.md">指令</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#">数据库</a><ul>
-<li><a href="source/_posts/jdbc/README.md">jdbc简介</a></li>
-<li><a href="source/_posts/">mybaits</a><ul>
-<li><a href="source/_posts/mybaits/conf.md">配置简介</a></li>
-<li><a href="source/_posts/mybaits/README.md">连接超时配置</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/hibernate/README.md">hibernate</a> </li>
-</ul>
-</li>
-<li><a href="source/_posts/gradle/README.md">gradle</a><ul>
-<li><a href="source/_posts/gradle/install.md">安装</a></li>
-<li><a href="source/_posts/gradle/des.md">基础</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/maven/README.md">maven</a><ul>
-<li><a href="source/_posts/maven/shell.md">常用命令</a></li>
-<li><a href="source/_posts/maven/install.md">安装</a> </li>
-<li><a href="source/_posts/maven/java.md">使用maven创建java项目</a></li>
-<li><a href="source/_posts/maven/web.md">使用maven创建Web应用程序</a></li>
-<li><a href="source/_posts/maven/evn.md">使用maven profile实现多环境可移植构建</a></li>
-<li><a href="source/_posts/maven/jar.md">将jar文件添加到Maven的local repository</a></li>
-</ul>
-</li>
-<li><a href="/Learn/java/jemter">Jmeter-未完成</a></li>
-<li><a href="source/_posts/quartz/README.md">任务调度</a><ul>
-<li><a href="source/_posts/">quartz</a> <ul>
-<li><a href="source/_posts/quartz/Quartz-meituan.md">美团点评技术-Quartz应用与集群原理分析</a></li>
-</ul>
-</li>
-<li><a href="source/_posts/">xxl-job</a></li>
-</ul>
-</li>
-</ul>
+<h2><span id="参考">参考</span></h2><p><a href="http://dockone.io/article/328" target="_blank" rel="noopener">Rolling update机制解析</a></p>
+<p><a href="https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/" target="_blank" rel="noopener">Running a Stateless Application Using a Deployment</a></p>
+<p><a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/simple-rolling-update.md" target="_blank" rel="noopener">Simple Rolling Update</a></p>
+<p><a href="https://segmentfault.com/a/1190000008232770" target="_blank" rel="noopener">使用kubernetes的deployment进行RollingUpdate</a></p>
+<p><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/" target="_blank" rel="noopener">Kubernetes Deployment Concept</a></p>
 
           
           <hr>
           <ul class="pager">
               
               <li class="previous">
-                  <a href="/Learn/k8s/README/" data-toggle="tooltip" data-placement="left" title="K8s学习">&larr; Previous Post</a>
+                  <a href="/Learn/java/jemter/" data-toggle="tooltip" data-placement="left" title="jemter">&larr; Previous Post</a>
               </li>
               
+              
+              <li class="next">
+                  <a href="/Learn/k8s/rollout/" data-toggle="tooltip" data-placement="top" title="kubernetes rollout">Next Post&rarr;</a>
+              </li>
               
           </ul>
         
@@ -293,7 +213,7 @@
       <script>
       var disqus_shortname = 'hexo-a-rsnippet';
       
-      var disqus_url = 'https://lv-neo.github.io/Learn/java/README/';
+      var disqus_url = 'https://lv-neo.github.io/Learn/k8s/rollback/';
       
       (function(){
         var dsq = document.createElement('script');
@@ -357,7 +277,7 @@
     <div class="toc-wrap">
         Table of Contents
         
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">java学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">k8s回滚方案和思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">ReplicationController</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
         
     </div>
   </div>
