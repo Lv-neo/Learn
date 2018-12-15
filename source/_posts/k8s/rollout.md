@@ -1,5 +1,5 @@
 ---
-title: kubernetes 滚动更新发布及回滚
+title: kubernetes rollout
 date: 2018-12-12 14:36:59
 categories: k8s
 tags: k8s
