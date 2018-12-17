@@ -1,0 +1,498 @@
+<hr>
+<p>title: zabbix 监控nginx<br>date: 2018-12-17 18:43:17<br>categories: zabbix</p>
+<h2 id="tags-zabbix"><a href="#tags-zabbix" class="headerlink" title="tags: zabbix"></a>tags: zabbix</h2><h2 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h2><p>在nginx的配置文件中，添加status配置。</p>
+<pre><code>server {
+    listen 40080;
+    server_name _;
+    allow 127.0.0.1;
+    allow 10.24.166.208;
+    deny all;
+    access_log off;
+    location /php-fpm_status {
+        #fastcgi_pass unix:/tmp/php-fpm.sock;
+        fastcgi_pass 127.0.0.1:9000;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+    }
+    location /nginx_status {
+        stub_status on;
+    }
+}
+</code></pre><ul>
+<li>测试</li>
+</ul>
+<pre><code>curl 127.0.0.1:40080/nginx_status
+</code></pre><ul>
+<li>测试结果</li>
+</ul>
+<pre><code>Active connections: 1 
+server accepts handled requests
+ 90 90 89 
+Reading: 0 Writing: 1 Waiting: 0 
+</code></pre><ul>
+<li>nginx Status 详细说明：</li>
+</ul>
+<pre><code>Activeconnections:对后端发起的活动连接数；
+
+server accepts 2349542：nginx 总共处理了2349542个连接；
+
+handled：成功创建了64603417次握手；
+
+requests：总共处理了8798670请求。
+
+Reading：nginx读取客户端的header数；
+
+Writing: nginx 返回给客户端的header数；
+
+Waiting: nginx 请求处理完成，正在等待下一请求指令的连接。
+</code></pre><h2 id="在agentd上编写监控脚本"><a href="#在agentd上编写监控脚本" class="headerlink" title="在agentd上编写监控脚本"></a>在agentd上编写监控脚本</h2><ul>
+<li>编写脚本</li>
+</ul>
+<pre><code>#!/bin/bash
+
+Active(){
+        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==1 {print$3}&apos;
+}
+Reading(){
+        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==4 {print$2}&apos;
+}
+Writing(){
+        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==4 {print$4}&apos;
+}
+Waiting(){
+        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==4 {print$6}&apos;
+}
+Accepts(){
+          wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==3 {print $1}&apos;
+}
+Handled(){
+        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==3 {print $2}&apos;
+}
+Requests(){
+        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==3 {print $3}&apos;
+}
+$1
+</code></pre><ul>
+<li>并且设置属主和属组为zabbix，赋予执行权限。</li>
+</ul>
+<pre><code>chmod o+x nginx_status.sh
+chown zabbix.zabbix nginx_status.sh
+</code></pre><ul>
+<li>修改nginx服务器上zabbix客户端的zabbix_agentd.conf配置文件</li>
+</ul>
+<pre><code>grep -v &quot;^[#;]&quot; zabbix_agentd.conf | grep -v &quot;^$&quot;
+
+PidFile=/tmp/zabbix_agentd.pid
+LogFile=/usr/local/logs/zabbix/zabbix_agentd.log
+Server=10.24.166.208
+ServerActive=10.24.166.208
+Hostname=120.76.24.60
+UnsafeUserParameters=1
+UserParameter=idle.processe,/usr/local/zabbix/scripts/php-fpm_status.sh idle
+UserParameter=total.processes,/usr/local/zabbix/scripts/php-fpm_status.sh total
+UserParameter=active.processes,/usr/local/zabbix/scripts/php-fpm_status.sh active
+UserParameter=max.active.processes,/usr/local/zabbix/scripts/php-fpm_status.sh mactive
+UserParameter=listen.queue.len,/usr/local/zabbix/scripts/php-fpm_status.sh listenqueuelen
+UserParameter=listen.queue,/usr/local/zabbix/scripts/php-fpm_status.sh listenqueue
+UserParameter=start.since,/usr/local/zabbix/scripts/php-fpm_status.sh since
+UserParameter=accepted.conn,/usr/local/zabbix/scripts/php-fpm_status.sh conn
+UserParameter=nginx.connections.active,/usr/local/zabbix/scripts/nginx_status.sh Active
+UserParameter=nginx.connections.reading,/usr/local/zabbix/scripts/nginx_status.sh Reading
+UserParameter=nginx.connections.writing,/usr/local/zabbix/scripts/nginx_status.sh Writing
+UserParameter=nginx.connections.waiting,/usr/local/zabbix/scripts/nginx_status.sh Waiting
+UserParameter=nginx.accepts,/usr/local/zabbix/scripts/nginx_status.sh Accepts
+UserParameter=nginx.handled,/usr/local/zabbix/scripts/nginx_status.sh Handled
+UserParameter=nginx.requests,/usr/local/zabbix/scripts/nginx_status.sh Requests
+</code></pre><ul>
+<li><p>重启zabbix agent</p>
+</li>
+<li><p>zabbix server测试</p>
+</li>
+</ul>
+<pre><code>/usr/local/zabbix/bin/zabbix_get -s 10.24.166.235 -p 10050 -k &quot;nginx.connections.waiting&quot;
+</code></pre><h2 id="导入模版"><a href="#导入模版" class="headerlink" title="导入模版"></a>导入模版</h2><p>选择仓库中的nginx_status.xml<br>导入成功后，添加应用集<br>设置监控模版</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;zabbix_export&gt;
+    &lt;version&gt;2.0&lt;/version&gt;
+    &lt;date&gt;2013-11-13T06:24:34Z&lt;/date&gt;
+    &lt;groups&gt;
+        &lt;group&gt;
+            &lt;name&gt;Templates&lt;/name&gt;
+        &lt;/group&gt;
+    &lt;/groups&gt;
+    &lt;templates&gt;
+        &lt;template&gt;
+            &lt;template&gt;Template nginx_status&lt;/template&gt;
+            &lt;name&gt;Template nginx_status&lt;/name&gt;
+            &lt;groups&gt;
+                &lt;group&gt;
+                    &lt;name&gt;Templates&lt;/name&gt;
+                &lt;/group&gt;
+            &lt;/groups&gt;
+           &lt;applications&gt;
+                &lt;application&gt;
+                    &lt;name&gt;nginx_status&lt;/name&gt;
+                &lt;/application&gt;
+            &lt;/applications&gt;
+            &lt;items&gt;
+                &lt;item&gt;
+                    &lt;name&gt;Active_connections&lt;/name&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;snmp_community/&gt;
+                    &lt;multiplier&gt;0&lt;/multiplier&gt;
+                    &lt;snmp_oid/&gt;
+                    &lt;key&gt;nginx.connections.active&lt;/key&gt;
+                    &lt;delay&gt;60&lt;/delay&gt;
+                    &lt;history&gt;30&lt;/history&gt;
+                    &lt;trends&gt;90&lt;/trends&gt;
+                    &lt;status&gt;0&lt;/status&gt;
+                    &lt;value_type&gt;3&lt;/value_type&gt;
+                    &lt;allowed_hosts/&gt;
+                    &lt;units/&gt;
+                    &lt;delta&gt;0&lt;/delta&gt;
+                    &lt;snmpv3_securityname/&gt;
+                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                    &lt;snmpv3_authpassphrase/&gt;
+                    &lt;snmpv3_privpassphrase/&gt;
+                    &lt;formula&gt;1&lt;/formula&gt;
+                    &lt;delay_flex/&gt;
+                    &lt;params/&gt;
+                    &lt;ipmi_sensor/&gt;
+                    &lt;data_type&gt;0&lt;/data_type&gt;
+                    &lt;authtype&gt;0&lt;/authtype&gt;
+                    &lt;username/&gt;
+                    &lt;password/&gt;
+                    &lt;publickey/&gt;
+                    &lt;privatekey/&gt;
+                    &lt;port/&gt;
+                    &lt;description/&gt;
+                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                    &lt;applications/&gt;
+                    &lt;valuemap/&gt;
+                &lt;/item&gt;
+                &lt;item&gt;
+                    &lt;name&gt;Reading_connection&lt;/name&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;snmp_community/&gt;
+                    &lt;multiplier&gt;0&lt;/multiplier&gt;
+                    &lt;snmp_oid/&gt;
+                    &lt;key&gt;nginx.connections.reading&lt;/key&gt;
+                    &lt;delay&gt;60&lt;/delay&gt;
+                    &lt;history&gt;30&lt;/history&gt;
+                    &lt;trends&gt;90&lt;/trends&gt;
+                    &lt;status&gt;0&lt;/status&gt;
+                    &lt;value_type&gt;3&lt;/value_type&gt;
+                    &lt;allowed_hosts/&gt;
+                    &lt;units/&gt;
+                    &lt;delta&gt;0&lt;/delta&gt;
+                    &lt;snmpv3_securityname/&gt;
+                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                    &lt;snmpv3_authpassphrase/&gt;
+                    &lt;snmpv3_privpassphrase/&gt;
+                    &lt;formula&gt;1&lt;/formula&gt;
+                    &lt;delay_flex/&gt;
+                    &lt;params/&gt;
+                    &lt;ipmi_sensor/&gt;
+                    &lt;data_type&gt;0&lt;/data_type&gt;
+                    &lt;authtype&gt;0&lt;/authtype&gt;
+                    &lt;username/&gt;
+                    &lt;password/&gt;
+                    &lt;publickey/&gt;
+                    &lt;privatekey/&gt;
+                    &lt;port/&gt;
+                    &lt;description/&gt;
+                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                    &lt;applications/&gt;
+                    &lt;valuemap/&gt;
+                &lt;/item&gt;
+                &lt;item&gt;
+                    &lt;name&gt;Waiting_connection&lt;/name&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;snmp_community/&gt;
+                    &lt;multiplier&gt;0&lt;/multiplier&gt;
+                    &lt;snmp_oid/&gt;
+                    &lt;key&gt;nginx.connections.waiting&lt;/key&gt;
+                    &lt;delay&gt;60&lt;/delay&gt;
+                    &lt;history&gt;30&lt;/history&gt;
+                    &lt;trends&gt;90&lt;/trends&gt;
+                    &lt;status&gt;0&lt;/status&gt;
+                    &lt;value_type&gt;3&lt;/value_type&gt;
+                    &lt;allowed_hosts/&gt;
+                    &lt;units/&gt;
+                    &lt;delta&gt;0&lt;/delta&gt;
+                    &lt;snmpv3_securityname/&gt;
+                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                    &lt;snmpv3_authpassphrase/&gt;
+                    &lt;snmpv3_privpassphrase/&gt;
+                    &lt;formula&gt;1&lt;/formula&gt;
+                    &lt;delay_flex/&gt;
+                    &lt;params/&gt;
+                    &lt;ipmi_sensor/&gt;
+                    &lt;data_type&gt;0&lt;/data_type&gt;
+                    &lt;authtype&gt;0&lt;/authtype&gt;
+                    &lt;username/&gt;
+                    &lt;password/&gt;
+                    &lt;publickey/&gt;
+                    &lt;privatekey/&gt;
+                    &lt;port/&gt;
+                    &lt;description/&gt;
+                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                    &lt;applications/&gt;
+                    &lt;valuemap/&gt;
+                &lt;/item&gt;
+                &lt;item&gt;
+                    &lt;name&gt;Writing_connection&lt;/name&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;snmp_community/&gt;
+                    &lt;multiplier&gt;0&lt;/multiplier&gt;
+                    &lt;snmp_oid/&gt;
+                    &lt;key&gt;nginx.connections.writing&lt;/key&gt;
+                    &lt;delay&gt;60&lt;/delay&gt;
+                    &lt;history&gt;30&lt;/history&gt;
+                    &lt;trends&gt;90&lt;/trends&gt;
+                    &lt;status&gt;0&lt;/status&gt;
+                    &lt;value_type&gt;3&lt;/value_type&gt;
+                    &lt;allowed_hosts/&gt;
+                    &lt;units/&gt;
+                    &lt;delta&gt;0&lt;/delta&gt;
+                    &lt;snmpv3_securityname/&gt;
+                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                    &lt;snmpv3_authpassphrase/&gt;
+                    &lt;snmpv3_privpassphrase/&gt;
+                    &lt;formula&gt;1&lt;/formula&gt;
+                    &lt;delay_flex/&gt;
+                    &lt;params/&gt;
+                    &lt;ipmi_sensor/&gt;
+                    &lt;data_type&gt;0&lt;/data_type&gt;
+                    &lt;authtype&gt;0&lt;/authtype&gt;
+                    &lt;username/&gt;
+                    &lt;password/&gt;
+                    &lt;publickey/&gt;
+                    &lt;privatekey/&gt;
+                    &lt;port/&gt;
+                    &lt;description/&gt;
+                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                    &lt;applications/&gt;
+                    &lt;valuemap/&gt;
+                &lt;/item&gt;
+                &lt;item&gt;
+                    &lt;name&gt;Accepts&lt;/name&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;snmp_community/&gt;
+                    &lt;multiplier&gt;0&lt;/multiplier&gt;
+                    &lt;snmp_oid/&gt;
+                    &lt;key&gt;nginx.accepts&lt;/key&gt;
+                    &lt;delay&gt;60&lt;/delay&gt;
+                    &lt;history&gt;30&lt;/history&gt;
+                    &lt;trends&gt;90&lt;/trends&gt;
+                    &lt;status&gt;0&lt;/status&gt;
+                    &lt;value_type&gt;3&lt;/value_type&gt;
+                    &lt;allowed_hosts/&gt;
+                    &lt;units/&gt;
+                    &lt;delta&gt;0&lt;/delta&gt;
+                    &lt;snmpv3_securityname/&gt;
+                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                    &lt;snmpv3_authpassphrase/&gt;
+                    &lt;snmpv3_privpassphrase/&gt;
+                    &lt;formula&gt;1&lt;/formula&gt;
+                    &lt;delay_flex/&gt;
+                    &lt;params/&gt;
+                    &lt;ipmi_sensor/&gt;
+                    &lt;data_type&gt;0&lt;/data_type&gt;
+                    &lt;authtype&gt;0&lt;/authtype&gt;
+                    &lt;username/&gt;
+                    &lt;password/&gt;
+                    &lt;publickey/&gt;
+                    &lt;privatekey/&gt;
+                    &lt;port/&gt;
+                    &lt;description/&gt;
+                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                    &lt;applications/&gt;
+                    &lt;valuemap/&gt;
+                &lt;/item&gt;
+                &lt;item&gt;
+                    &lt;name&gt;Handled&lt;/name&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;snmp_community/&gt;
+                    &lt;multiplier&gt;0&lt;/multiplier&gt;
+                    &lt;snmp_oid/&gt;
+                    &lt;key&gt;nginx.handled&lt;/key&gt;
+                    &lt;delay&gt;60&lt;/delay&gt;
+                    &lt;history&gt;30&lt;/history&gt;
+                    &lt;trends&gt;90&lt;/trends&gt;
+                    &lt;status&gt;0&lt;/status&gt;
+                    &lt;value_type&gt;3&lt;/value_type&gt;
+                    &lt;allowed_hosts/&gt;
+                    &lt;units/&gt;
+                    &lt;delta&gt;0&lt;/delta&gt;
+                    &lt;snmpv3_securityname/&gt;
+                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                    &lt;snmpv3_authpassphrase/&gt;
+                    &lt;snmpv3_privpassphrase/&gt;
+                    &lt;formula&gt;1&lt;/formula&gt;
+                    &lt;delay_flex/&gt;
+                    &lt;params/&gt;
+                    &lt;ipmi_sensor/&gt;
+                    &lt;data_type&gt;0&lt;/data_type&gt;
+                    &lt;authtype&gt;0&lt;/authtype&gt;
+                    &lt;username/&gt;
+                    &lt;password/&gt;
+                    &lt;publickey/&gt;
+                    &lt;privatekey/&gt;
+                    &lt;port/&gt;
+                    &lt;description/&gt;
+                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                    &lt;applications/&gt;
+                    &lt;valuemap/&gt;
+                &lt;/item&gt;
+                &lt;item&gt;
+                    &lt;name&gt;Requests&lt;/name&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;snmp_community/&gt;
+                    &lt;multiplier&gt;0&lt;/multiplier&gt;
+                    &lt;snmp_oid/&gt;
+                    &lt;key&gt;nginx.requests&lt;/key&gt;
+                    &lt;delay&gt;60&lt;/delay&gt;
+                    &lt;history&gt;30&lt;/history&gt;
+                    &lt;trends&gt;90&lt;/trends&gt;
+                    &lt;status&gt;0&lt;/status&gt;
+                    &lt;value_type&gt;3&lt;/value_type&gt;
+                    &lt;allowed_hosts/&gt;
+                    &lt;units/&gt;
+                    &lt;delta&gt;0&lt;/delta&gt;
+                    &lt;snmpv3_securityname/&gt;
+                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;
+                    &lt;snmpv3_authpassphrase/&gt;
+                    &lt;snmpv3_privpassphrase/&gt;
+                    &lt;formula&gt;1&lt;/formula&gt;
+                    &lt;delay_flex/&gt;
+                    &lt;params/&gt;
+                    &lt;ipmi_sensor/&gt;
+                    &lt;data_type&gt;0&lt;/data_type&gt;
+                    &lt;authtype&gt;0&lt;/authtype&gt;
+                    &lt;username/&gt;
+                    &lt;password/&gt;
+                    &lt;publickey/&gt;
+                    &lt;privatekey/&gt;
+                    &lt;port/&gt;
+                    &lt;description/&gt;
+                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;
+                    &lt;applications/&gt;
+                    &lt;valuemap/&gt;
+                &lt;/item&gt;
+            &lt;/items&gt;
+            &lt;discovery_rules/&gt;
+            &lt;macros/&gt;
+            &lt;templates/&gt;
+            &lt;screens/&gt;
+        &lt;/template&gt;
+    &lt;/templates&gt;
+    &lt;graphs&gt;
+        &lt;graph&gt;
+            &lt;name&gt;nginx_connections&lt;/name&gt;
+            &lt;width&gt;900&lt;/width&gt;
+            &lt;height&gt;200&lt;/height&gt;
+            &lt;yaxismin&gt;0.0000&lt;/yaxismin&gt;
+            &lt;yaxismax&gt;100.0000&lt;/yaxismax&gt;
+            &lt;show_work_period&gt;1&lt;/show_work_period&gt;
+            &lt;show_triggers&gt;1&lt;/show_triggers&gt;
+            &lt;type&gt;0&lt;/type&gt;
+            &lt;show_legend&gt;1&lt;/show_legend&gt;
+            &lt;show_3d&gt;0&lt;/show_3d&gt;
+            &lt;percent_left&gt;0.0000&lt;/percent_left&gt;
+            &lt;percent_right&gt;0.0000&lt;/percent_right&gt;
+            &lt;ymin_type_1&gt;0&lt;/ymin_type_1&gt;
+            &lt;ymax_type_1&gt;0&lt;/ymax_type_1&gt;
+            &lt;ymin_item_1&gt;0&lt;/ymin_item_1&gt;
+            &lt;ymax_item_1&gt;0&lt;/ymax_item_1&gt;
+            &lt;graph_items&gt;
+                &lt;graph_item&gt;
+                    &lt;sortorder&gt;0&lt;/sortorder&gt;
+                    &lt;drawtype&gt;0&lt;/drawtype&gt;
+                    &lt;color&gt;C80000&lt;/color&gt;
+                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;item&gt;
+                        &lt;host&gt;Template nginx_status&lt;/host&gt;
+                        &lt;key&gt;nginx.connections.active&lt;/key&gt;
+                    &lt;/item&gt;
+                &lt;/graph_item&gt;
+                &lt;graph_item&gt;
+                    &lt;sortorder&gt;1&lt;/sortorder&gt;
+                    &lt;drawtype&gt;0&lt;/drawtype&gt;
+                    &lt;color&gt;00C800&lt;/color&gt;
+                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;item&gt;
+                        &lt;host&gt;Template nginx_status&lt;/host&gt;
+                        &lt;key&gt;nginx.connections.reading&lt;/key&gt;
+                    &lt;/item&gt;
+                &lt;/graph_item&gt;
+                &lt;graph_item&gt;
+                    &lt;sortorder&gt;2&lt;/sortorder&gt;
+                    &lt;drawtype&gt;0&lt;/drawtype&gt;
+                    &lt;color&gt;0000C8&lt;/color&gt;
+                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;item&gt;
+                        &lt;host&gt;Template nginx_status&lt;/host&gt;
+                        &lt;key&gt;nginx.connections.waiting&lt;/key&gt;
+                    &lt;/item&gt;
+                &lt;/graph_item&gt;
+                &lt;graph_item&gt;
+                    &lt;sortorder&gt;3&lt;/sortorder&gt;
+                    &lt;drawtype&gt;0&lt;/drawtype&gt;
+                    &lt;color&gt;C800C8&lt;/color&gt;
+                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;item&gt;
+                        &lt;host&gt;Template nginx_status&lt;/host&gt;
+                        &lt;key&gt;nginx.connections.writing&lt;/key&gt;
+                    &lt;/item&gt;
+                &lt;/graph_item&gt;
+                &lt;graph_item&gt;
+                    &lt;sortorder&gt;4&lt;/sortorder&gt;
+                    &lt;drawtype&gt;0&lt;/drawtype&gt;
+                    &lt;color&gt;00EE00&lt;/color&gt;
+                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;item&gt;
+                        &lt;host&gt;Template nginx_status&lt;/host&gt;
+                        &lt;key&gt;nginx.accepts&lt;/key&gt;
+                    &lt;/item&gt;
+                &lt;/graph_item&gt;
+                &lt;graph_item&gt;
+                    &lt;sortorder&gt;5&lt;/sortorder&gt;
+                    &lt;drawtype&gt;0&lt;/drawtype&gt;
+                    &lt;color&gt;EE0000&lt;/color&gt;
+                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;item&gt;
+                        &lt;host&gt;Template nginx_status&lt;/host&gt;
+                        &lt;key&gt;nginx.handled&lt;/key&gt;
+                    &lt;/item&gt;
+                &lt;/graph_item&gt;
+                &lt;graph_item&gt;
+                    &lt;sortorder&gt;6&lt;/sortorder&gt;
+                    &lt;drawtype&gt;0&lt;/drawtype&gt;
+                    &lt;color&gt;EEEE00&lt;/color&gt;
+                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;
+                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;
+                    &lt;type&gt;0&lt;/type&gt;
+                    &lt;item&gt;
+                        &lt;host&gt;Template nginx_status&lt;/host&gt;
+                        &lt;key&gt;nginx.requests&lt;/key&gt;
+                    &lt;/item&gt;
+                &lt;/graph_item&gt;
+            &lt;/graph_items&gt;
+        &lt;/graph&gt;
+    &lt;/graphs&gt;
+&lt;/zabbix_export&gt;
+
+</code></pre>

@@ -1,0 +1,33 @@
+<hr>
+<p>title: zabbix主被动模式<br>date: 2018-12-17 18:39:17<br>categories: zabbix</p>
+<h2 id="tags-zabbix"><a href="#tags-zabbix" class="headerlink" title="tags: zabbix"></a>tags: zabbix</h2><h1 id="zabbix主被动模式"><a href="#zabbix主被动模式" class="headerlink" title="zabbix主被动模式"></a>zabbix主被动模式</h1><p>使用zabbix代理有很多好处，一方面可以监控不可达的远程区域；另一方面当监控项目数以万计的时候使用代理可以有效分担zabbix server压力，也简化分布式监控的维护。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>主动、被动模式都是相对于proxy来说的。proxy主动发送数据就是主动模式；proxy等待server的请求，再发送数据就是被动模式。因为主动模式可以有效减轻zabbix server压力，需要监控的东西很多时一定要把监控模式更改为主动监控</p>
+<h3 id="zabbix客户端主被动模式"><a href="#zabbix客户端主被动模式" class="headerlink" title="zabbix客户端主被动模式"></a>zabbix客户端主被动模式</h3><p>zabbix客户端分数据给服务端分为主被动两种模式,主动模式是zabbix客户端主动向服务端发送数据,被动模式是被动等待客户端来取数据</p>
+<p>主动模式的流程是 客户端每隔一段时间主动向服务端发起连接请求–&gt;服务端收到请求,查询客户端需要取的item信息,发送给客户端–&gt;客户端收集数据发送服务端–&gt;结束</p>
+<p>而被动模式是客户端开一个端口默认10050,等待服务端来取数据,然后客户端收集数据发送到服务端,后结束</p>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>zabbix_server端当主机数量过多的时候，由Server端去收集数据，Zabbix会出现严重的性能问题，主要表现如下：<br>1、当被监控端到达一个量级的时候，Web操作很卡，容易出现502<br>2、图层断裂<br>3、开启的进程（Pollar）太多，即使减少item数量，以后加入一定量的机器也会有问题</p>
+<p>所以下面主要往两个优化方向考虑：<br>1、添加Proxy节点或者Node模式做分布式监控<br>2、调整Agentd为主动模式<br>由于第一个方案需要增加物理机器，所以首先尝试第二方案。</p>
+<ul>
+<li>服务端配置</li>
+</ul>
+<pre><code>ListenPort=10051
+LogFile=/usr/local/logs/zabbix/zabbix_server.log
+DBHost=127.0.0.1
+DBName=zabbix
+DBUser=zabbix
+DBPassword=zabbix
+StartTrappers=200
+Timeout=5
+LogSlowQueries=3000
+</code></pre><p>zabbix_server.conf 配置调整：<br>StartPollers=100<br>首先把这个主动收集数据进程减少，原来开到700多<br>StartTrappers=200<br>然后把这个负责处理Agentd推送过来的数据的进程开大一些，就可以了</p>
+<ul>
+<li>被监控端 zabbix_Agentd.conf 的配置调整：</li>
+</ul>
+<pre><code>LogFile=/usr/local/logs/zabbix/zabbix_agent.log
+StartAgents=0          #客户端agent模式，仅为主动模式,值为0的时候，被监控端的zabbix_agentd 不监听本地端口，所以无法在 netstat -tunpl 中查看到zabbix_agentd进程
+ServerActive=**.**.**.**    #zabbix_server的ip
+Hostname=test_host    #重要：主机名,唯一/
+RefreshActiveChecks=1800    #被监控端到服务器获取监控项的周期
+BufferSize=200        #被监控端存储监控信息的空间大小
+Timeout=10            #超时时间
+</code></pre><p>比较重要的参数是ServerActive和Hostname，ServerActive是指定Agentd收集的数据往哪里发送，Hostname是必须要和Server端添加主机时的主机名一样，这样Server端接收到数据才能找到对应关系。</p>

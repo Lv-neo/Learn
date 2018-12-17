@@ -139,20 +139,22 @@
         <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
           
             <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
-    <a href="/Learn/k8s/hpa/">
+    <a href="/Learn/zabbix/index/install/">
         <h2 class="post-title">
-            Horizontal Pod Autoscaling
+            zabbix安装
         </h2>
         
         <div class="post-meta">
-          <span>Nov 30, 2018</span>
+          <span>Dec 17, 2018</span>
           
         </div>
         <div class="post-content-preview">
             <p>
-                Horizontal Pod AutoscalingHorizontal Pod Autoscaling可以根据CPU使用率或应用自定义metrics自动扩展Pod数量（支持replication controller、deployment和replica set）。
+                ＃安装说明
 
-控制管理器每隔30s（可..
+agent安装自己写了个脚本，适合简单安装
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#!/bin/shversion=3.0.4zab..
             </p>
         </div>
     </a>
@@ -161,19 +163,28 @@
 
           
             <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
-    <a href="/Learn/k8s/namespace/">
+    <a href="/Learn/zabbix/index/">
         <h2 class="post-title">
-            namespace简介
+            zabbix学习
         </h2>
         
         <div class="post-meta">
-          <span>Nov 26, 2018</span>
+          <span>Dec 17, 2018</span>
           
         </div>
         <div class="post-content-preview">
             <p>
-                namespace简介Namespace（命名空间）是kubernetes系统中的另一个重要的概念，通过将系统内部的对象“分配”到不同的Namespace中，形成逻辑上分组的不同项目、小组或用户组，便于不同的分组在共享使用整个集群的资源的同时还能被分别管理。
-   Kubernetes集群在启动..
+                zabbix本文学习参考资料主要以作者使用的Zabbix 3.0.2版本为参考
+
+官网链接
+官方文档
+安装
+工作模式
+zabbix解决中文乱码
+zabbix监控nginx
+zabbix监控php-fpm
+
+
             </p>
         </div>
     </a>
@@ -182,25 +193,97 @@
 
           
             <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
-    <a href="/Learn/k8s/k8s-install/">
+    <a href="/Learn/index/">
         <h2 class="post-title">
-            安装k8s(3master+etcd+node)
+            资料目录
         </h2>
         
         <div class="post-meta">
-          <span>Nov 26, 2018</span>
+          <span>Dec 15, 2018</span>
+          
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+语言类
+java
+spring
+
+
+php
+composer
+php
+
+
+python
+node
+golang
+ios
+android
+
+
+运维类
+docker
+k8s
+alpine
+busybox
+
+
+swarm
+elk
+zabbix
+walle
+jumpserver
+ssh
+客户端解决ss..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
+    <a href="/Learn/ssh/ssh_connect/">
+        <h2 class="post-title">
+            客户端解决ssh连接断开的问题
+        </h2>
+        
+        <div class="post-meta">
+          <span>Dec 13, 2018</span>
+          
+        </div>
+        <div class="post-content-preview">
+            <p>
+                客户端解决ssh连接断开的问题今天有小伙伴又在问，客户端连服务器ssh总是断开，其实这个问题很简单。
+核心问题点在哪里其实这个问题，核心点在与客户端与服务端的心跳监听和防火墙
+NAT/firewall在处理网络连接时候，对闲置连接会断开处理，减少空闲连接的占用。（具体请自己查阅资料，以前看的了）..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
+    <a href="/Learn/docker/busybox/">
+        <h2 class="post-title">
+            busybox
+        </h2>
+        
+        <div class="post-meta">
+          <span>Dec 13, 2018</span>
           
         </div>
         <div class="post-content-preview">
             <p>
                 
 
-安装k8s(3master+etcd+node)
-安装步骤
-设置主机名
-配置host和节点，追加host
-master1配置ssh，手动添加key，copy-id到其他机器
-停防火墙、关闭Swap、关闭Selinux、设置内核、K8S的yum源、安装依赖包、配置ntp（配置完后建议重启一次）..
+busybox
+
+
+busyboxBusyBox 是一个集成了一百多个最常用 Linux 命令和工具（如 cat、echo、grep、mount、telnet 等）的精简工具箱，它只需要几 MB 的大小，很方便进行各种快速验证，被誉为“Linux 系统的瑞士军刀”。
+BusyBox 可运行于..
             </p>
         </div>
     </a>
@@ -209,25 +292,29 @@ master1配置ssh，手动添加key，copy-id到其他机器
 
           
             <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
-    <a href="/Learn/k8s/ignress/https/">
+    <a href="/Learn/docker/alpine/">
         <h2 class="post-title">
-            ignress https证书配置
+            docker alpine源
         </h2>
         
         <div class="post-meta">
-          <span>Nov 26, 2018</span>
+          <span>Dec 13, 2018</span>
           
         </div>
         <div class="post-content-preview">
             <p>
-                ignress https证书配置我们使用阿里云的架构之中配置https证书有以下几种方式
+                
 
-slb配置https泛域名证书
-ignress配置https证书
-容器配置https证书
+docker alpine源
+常用工具安装
+安装curl
 
-我们的k8s上面放了不同域名，所以我们选择更加轻便简洁的ignress上配置https证书
-k8s secre..
+
+
+
+
+
+docker alpine源Alpine 操作系统是一个面向安全的轻型 Linux 发行版。它不同于通常 Linux 发行版，Alpine 采用了 musl libc 和 busybox 以减小系统的体积和运行时资源消耗，..
             </p>
         </div>
     </a>
@@ -236,18 +323,19 @@ k8s secre..
 
           
             <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
-    <a href="/Learn/k8s/aliyun/private_secret/">
+    <a href="/Learn/java/jemter/">
         <h2 class="post-title">
-            如何支持私有镜像
+            jemter
         </h2>
         
         <div class="post-meta">
-          <span>Nov 26, 2018</span>
+          <span>Dec 12, 2018</span>
           
         </div>
         <div class="post-content-preview">
             <p>
-                如何支持私有镜像1kubectl create secret docker-registry regsecret -n namespace --docker-server=registry-internal.cn-hangzhou.aliyuncs.com --docker-username=a..
+                jemter实战jemter是开源软件,100%纯Java应用程序设计为负载测试功能行为和测量性能。它最初是为测试Web应用程序而设计的，但后来扩展到其他测试功能。
+
             </p>
         </div>
     </a>
@@ -256,75 +344,28 @@ k8s secre..
 
           
             <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
-    <a href="/Learn/k8s/README/">
+    <a href="/Learn/k8s/rollback/">
         <h2 class="post-title">
-            K8s学习
+            回滚方案和思路
         </h2>
         
         <div class="post-meta">
-          <span>Nov 26, 2018</span>
+          <span>Dec 12, 2018</span>
           
         </div>
         <div class="post-content-preview">
             <p>
-                K8s学习
-K8s学习
-安装k8s(3master+etcd+node)
-namespace
-ignress
-ignress配置https
+                k8s回滚方案和思路
+deployment（官方推荐）
+apply imgaeId
 
 
-Horizontal Pod Autoscaling
-kubernetes rollout
-kubernetes 回滚方案和思路
-
-
-阿里云k8s
-如何..
-            </p>
-        </div>
-    </a>
-</div>
-<hr>
-
-          
-            <div class="post-preview " style="background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg')">
-    <a href="/Learn/java/README/">
-        <h2 class="post-title">
-            java学习
-        </h2>
-        
-        <div class="post-meta">
-          <span>Nov 26, 2018</span>
-          
-        </div>
-        <div class="post-content-preview">
-            <p>
-                java学习目录
-JVM
-jvm内存
-
-
-语法糖
-面向对象
-Java Bean 
-8种基本类型
-集合
-java容器类简介
-Serializable 
+ReplicationController
+RollingUpdate
 
 
 
-
-多线程
-线程
-什么是线程
-Java线程基础
-共享对数据的访问
-线程同步详解
-线程的控制
-线程间通讯(source/_posts/未编写)..
+如果你使用ReplicationController创建的pod可以使用kubectl rollingupdate命令滚动升级，..
             </p>
         </div>
     </a>
@@ -336,6 +377,8 @@ Java线程基础
     
         <li class="previous"><a href="/Learn/">&larr;  Newer Posts</a></li>
     
+    
+        <li class="next"><a href="/Learn/page/3/">Previous Posts  &rarr;</a></li>
     
 </ul>
 
