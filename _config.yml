@@ -231,7 +231,7 @@ mathjax:
 # Comment settings
 # ---------------------------------------------------------------
 # Disqus settings
-disqus_shortname: hexo-a-rsnippet
+# disqus_shortname: hexo-a-rsnippet
 
 # Use livere
 # use_livere: false
@@ -241,7 +241,7 @@ disqus_shortname: hexo-a-rsnippet
 # Analytics settings
 # ---------------------------------------------------------------
 # Baidu Analytics
-baidu_analytics:
+# baidu_analytics:
 # Google Analytics
 # google_analytics: UA-38355881-1            # Format: UA-xxxxxx-xx
 # Google Webmaster tools verification setting

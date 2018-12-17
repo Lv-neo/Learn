@@ -22,6 +22,7 @@ tags: vagrant
 ## 添加box，初始化vagrant box
 
 选择一个目录,开始构建
+
 ```
 $ cd ~/project/
 
@@ -93,11 +94,13 @@ Bringing machine 'default' up with 'virtualbox' provider...
 > 如果你是用的网上的box，可能需要十几分钟以上，建议是放到内网或者本地
 
 ## 访问虚拟机
+
 ```
 $  vagrant ssh
 [vagrant@localhost ~]$ uname -r
 3.10.0-327.4.5.el7.x86_64
 ```
+
 
 我们已经进入虚拟机了，登陆进来的用户名是 vagrant，这个用户挺好，执行 sudo 是不需要输入密码的，开发中实际使用挺好用的。不过如果我非要创建自己的用户也是可以的。
 
@@ -108,11 +111,12 @@ $  vagrant ssh
 
 ### 修改内存
 
-默认内存512m
 ```
 v.memory = 1024
-``` 
+```
+
 > 你也可以进入VirtualBox修改，不过VagrantFile都可以搞定
+
 
 ### 修改网络
 
@@ -124,11 +128,14 @@ v.memory = 1024
 
 很简单，按照你的需求设置，个人开发环境建议设置为private_network
 
+
 ```
 config.vm.network "private_network", ip: "192.168.222.111"
 ```
 
+
 >协同开发，大家可以下载使用同一个VagrantFile，大部分配置相同，是不是很爽
+
 
 
 ### 修改共享目录
@@ -137,12 +144,16 @@ config.vm.network "private_network", ip: "192.168.222.111"
 
 在这之前必须进入vagrant增加你需要的用户www，如果你直接用vagrant，就不需要
 
+
 ```
 config.vm.synced_folder "/Users/Neo/project", "/vagrant",create:true, :owner => "www", :group => "www", :mount_options => ["dmode=775","fmode=664"]
 ```
 
+
 ### 修改登录
+
 我比较喜欢crt或者xshell统一管理机器,在结尾加上
+
 ```
   config.ssh.username = 'vagrant'
   config.ssh.password = 'vagrant'
@@ -151,11 +162,14 @@ config.vm.synced_folder "/Users/Neo/project", "/vagrant",create:true, :owner => 
 
 ### 重启
 
+
 ```
 vagrant reload
 ```
 
+
 ### ssh免密登录
+
 ```
 # 现在我们进入vagrant 账号root密码vagrant
 
@@ -166,7 +180,9 @@ vagrant reload
 # 保存退出
 ```
 
+
 在通过crt Publickey方式，完美无密码进入
+
 
 ## 打包box
 
@@ -176,10 +192,13 @@ vagrant reload
 vagrant package --output xxxx.box --vagrantfile file
 ```
 
+
 ## 获取远程仓库
+
 ```
 vagrant box add centos7.2 http://127.0.0.1/xxxx.box
 ```
+
 
 ## 附录：完整的vagrantFile
 
