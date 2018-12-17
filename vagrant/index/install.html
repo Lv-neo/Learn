@@ -73,8 +73,7 @@ Bringing machine &apos;default&apos; up with &apos;virtualbox&apos; provider...
 3.10.0-327.4.5.el7.x86_64
 </code></pre><p>我们已经进入虚拟机了，登陆进来的用户名是 vagrant，这个用户挺好，执行 sudo 是不需要输入密码的，开发中实际使用挺好用的。不过如果我非要创建自己的用户也是可以的。</p>
 <h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>关键步骤来了，vagrant默认配置不满足我们的需求</p>
-<h3 id="修改内存"><a href="#修改内存" class="headerlink" title="修改内存"></a>修改内存</h3><p>默认内存512m</p>
-<pre><code>v.memory = 1024
+<h3 id="修改内存"><a href="#修改内存" class="headerlink" title="修改内存"></a>修改内存</h3><pre><code>v.memory = 1024
 </code></pre><blockquote>
 <p>你也可以进入VirtualBox修改，不过VagrantFile都可以搞定</p>
 </blockquote>
