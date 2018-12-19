@@ -46,6 +46,8 @@ tags: linux
 	* [mysql备份脚本](yunwei/mysql_bak.md)
 	* [mc启动脚本](yunwei/mc.md)
 * [其他](#)
+	* [ssh](#)
+		* [客户端解决ssh连接断开的问题](/Learn/ssh/ssh_connect)
 	* [文件传输协议](sync/README.md)
 		* [sftp介绍](sync/sftp/README.md)
 			* [centos6下使用](sync/sftp/centos6.md)

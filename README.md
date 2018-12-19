@@ -15,7 +15,7 @@
     <!-- - [ios](#) -->
     <!-- - [android](#) -->
 - [操作系统]()
-    - [Linux](/Learn/Linux/README)
+    - [Linux](/source/_posts/Linux/README)
 - [运维类](#)
     <!-- - [日志服务](#) -->
     - [docker](/source/_posts/docker/index.md)
@@ -26,7 +26,6 @@
     - [zabbix](/source/_posts/zabbix/index.md)
     <!-- - [walle](#) -->
     <!-- - [jumpserver](#) -->
-    - [客户端解决ssh连接断开的问题](/source/_posts/ssh/ssh_connect.md)
 - [数据库与缓存](#)
     - [redis](#)
     - [mysql](#)
@@ -34,5 +33,3 @@
 - [数据结构与算法](/source/_posts/algorithm/README.md)
     - [二叉树](/source/_posts/algorithm/tree/README.md)
 <!-- - [架构](#) -->
-- [测试](#)
-    - [Jmeter](https://lv-neo.github.io/Learn-Java/2018/11/test/jmeter/)

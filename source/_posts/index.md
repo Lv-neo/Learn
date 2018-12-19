@@ -14,6 +14,8 @@ title: 资料目录
     <!-- - [golang](#) -->
     <!-- - [ios](#) -->
     <!-- - [android](#) -->
+- [操作系统]()
+    - [Linux](/Learn/Linux/README)
 - [运维类](#)
     <!-- - [日志服务](#) -->
     - [docker](/Learn/k8s/docker/index/)
@@ -24,8 +26,6 @@ title: 资料目录
     - [zabbix](/Learn/zabbix/index/)
     <!-- - [walle](#) -->
     <!-- - [jumpserver](#) -->
-    - [ssh](#)
-      - [客户端解决ssh连接断开的问题](/Learn/ssh/ssh_connect)
 - [数据库与缓存](#)
     - [redis](#)
     - [mysql](#)
@@ -33,5 +33,3 @@ title: 资料目录
 - [数据结构与算法](/Learn/algorithm/README.md)
     - [二叉树](/Learn/algorithm/tree/README.md)
 <!-- - [架构](#) -->
-- [测试](#)
-    - [Jmeter](https://lv-neo.github.io/Learn-Java/2018/11/test/jmeter/)
