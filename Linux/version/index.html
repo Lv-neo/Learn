@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="欢迎光临Neo的博客">
+    <meta name="author" content="Neo">
+    <meta name="keyword" content="">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/Linux/version/">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        Linux常用版本介绍｜Neo&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/Learn/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/Learn/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/Learn/css/arsnippet.css">
+    <script src="/Learn/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/Learn/">
+            Neo's Blog
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/Learn/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/tags/">tags</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/categories/">categories</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>Linux常用版本介绍</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Neo</span>
+                               <span class="meta-item">Date: Dec 17, 2018</span>
+                               
+                                 <span class="meta-item">Updated On: Dec 17, 2018</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/Learn/categories/#linux" title="linux">linux</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/Learn/tags/#linux" title="linux">linux</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          
+          <h1><span id="centos">CentOS</span></h1><p>CentOS 是一个基于Red Hat Linux 提供的可自由使用源代码的企业级 Linux发行版本。每个版本的 CentOS都会获得十年的支持（通过安全更新方式）。新版本的 CentOS 大约每两年发行一次，而每个版本的 CentOS 会定期（大概每六个月）更新一次，以便支持新的硬件。这样，建立一个安全、低维护、稳定、高预测性、高重复性的 Linux 环境。[1]CentOS是Community Enterprise Operating System的缩写。<br>CentOS 是 RHEL（Red Hat Enterprise Linux）源代码再编译的产物，而且在 RHEL的基础上修正了不少已知的 Bug ，相对于其他 Linux 发行版，其稳定性值得信赖。RHEL 在发行的时候，有两种方式。一种是二进制的发行方式，另外一种是源代码的发行方式。无论是哪一种发行方式，你都可以免费获得（例如从网上下载），并再次发布。但如果你使用了他们的在线升级（包括补丁）或咨询服务，就必须要付费</p>
+<p>1[3]．可以把CentOS理解为Red Hat AS系列！它完全就是对Red Hat AS进行改进后发布的！各种操作、使用和RED HAT没有区别！<br>2．CentOS完全免费，不存在RED HAT AS4需要序列号的问题。<br>3．CentOS独有的yum命令支持在线升级，可以即时更新系统，不像RED HAT那样需要花钱购买支持服务！<br>4．CentOS修正了许多RED HAT AS的BUG！<br>5．CentOS版本说明：CentOS3.1 等同于 RED HAT AS3 Update1 CentOS3.4 等同于 RED HAT AS3 Update4 CentOS4.0 等同于 RED HAT AS4<br>与 RHEL的关系<br>RHEL 在发行的时候，有两种方式。一种是二进制的发行方式，另外一种是源代码的发行方式。无论是哪一种发行方式，你都可以免费获得（例如从网上下载），并再次发布。但如果你使用了他们的在线升级（包括补丁）或咨询服务，就必须要付费。RHEL 一直都提供源代码的发行方式，CentOS 就是将 RHEL 发行的源代码重新编译一次，形成一个可使用的二进制版本。由于 LINUX 的源代码是 GNU，所以从获得 RHEL 的源代码到编译成新的二进制，都是合法。只是 REDHAT 是商标，所以必须在新的发行版里将 REDHAT 的商标去掉。REDHAT 对这种发行版的态度是：”我们其实并不反对这种发行版，真正向我们付费的用户，他们重视的并不是系统本身，而是我们所提供的商业服务。” 所以，CentOS 可以得到 RHEL 的所有功能，甚至是更好的软件。但 CentOS 并不向用户提供商业支持，当然也不负上任何商业责任。如果你要将你的 RHEL 转到 CentOS 上，因为你不希望为 RHEL 升级而付费。当然，你必须有丰富 linux 使用经验，因此 RHEL 的商业技术支持对你来说并不重要。但如果你是单纯的业务型企业，那么还是建议你选购 RHEL 软件并购买相应服务。这样可以节省你的 IT 管理费用，并可得到专业服务。一句话，选用 CentOS 还是 RHEL，取决于你所在公司是否拥有相应的技术力量。</p>
+<h1><span id="mandriva">Mandriva</span></h1><p>Mandriva原名Mandrake，最早由Ga?l Duval创建并在1998年7月发布。记得前两年国内刚开始普及Linux时，Mandrake非常流行。说起Mandrake的历史，其实最早 Mandrake的开发者是基于Redhat进行开发的。Redhat默认采用GNOME桌面系统，而Mandrake将之改为KDE。而由于当时的 Linux普遍比较难安装，不适合第一次接触Linux的新手，所以Mandrake还简化了安装系统。我想这也是当时Mandrake在国内如此红火的 原因之一。Mandrake在易用性方面的确是下了不少功夫，包括默认情况下的硬件检测等。</p>
+<p>Mandrake的开发完全透明化，包括“cooker”。当系统有了新的测试版本后，便可以在cooker上找到。之前Mandrake的新版本的发布速度很快，但从9.0之后便开始减缓。估计是希望能够延长版本的生命力以确保稳定和安全性。</p>
+<p>优点：友好的操作界面，图形配置工具，庞大的社区技术支持，NTFS分区大小变更</p>
+<p>缺点：部分版本bug较多，最新版本只先发布给Mandrake俱乐部的成员</p>
+<p>软件包管理系统：urpmi (RPM)</p>
+<p>免费下载：FTP即时发布下载，ISO在版本发布后数星期内提供</p>
+<p>官方主页：<a href="http://www.mandrivalinux.com/" target="_blank" rel="noopener">http://www.mandrivalinux.com/</a></p>
+<h1><span id="red-hat">Red Hat</span></h1><p>国内，乃至是全世界的Linux用户所最熟悉、最耳闻能 详的发行版想必就是Red Hat了。Red Hat最早由Bob Young和Marc Ewing在1995年创建。而公司在最近才开始真正步入盈利时代，归功于收费的Red Hat Enterprise Linux(RHEL，Red Hat的企业版)。而正统的Red Hat版本早已停止技术支持，最后一版是Red Hat 9.0。于是，目前Red Hat分为两个系列：由Red Hat公司提供收费技术支持和更新的Red Hat Enterprise Linux，以及由社区开发的免费的Fedora Core。Fedora Core 1发布于2003年年末，而FC的定位便是桌面用户。FC提供了最新的软件包，同时，它的版本更新周期也非常短，仅六个月。目前最新版本为FC 3，而FC4也预定将于今年6月发布。这也是为什么服务器上一般不推荐采用Fedora Core。</p>
+<p>适用于服务器的版本是Red Hat Enterprise Linux，而由于这是个收费的操作系统。于是，国内外许多企业或空间商选择CentOS。CentOS可以算是RHEL的克隆版，但它最大的好处是免费！菜鸟油目前的服务器便采用的CentOS 3.4。</p>
+<p>优点：拥有数量庞大的用户，优秀的社区技术支持，许多创新</p>
+<p>缺点：免费版(Fedora Core)版本生命周期太短，多媒体支持不佳</p>
+<p>软件包管理系统：up2date (RPM)， YUM (RPM)</p>
+<p>免费下载：是</p>
+<p>官方主页：<a href="http://www.redhat.com/" target="_blank" rel="noopener">http://www.redhat.com/</a></p>
+<h1><span id="suse">SUSE</span></h1><p>SUSE是德国最著名的Linux发行版，在全世界范围中也享有较高的声誉。SUSE自主开发的软件包管理系统YaST也大受好评。SUSE于2003年年末被Novell收购。</p>
+<p>SUSE之后的发布显得比较混乱，比如9.0版本是收费的，而10.0版本(也许由于各种压力)又免费发布。这使得一部分用户感到困惑，也转而使用其它发行版本。但是，瑕不掩瑜，SUSE仍然是一个非常专业、优秀的发行版。</p>
+<p>优点：专业，易用的YaST软件包管理系统</p>
+<p>缺点：FTP发布通常要比零售版晚1~3个月</p>
+<p>软件包管理系统：YaST (RPM)， 第三方APT (RPM) 软件库(repository)</p>
+<p>免费下载：取决于版本</p>
+<p>官方主页：<a href="http://www.suse.com/" target="_blank" rel="noopener">http://www.suse.com/</a></p>
+<h1><span id="debian-gnulinux">Debian GNU/Linux</span></h1><p>Debian是菜鸟油服务器之前所采用的操作系统。 Debian最早由Ian Murdock于1993年创建。可以算是迄今为止，最遵循GNU规范的Linux系统。Debian系统分为三个版本分支 (branch)：stable, testing 和 unstable。截至2005年5月，这三个版本分支分别对应的具体版本为：Woody, Sarge 和 Sid。其中，unstable为最新的测试版本，其中包括最新的软件包，但是也有相对较多的bug，适合桌面用户。testing的版本都经过 unstable中的测试，相对较为稳定，也支持了不少新技术(比如SMP等)。而Woody一般只用于服务器，上面的软件包大部分都比较过时，但是稳定 和安全性都非常的高。菜鸟油之前所采用的是Debian Sarge。</p>
+<p>Debian</p>
+<p>为何有如此多的用户痴迷于Debian呢(包括笔者在 内)？apt-get / dpkg是原因之一。dpkg是Debian系列特有的软件包管理工具，它被誉为所有Linux软件包管理工具(比如RPM)最强大的！配合apt- get，在Debian上安装、升级、删除和管理软件变得异常容易。许多Debian的用户都开玩笑的说，Debian将他们养懒了，因为只要简单得敲一 下”apt-get upgrade &amp;&amp; apt-get update”，机器上所有的软件就会自动更新了……</p>
+<p>优点：遵循GNU规范，100%免费，优秀的网络和社区资源，强大的apt-get</p>
+<p>缺点：安装相对不易，stable分支的软件极度过时</p>
+<p>软件包管理系统：APT (DEB)</p>
+<p>免费下载：是</p>
+<p>官方主页：<a href="http://www.debian.org/" target="_blank" rel="noopener">http://www.debian.org/</a></p>
+<h1><span id="ubuntu">Ubuntu</span></h1><p>简单而言，Ubuntu就是一个拥有Debian所有的 优点，以及自己所加强的优点的近乎完美的Linux操作系统。:) Ubuntu是一个相对较新的发行版，但是，它的出现可能改变了许多潜在用户对Linux的看法。也许，从前人们会认为Linux难以安装、难以使用，但 是，Ubuntu出现后，这些都成为了历史。Ubuntu基于Debian Sid，所以这也就是笔者所说的，Ubuntu拥有Debian的所有优点，包括apt-get。然而，不仅如此而已，Ubuntu默认采用的GNOME 桌面系统也将Ubuntu的界面装饰的简易而不失华丽。当然，如果你是一个KDE的拥护者的话，Kubuntu同样适合你！</p>
+<p>Ubuntu的安装非常的人性化，只要按照提示一步一步 进行，安装和Windows同样简便！并且，Ubuntu被誉为对硬件支持最好最全面的Linux发行版之一，许多在其他发行版上无法使用，或者默认配置 时无法使用的硬件，在Ubuntu上轻松搞定。并且，Ubuntu采用自行加强的内核(kernel)，安全性方面更上一层楼。并且，Ubuntu默认不 能直接root登陆，必须从第一个创建的用户通过su或sudo来获取root权限(这也许不太方便，但无疑增加了安全性，避免用户由于粗心而损坏系 统)。Ubuntu的版本周期为六个月，弥补了Debian更新缓慢的不足。</p>
+<p>优点：人气颇高的论坛提供优秀的资源和技术支持，固定的版本更新周期和技术支持，可从Debian Woody直接升级</p>
+<p>缺点：还未建立成熟的商业模式</p>
+<p>软件包管理系统：APT (DEB)</p>
+
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/Learn/java/webservice/README/" data-toggle="tooltip" data-placement="left" title="webservice">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/Learn/Linux/README/" data-toggle="tooltip" data-placement="top" title="Linux学习">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  
+
+
+      </div>
+      <!-- sidebar-profile.ejs -->
+<div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+    <section class="visible-md visible-lg" style="padding: 0 18px">
+        <div class="short-about">
+            
+                <img src="https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true" class="avatar">
+            
+            <h3>Neo</h3>
+            
+                <p>data scientist</p>
+            
+            <hr>
+            <ul class="list-inline">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
+            
+        </div>
+    </section>
+</div>
+
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">CentOS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Mandriva</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">Red Hat</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">SUSE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">Debian GNU/Linux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">Ubuntu</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+          
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            neo
+        <br>
+          
+              Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+          
+          
+            |
+          
+          
+              Theme - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/Learn/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
