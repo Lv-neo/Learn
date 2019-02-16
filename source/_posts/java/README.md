@@ -63,6 +63,10 @@ tags:
 	* [JSP](source/_posts/JSP/README.md)
 		* [基本语法](source/_posts/JSP/BasicSyntax.md)
 		* [指令](source/_posts/JSP/order.md)
+* [springboot](#)
+	* [spring-boot-start](#)
+	* [spring-boot-log](#)
+	* [spring-boot-actuator](#)
 * [数据库](#)
 	* [jdbc简介](source/_posts/jdbc/README.md)
 	* [mybaits](source/_posts/)
@@ -81,10 +85,13 @@ tags:
 	* [将jar文件添加到Maven的local repository](source/_posts/maven/jar.md)
 * [Jmeter-未完成](/Learn/java/jemter)
 * [任务调度](source/_posts/quartz/README.md)
-	* [quartz](source/_posts/) 
+	* [quartz](#) 
 		* [美团点评技术-Quartz应用与集群原理分析](source/_posts/quartz/Quartz-meituan.md)
-	* [xxl-job](source/_posts/)
-
+	* [xxl-job](#)
+* [plugin](#)
+	* [jaxb2-maven-plugin](http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/example_xjc_basic.html)
+* [library](#)
+	* [lombok](library)
 	
 
 

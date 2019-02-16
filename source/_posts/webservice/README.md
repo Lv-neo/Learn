@@ -48,8 +48,15 @@ SOA式WEB服务得到了大部分主要软件供应商以及业界专家的支�
 
 此种服务可以通过WSDL来描述SOAP消息内容，通过HTTP限定动作接口；或者完全在SOAP中对动作进行抽象。
 
+# Web service的发展趋势
+
+* resuful还是越来越多占据主导
+* json格式会比xml要更多
+
 # 外部链接
 
 https://zh.wikipedia.org/wiki/Web%E6%9C%8D%E5%8A%A1
 
 http://www.ruanyifeng.com/blog/2009/08/what_is_web_service.html
+
+
