@@ -28,4 +28,4 @@ http://www.vagrantbox.es/
 巨慢，建议用百度云盘下载，你懂的
 
 
-## [vagrant安装和使用](/Learn/vagrant/install)
+## [vagrant安装和使用](/Learn/ops/vagrant/install/)

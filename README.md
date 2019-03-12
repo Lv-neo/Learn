@@ -17,12 +17,12 @@
 - [操作系统](#)
     - [Linux](/source/_posts/Linux/README.md)
 - [运维类](/source/_posts/ops/README.md)
-    - [docker](/source/_posts/docker/index.md)
-    - [k8s](/source/_posts/k8s/README.md)
+    - [docker](/source/_posts/ops/docker/index.md)
+    - [k8s](/source/_posts/ops/k8s/README.md)
     <!-- 不再更新 -->
-    - [vagrant](/source/_posts/vagrant/index.md)
+    - [vagrant](/source/_posts/ops/vagrant/index.md)
     <!-- 不再更新 -->
-    - [zabbix](/source/_posts/zabbix/index.md)
+    - [zabbix](/source/_posts/ops/zabbix/index.md)
     <!-- - [日志服务](#) -->
 - [测试类](#)
     - [jmeter](#)
