@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="欢迎光临Neo的博客">
+    <meta name="author" content="Neo">
+    <meta name="keyword" content="">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/Linux/ssh/ssh_connect/">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        客户端解决ssh连接断开的问题｜Neo&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/Learn/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/Learn/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/Learn/css/arsnippet.css">
+    <script src="/Learn/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/Learn/">
+            Neo's Blog
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/Learn/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/tags/">tags</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/categories/">categories</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>客户端解决ssh连接断开的问题</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">博主: Neo</span>
+                               <span class="meta-item">创建于: Dec 13, 2018</span>
+                               
+                                 <span class="meta-item">更新于: Dec 15, 2018</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              分类: 
+                              <a class="tag" href="/Learn/categories/#ssh" title="ssh">ssh</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              标签: 
+                              <a class="tag" href="/Learn/tags/#ssh" title="ssh">ssh</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          
+          <h1><span id="客户端解决ssh连接断开的问题">客户端解决ssh连接断开的问题</span></h1><p>今天有小伙伴又在问，客户端连服务器ssh总是断开，其实这个问题很简单。</p>
+<h2><span id="核心问题点在哪里">核心问题点在哪里</span></h2><p>其实这个问题，核心点在与客户端与服务端的心跳监听和防火墙</p>
+<p>NAT/firewall在处理网络连接时候，对闲置连接会断开处理，减少空闲连接的占用。（具体请自己查阅资料，以前看的了）</p>
+<p>另外客户端与服务端之间有心跳保持连接</p>
+<p>看服务端ssh全局配置 /etc/ssh/sshd_config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TCPKeepAlive yes //核心保证连接</span><br><span class="line">#UseLogin no</span><br><span class="line">#UsePrivilegeSeparation sandbox</span><br><span class="line">#PermitUserEnvironment no</span><br><span class="line">#Compression delayed</span><br><span class="line">ClientAliveInterval 60 //下发客户端心跳包</span><br><span class="line">ClientAliveCountMax 5  //多少次未响应就断开</span><br></pre></td></tr></table></figure>
+<h2><span id="怎么解决">怎么解决</span></h2><p>一般情况，我们将客户端在对应操作系统上设置下就好了</p>
+<h3><span id="客户端配置">客户端配置</span></h3><p>vim ~/.ssh/config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host * //#表示需要启用该规则的服务端（域名或ip）</span><br><span class="line">ClientAliveInterval 60 //下发客户端心跳包</span><br><span class="line">ClientAliveCountMax 5  //多少次未响应就断开</span><br></pre></td></tr></table></figure>
+<h3><span id="ssh增加连接参数">ssh增加连接参数</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -o ServerAliveInterval=30 user@host</span><br></pre></td></tr></table></figure>
+<h3><span id="修改连接工具的配置">修改连接工具的配置</span></h3><p>通过改变连接工具的一些默认配置，把keepalive的配置打开起来即可：</p>
+<ul>
+<li>secureCRT：会话选项 - 终端 - 反空闲 - 发送NO-OP每xxx秒，设置一个非0值。</li>
+<li>putty：Connection - Seconds between keepalive(0 to turn off)，设置一个非0值。</li>
+<li>iTerm2：profiles - sessions - When idle - send ASCII code.</li>
+<li>XShell：session properties - connection - Keep Alive - Send keep alive message while this session connected. Interval [xxx] sec.</li>
+</ul>
+
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/Learn/zabbix/index/" data-toggle="tooltip" data-placement="left" title="zabbix学习">&larr; 上一篇</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/Learn/docker/busybox/" data-toggle="tooltip" data-placement="top" title="busybox">下一篇&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  
+
+
+      </div>
+      <!-- sidebar-profile.ejs -->
+<div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+    <section class="visible-md visible-lg" style="padding: 0 18px">
+        <div class="short-about">
+            
+                <img src="https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true" class="avatar">
+            
+            <h3>Neo</h3>
+            
+                <p>data scientist</p>
+            
+            <hr>
+            <ul class="list-inline">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
+            
+        </div>
+    </section>
+</div>
+
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        目录
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">客户端解决ssh连接断开的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">核心问题点在哪里</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">怎么解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.1.</span> <span class="toc-text">客户端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.2.</span> <span class="toc-text">ssh增加连接参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.3.</span> <span class="toc-text">修改连接工具的配置</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+          
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2019
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            neo
+        <br>
+          
+              由 <a target="_blank" href="https://hexo.io">Hexo</a> 强力驱动
+          
+          
+            |
+          
+          
+              主题 - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/Learn/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

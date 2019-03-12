@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="欢迎光临Neo的博客">
+    <meta name="author" content="Neo">
+    <meta name="keyword" content="">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/zabbix/nginx/">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        zabbix 监控nginx｜Neo&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/Learn/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/Learn/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/Learn/css/arsnippet.css">
+    <script src="/Learn/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/Learn/">
+            Neo's Blog
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/Learn/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/tags/">tags</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/categories/">categories</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>zabbix 监控nginx</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">博主: Neo</span>
+                               <span class="meta-item">创建于: Dec 17, 2018</span>
+                               
+                                 <span class="meta-item">更新于: Feb 22, 2019</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              分类: 
+                              <a class="tag" href="/Learn/categories/#zabbix" title="zabbix">zabbix</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              标签: 
+                              <a class="tag" href="/Learn/tags/#zabbix" title="zabbix">zabbix</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          
+          <h2><span id="配置nginx">配置nginx</span></h2><p>在nginx的配置文件中，添加status配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 40080;</span><br><span class="line">    server_name _;</span><br><span class="line">    allow 127.0.0.1;</span><br><span class="line">    allow 10.24.166.208;</span><br><span class="line">    deny all;</span><br><span class="line">    access_log off;</span><br><span class="line">    location /php-fpm_status &#123;</span><br><span class="line">        #fastcgi_pass unix:/tmp/php-fpm.sock;</span><br><span class="line">        fastcgi_pass 127.0.0.1:9000;</span><br><span class="line">        include fastcgi_params;</span><br><span class="line">        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;</span><br><span class="line">    &#125;</span><br><span class="line">    location /nginx_status &#123;</span><br><span class="line">        stub_status on;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl 127.0.0.1:40080/nginx_status</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Active connections: 1 </span><br><span class="line">server accepts handled requests</span><br><span class="line"> 90 90 89 </span><br><span class="line">Reading: 0 Writing: 1 Waiting: 0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>nginx Status 详细说明：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Activeconnections:对后端发起的活动连接数；</span><br><span class="line"></span><br><span class="line">server accepts 2349542：nginx 总共处理了2349542个连接；</span><br><span class="line"></span><br><span class="line">handled：成功创建了64603417次握手；</span><br><span class="line"></span><br><span class="line">requests：总共处理了8798670请求。</span><br><span class="line"></span><br><span class="line">Reading：nginx读取客户端的header数；</span><br><span class="line"></span><br><span class="line">Writing: nginx 返回给客户端的header数；</span><br><span class="line"></span><br><span class="line">Waiting: nginx 请求处理完成，正在等待下一请求指令的连接。</span><br></pre></td></tr></table></figure>
+<h2><span id="在agentd上编写监控脚本">在agentd上编写监控脚本</span></h2><ul>
+<li>编写脚本</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">Active()&#123;</span><br><span class="line">        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==1 &#123;print$3&#125;&apos;</span><br><span class="line">&#125;</span><br><span class="line">Reading()&#123;</span><br><span class="line">        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==4 &#123;print$2&#125;&apos;</span><br><span class="line">&#125;</span><br><span class="line">Writing()&#123;</span><br><span class="line">        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==4 &#123;print$4&#125;&apos;</span><br><span class="line">&#125;</span><br><span class="line">Waiting()&#123;</span><br><span class="line">        wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==4 &#123;print$6&#125;&apos;</span><br><span class="line">&#125;</span><br><span class="line">Accepts()&#123;</span><br><span class="line">  		wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==3 &#123;print $1&#125;&apos;</span><br><span class="line">&#125;</span><br><span class="line">Handled()&#123;</span><br><span class="line">		wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==3 &#123;print $2&#125;&apos;</span><br><span class="line">&#125;</span><br><span class="line">Requests()&#123;</span><br><span class="line">		wget --quiet -O - http://localhost:40080/nginx_status?auto |awk &apos;NR==3 &#123;print $3&#125;&apos;</span><br><span class="line">&#125;</span><br><span class="line">$1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>并且设置属主和属组为zabbix，赋予执行权限。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod o+x nginx_status.sh</span><br><span class="line">chown zabbix.zabbix nginx_status.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改nginx服务器上zabbix客户端的zabbix_agentd.conf配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">grep -v &quot;^[#;]&quot; zabbix_agentd.conf | grep -v &quot;^$&quot;</span><br><span class="line"></span><br><span class="line">PidFile=/tmp/zabbix_agentd.pid</span><br><span class="line">LogFile=/usr/local/logs/zabbix/zabbix_agentd.log</span><br><span class="line">Server=10.24.166.208</span><br><span class="line">ServerActive=10.24.166.208</span><br><span class="line">Hostname=120.76.24.60</span><br><span class="line">UnsafeUserParameters=1</span><br><span class="line">UserParameter=idle.processe,/usr/local/zabbix/scripts/php-fpm_status.sh idle</span><br><span class="line">UserParameter=total.processes,/usr/local/zabbix/scripts/php-fpm_status.sh total</span><br><span class="line">UserParameter=active.processes,/usr/local/zabbix/scripts/php-fpm_status.sh active</span><br><span class="line">UserParameter=max.active.processes,/usr/local/zabbix/scripts/php-fpm_status.sh mactive</span><br><span class="line">UserParameter=listen.queue.len,/usr/local/zabbix/scripts/php-fpm_status.sh listenqueuelen</span><br><span class="line">UserParameter=listen.queue,/usr/local/zabbix/scripts/php-fpm_status.sh listenqueue</span><br><span class="line">UserParameter=start.since,/usr/local/zabbix/scripts/php-fpm_status.sh since</span><br><span class="line">UserParameter=accepted.conn,/usr/local/zabbix/scripts/php-fpm_status.sh conn</span><br><span class="line">UserParameter=nginx.connections.active,/usr/local/zabbix/scripts/nginx_status.sh Active</span><br><span class="line">UserParameter=nginx.connections.reading,/usr/local/zabbix/scripts/nginx_status.sh Reading</span><br><span class="line">UserParameter=nginx.connections.writing,/usr/local/zabbix/scripts/nginx_status.sh Writing</span><br><span class="line">UserParameter=nginx.connections.waiting,/usr/local/zabbix/scripts/nginx_status.sh Waiting</span><br><span class="line">UserParameter=nginx.accepts,/usr/local/zabbix/scripts/nginx_status.sh Accepts</span><br><span class="line">UserParameter=nginx.handled,/usr/local/zabbix/scripts/nginx_status.sh Handled</span><br><span class="line">UserParameter=nginx.requests,/usr/local/zabbix/scripts/nginx_status.sh Requests</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>重启zabbix agent</p>
+</li>
+<li><p>zabbix server测试</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/zabbix/bin/zabbix_get -s 10.24.166.235 -p 10050 -k &quot;nginx.connections.waiting&quot;</span><br></pre></td></tr></table></figure>
+<h2><span id="导入模版">导入模版</span></h2><p>选择仓库中的nginx_status.xml<br>导入成功后，添加应用集<br>设置监控模版</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;zabbix_export&gt;</span><br><span class="line">    &lt;version&gt;2.0&lt;/version&gt;</span><br><span class="line">    &lt;date&gt;2013-11-13T06:24:34Z&lt;/date&gt;</span><br><span class="line">    &lt;groups&gt;</span><br><span class="line">        &lt;group&gt;</span><br><span class="line">            &lt;name&gt;Templates&lt;/name&gt;</span><br><span class="line">        &lt;/group&gt;</span><br><span class="line">    &lt;/groups&gt;</span><br><span class="line">    &lt;templates&gt;</span><br><span class="line">        &lt;template&gt;</span><br><span class="line">            &lt;template&gt;Template nginx_status&lt;/template&gt;</span><br><span class="line">            &lt;name&gt;Template nginx_status&lt;/name&gt;</span><br><span class="line">            &lt;groups&gt;</span><br><span class="line">                &lt;group&gt;</span><br><span class="line">                    &lt;name&gt;Templates&lt;/name&gt;</span><br><span class="line">                &lt;/group&gt;</span><br><span class="line">            &lt;/groups&gt;</span><br><span class="line">           &lt;applications&gt;</span><br><span class="line">                &lt;application&gt;</span><br><span class="line">                    &lt;name&gt;nginx_status&lt;/name&gt;</span><br><span class="line">                &lt;/application&gt;</span><br><span class="line">            &lt;/applications&gt;</span><br><span class="line">            &lt;items&gt;</span><br><span class="line">                &lt;item&gt;</span><br><span class="line">                    &lt;name&gt;Active_connections&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;snmp_community/&gt;</span><br><span class="line">                    &lt;multiplier&gt;0&lt;/multiplier&gt;</span><br><span class="line">                    &lt;snmp_oid/&gt;</span><br><span class="line">                    &lt;key&gt;nginx.connections.active&lt;/key&gt;</span><br><span class="line">                    &lt;delay&gt;60&lt;/delay&gt;</span><br><span class="line">                    &lt;history&gt;30&lt;/history&gt;</span><br><span class="line">                    &lt;trends&gt;90&lt;/trends&gt;</span><br><span class="line">                    &lt;status&gt;0&lt;/status&gt;</span><br><span class="line">                    &lt;value_type&gt;3&lt;/value_type&gt;</span><br><span class="line">                    &lt;allowed_hosts/&gt;</span><br><span class="line">                    &lt;units/&gt;</span><br><span class="line">                    &lt;delta&gt;0&lt;/delta&gt;</span><br><span class="line">                    &lt;snmpv3_securityname/&gt;</span><br><span class="line">                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;</span><br><span class="line">                    &lt;snmpv3_authpassphrase/&gt;</span><br><span class="line">                    &lt;snmpv3_privpassphrase/&gt;</span><br><span class="line">                    &lt;formula&gt;1&lt;/formula&gt;</span><br><span class="line">                    &lt;delay_flex/&gt;</span><br><span class="line">                    &lt;params/&gt;</span><br><span class="line">                    &lt;ipmi_sensor/&gt;</span><br><span class="line">                    &lt;data_type&gt;0&lt;/data_type&gt;</span><br><span class="line">                    &lt;authtype&gt;0&lt;/authtype&gt;</span><br><span class="line">                    &lt;username/&gt;</span><br><span class="line">                    &lt;password/&gt;</span><br><span class="line">                    &lt;publickey/&gt;</span><br><span class="line">                    &lt;privatekey/&gt;</span><br><span class="line">                    &lt;port/&gt;</span><br><span class="line">                    &lt;description/&gt;</span><br><span class="line">                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;</span><br><span class="line">                    &lt;applications/&gt;</span><br><span class="line">                    &lt;valuemap/&gt;</span><br><span class="line">                &lt;/item&gt;</span><br><span class="line">                &lt;item&gt;</span><br><span class="line">                    &lt;name&gt;Reading_connection&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;snmp_community/&gt;</span><br><span class="line">                    &lt;multiplier&gt;0&lt;/multiplier&gt;</span><br><span class="line">                    &lt;snmp_oid/&gt;</span><br><span class="line">                    &lt;key&gt;nginx.connections.reading&lt;/key&gt;</span><br><span class="line">                    &lt;delay&gt;60&lt;/delay&gt;</span><br><span class="line">                    &lt;history&gt;30&lt;/history&gt;</span><br><span class="line">                    &lt;trends&gt;90&lt;/trends&gt;</span><br><span class="line">                    &lt;status&gt;0&lt;/status&gt;</span><br><span class="line">                    &lt;value_type&gt;3&lt;/value_type&gt;</span><br><span class="line">                    &lt;allowed_hosts/&gt;</span><br><span class="line">                    &lt;units/&gt;</span><br><span class="line">                    &lt;delta&gt;0&lt;/delta&gt;</span><br><span class="line">                    &lt;snmpv3_securityname/&gt;</span><br><span class="line">                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;</span><br><span class="line">                    &lt;snmpv3_authpassphrase/&gt;</span><br><span class="line">                    &lt;snmpv3_privpassphrase/&gt;</span><br><span class="line">                    &lt;formula&gt;1&lt;/formula&gt;</span><br><span class="line">                    &lt;delay_flex/&gt;</span><br><span class="line">                    &lt;params/&gt;</span><br><span class="line">                    &lt;ipmi_sensor/&gt;</span><br><span class="line">                    &lt;data_type&gt;0&lt;/data_type&gt;</span><br><span class="line">                    &lt;authtype&gt;0&lt;/authtype&gt;</span><br><span class="line">                    &lt;username/&gt;</span><br><span class="line">                    &lt;password/&gt;</span><br><span class="line">                    &lt;publickey/&gt;</span><br><span class="line">                    &lt;privatekey/&gt;</span><br><span class="line">                    &lt;port/&gt;</span><br><span class="line">                    &lt;description/&gt;</span><br><span class="line">                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;</span><br><span class="line">                    &lt;applications/&gt;</span><br><span class="line">                    &lt;valuemap/&gt;</span><br><span class="line">                &lt;/item&gt;</span><br><span class="line">                &lt;item&gt;</span><br><span class="line">                    &lt;name&gt;Waiting_connection&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;snmp_community/&gt;</span><br><span class="line">                    &lt;multiplier&gt;0&lt;/multiplier&gt;</span><br><span class="line">                    &lt;snmp_oid/&gt;</span><br><span class="line">                    &lt;key&gt;nginx.connections.waiting&lt;/key&gt;</span><br><span class="line">                    &lt;delay&gt;60&lt;/delay&gt;</span><br><span class="line">                    &lt;history&gt;30&lt;/history&gt;</span><br><span class="line">                    &lt;trends&gt;90&lt;/trends&gt;</span><br><span class="line">                    &lt;status&gt;0&lt;/status&gt;</span><br><span class="line">                    &lt;value_type&gt;3&lt;/value_type&gt;</span><br><span class="line">                    &lt;allowed_hosts/&gt;</span><br><span class="line">                    &lt;units/&gt;</span><br><span class="line">                    &lt;delta&gt;0&lt;/delta&gt;</span><br><span class="line">                    &lt;snmpv3_securityname/&gt;</span><br><span class="line">                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;</span><br><span class="line">                    &lt;snmpv3_authpassphrase/&gt;</span><br><span class="line">                    &lt;snmpv3_privpassphrase/&gt;</span><br><span class="line">                    &lt;formula&gt;1&lt;/formula&gt;</span><br><span class="line">                    &lt;delay_flex/&gt;</span><br><span class="line">                    &lt;params/&gt;</span><br><span class="line">                    &lt;ipmi_sensor/&gt;</span><br><span class="line">                    &lt;data_type&gt;0&lt;/data_type&gt;</span><br><span class="line">                    &lt;authtype&gt;0&lt;/authtype&gt;</span><br><span class="line">                    &lt;username/&gt;</span><br><span class="line">                    &lt;password/&gt;</span><br><span class="line">                    &lt;publickey/&gt;</span><br><span class="line">                    &lt;privatekey/&gt;</span><br><span class="line">                    &lt;port/&gt;</span><br><span class="line">                    &lt;description/&gt;</span><br><span class="line">                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;</span><br><span class="line">                    &lt;applications/&gt;</span><br><span class="line">                    &lt;valuemap/&gt;</span><br><span class="line">                &lt;/item&gt;</span><br><span class="line">                &lt;item&gt;</span><br><span class="line">                    &lt;name&gt;Writing_connection&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;snmp_community/&gt;</span><br><span class="line">                    &lt;multiplier&gt;0&lt;/multiplier&gt;</span><br><span class="line">                    &lt;snmp_oid/&gt;</span><br><span class="line">                    &lt;key&gt;nginx.connections.writing&lt;/key&gt;</span><br><span class="line">                    &lt;delay&gt;60&lt;/delay&gt;</span><br><span class="line">                    &lt;history&gt;30&lt;/history&gt;</span><br><span class="line">                    &lt;trends&gt;90&lt;/trends&gt;</span><br><span class="line">                    &lt;status&gt;0&lt;/status&gt;</span><br><span class="line">                    &lt;value_type&gt;3&lt;/value_type&gt;</span><br><span class="line">                    &lt;allowed_hosts/&gt;</span><br><span class="line">                    &lt;units/&gt;</span><br><span class="line">                    &lt;delta&gt;0&lt;/delta&gt;</span><br><span class="line">                    &lt;snmpv3_securityname/&gt;</span><br><span class="line">                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;</span><br><span class="line">                    &lt;snmpv3_authpassphrase/&gt;</span><br><span class="line">                    &lt;snmpv3_privpassphrase/&gt;</span><br><span class="line">                    &lt;formula&gt;1&lt;/formula&gt;</span><br><span class="line">                    &lt;delay_flex/&gt;</span><br><span class="line">                    &lt;params/&gt;</span><br><span class="line">                    &lt;ipmi_sensor/&gt;</span><br><span class="line">                    &lt;data_type&gt;0&lt;/data_type&gt;</span><br><span class="line">                    &lt;authtype&gt;0&lt;/authtype&gt;</span><br><span class="line">                    &lt;username/&gt;</span><br><span class="line">                    &lt;password/&gt;</span><br><span class="line">                    &lt;publickey/&gt;</span><br><span class="line">                    &lt;privatekey/&gt;</span><br><span class="line">                    &lt;port/&gt;</span><br><span class="line">                    &lt;description/&gt;</span><br><span class="line">                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;</span><br><span class="line">                    &lt;applications/&gt;</span><br><span class="line">                    &lt;valuemap/&gt;</span><br><span class="line">                &lt;/item&gt;</span><br><span class="line">                &lt;item&gt;</span><br><span class="line">                    &lt;name&gt;Accepts&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;snmp_community/&gt;</span><br><span class="line">                    &lt;multiplier&gt;0&lt;/multiplier&gt;</span><br><span class="line">                    &lt;snmp_oid/&gt;</span><br><span class="line">                    &lt;key&gt;nginx.accepts&lt;/key&gt;</span><br><span class="line">                    &lt;delay&gt;60&lt;/delay&gt;</span><br><span class="line">                    &lt;history&gt;30&lt;/history&gt;</span><br><span class="line">                    &lt;trends&gt;90&lt;/trends&gt;</span><br><span class="line">                    &lt;status&gt;0&lt;/status&gt;</span><br><span class="line">                    &lt;value_type&gt;3&lt;/value_type&gt;</span><br><span class="line">                    &lt;allowed_hosts/&gt;</span><br><span class="line">                    &lt;units/&gt;</span><br><span class="line">                    &lt;delta&gt;0&lt;/delta&gt;</span><br><span class="line">                    &lt;snmpv3_securityname/&gt;</span><br><span class="line">                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;</span><br><span class="line">                    &lt;snmpv3_authpassphrase/&gt;</span><br><span class="line">                    &lt;snmpv3_privpassphrase/&gt;</span><br><span class="line">                    &lt;formula&gt;1&lt;/formula&gt;</span><br><span class="line">                    &lt;delay_flex/&gt;</span><br><span class="line">                    &lt;params/&gt;</span><br><span class="line">                    &lt;ipmi_sensor/&gt;</span><br><span class="line">                    &lt;data_type&gt;0&lt;/data_type&gt;</span><br><span class="line">                    &lt;authtype&gt;0&lt;/authtype&gt;</span><br><span class="line">                    &lt;username/&gt;</span><br><span class="line">                    &lt;password/&gt;</span><br><span class="line">                    &lt;publickey/&gt;</span><br><span class="line">                    &lt;privatekey/&gt;</span><br><span class="line">                    &lt;port/&gt;</span><br><span class="line">                    &lt;description/&gt;</span><br><span class="line">                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;</span><br><span class="line">                    &lt;applications/&gt;</span><br><span class="line">                    &lt;valuemap/&gt;</span><br><span class="line">                &lt;/item&gt;</span><br><span class="line">                &lt;item&gt;</span><br><span class="line">                    &lt;name&gt;Handled&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;snmp_community/&gt;</span><br><span class="line">                    &lt;multiplier&gt;0&lt;/multiplier&gt;</span><br><span class="line">                    &lt;snmp_oid/&gt;</span><br><span class="line">                    &lt;key&gt;nginx.handled&lt;/key&gt;</span><br><span class="line">                    &lt;delay&gt;60&lt;/delay&gt;</span><br><span class="line">                    &lt;history&gt;30&lt;/history&gt;</span><br><span class="line">                    &lt;trends&gt;90&lt;/trends&gt;</span><br><span class="line">                    &lt;status&gt;0&lt;/status&gt;</span><br><span class="line">                    &lt;value_type&gt;3&lt;/value_type&gt;</span><br><span class="line">                    &lt;allowed_hosts/&gt;</span><br><span class="line">                    &lt;units/&gt;</span><br><span class="line">                    &lt;delta&gt;0&lt;/delta&gt;</span><br><span class="line">                    &lt;snmpv3_securityname/&gt;</span><br><span class="line">                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;</span><br><span class="line">                    &lt;snmpv3_authpassphrase/&gt;</span><br><span class="line">                    &lt;snmpv3_privpassphrase/&gt;</span><br><span class="line">                    &lt;formula&gt;1&lt;/formula&gt;</span><br><span class="line">                    &lt;delay_flex/&gt;</span><br><span class="line">                    &lt;params/&gt;</span><br><span class="line">                    &lt;ipmi_sensor/&gt;</span><br><span class="line">                    &lt;data_type&gt;0&lt;/data_type&gt;</span><br><span class="line">                    &lt;authtype&gt;0&lt;/authtype&gt;</span><br><span class="line">                    &lt;username/&gt;</span><br><span class="line">                    &lt;password/&gt;</span><br><span class="line">                    &lt;publickey/&gt;</span><br><span class="line">                    &lt;privatekey/&gt;</span><br><span class="line">                    &lt;port/&gt;</span><br><span class="line">                    &lt;description/&gt;</span><br><span class="line">                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;</span><br><span class="line">                    &lt;applications/&gt;</span><br><span class="line">                    &lt;valuemap/&gt;</span><br><span class="line">                &lt;/item&gt;</span><br><span class="line">                &lt;item&gt;</span><br><span class="line">                    &lt;name&gt;Requests&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;snmp_community/&gt;</span><br><span class="line">                    &lt;multiplier&gt;0&lt;/multiplier&gt;</span><br><span class="line">                    &lt;snmp_oid/&gt;</span><br><span class="line">                    &lt;key&gt;nginx.requests&lt;/key&gt;</span><br><span class="line">                    &lt;delay&gt;60&lt;/delay&gt;</span><br><span class="line">                    &lt;history&gt;30&lt;/history&gt;</span><br><span class="line">                    &lt;trends&gt;90&lt;/trends&gt;</span><br><span class="line">                    &lt;status&gt;0&lt;/status&gt;</span><br><span class="line">                    &lt;value_type&gt;3&lt;/value_type&gt;</span><br><span class="line">                    &lt;allowed_hosts/&gt;</span><br><span class="line">                    &lt;units/&gt;</span><br><span class="line">                    &lt;delta&gt;0&lt;/delta&gt;</span><br><span class="line">                    &lt;snmpv3_securityname/&gt;</span><br><span class="line">                    &lt;snmpv3_securitylevel&gt;0&lt;/snmpv3_securitylevel&gt;</span><br><span class="line">                    &lt;snmpv3_authpassphrase/&gt;</span><br><span class="line">                    &lt;snmpv3_privpassphrase/&gt;</span><br><span class="line">                    &lt;formula&gt;1&lt;/formula&gt;</span><br><span class="line">                    &lt;delay_flex/&gt;</span><br><span class="line">                    &lt;params/&gt;</span><br><span class="line">                    &lt;ipmi_sensor/&gt;</span><br><span class="line">                    &lt;data_type&gt;0&lt;/data_type&gt;</span><br><span class="line">                    &lt;authtype&gt;0&lt;/authtype&gt;</span><br><span class="line">                    &lt;username/&gt;</span><br><span class="line">                    &lt;password/&gt;</span><br><span class="line">                    &lt;publickey/&gt;</span><br><span class="line">                    &lt;privatekey/&gt;</span><br><span class="line">                    &lt;port/&gt;</span><br><span class="line">                    &lt;description/&gt;</span><br><span class="line">                    &lt;inventory_link&gt;0&lt;/inventory_link&gt;</span><br><span class="line">                    &lt;applications/&gt;</span><br><span class="line">                    &lt;valuemap/&gt;</span><br><span class="line">                &lt;/item&gt;</span><br><span class="line">            &lt;/items&gt;</span><br><span class="line">            &lt;discovery_rules/&gt;</span><br><span class="line">            &lt;macros/&gt;</span><br><span class="line">            &lt;templates/&gt;</span><br><span class="line">            &lt;screens/&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">    &lt;/templates&gt;</span><br><span class="line">    &lt;graphs&gt;</span><br><span class="line">        &lt;graph&gt;</span><br><span class="line">            &lt;name&gt;nginx_connections&lt;/name&gt;</span><br><span class="line">            &lt;width&gt;900&lt;/width&gt;</span><br><span class="line">            &lt;height&gt;200&lt;/height&gt;</span><br><span class="line">            &lt;yaxismin&gt;0.0000&lt;/yaxismin&gt;</span><br><span class="line">            &lt;yaxismax&gt;100.0000&lt;/yaxismax&gt;</span><br><span class="line">            &lt;show_work_period&gt;1&lt;/show_work_period&gt;</span><br><span class="line">            &lt;show_triggers&gt;1&lt;/show_triggers&gt;</span><br><span class="line">            &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">            &lt;show_legend&gt;1&lt;/show_legend&gt;</span><br><span class="line">            &lt;show_3d&gt;0&lt;/show_3d&gt;</span><br><span class="line">            &lt;percent_left&gt;0.0000&lt;/percent_left&gt;</span><br><span class="line">            &lt;percent_right&gt;0.0000&lt;/percent_right&gt;</span><br><span class="line">            &lt;ymin_type_1&gt;0&lt;/ymin_type_1&gt;</span><br><span class="line">            &lt;ymax_type_1&gt;0&lt;/ymax_type_1&gt;</span><br><span class="line">            &lt;ymin_item_1&gt;0&lt;/ymin_item_1&gt;</span><br><span class="line">            &lt;ymax_item_1&gt;0&lt;/ymax_item_1&gt;</span><br><span class="line">            &lt;graph_items&gt;</span><br><span class="line">                &lt;graph_item&gt;</span><br><span class="line">                    &lt;sortorder&gt;0&lt;/sortorder&gt;</span><br><span class="line">                    &lt;drawtype&gt;0&lt;/drawtype&gt;</span><br><span class="line">                    &lt;color&gt;C80000&lt;/color&gt;</span><br><span class="line">                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;</span><br><span class="line">                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;item&gt;</span><br><span class="line">                        &lt;host&gt;Template nginx_status&lt;/host&gt;</span><br><span class="line">                        &lt;key&gt;nginx.connections.active&lt;/key&gt;</span><br><span class="line">                    &lt;/item&gt;</span><br><span class="line">                &lt;/graph_item&gt;</span><br><span class="line">                &lt;graph_item&gt;</span><br><span class="line">                    &lt;sortorder&gt;1&lt;/sortorder&gt;</span><br><span class="line">                    &lt;drawtype&gt;0&lt;/drawtype&gt;</span><br><span class="line">                    &lt;color&gt;00C800&lt;/color&gt;</span><br><span class="line">                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;</span><br><span class="line">                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;item&gt;</span><br><span class="line">                        &lt;host&gt;Template nginx_status&lt;/host&gt;</span><br><span class="line">                        &lt;key&gt;nginx.connections.reading&lt;/key&gt;</span><br><span class="line">                    &lt;/item&gt;</span><br><span class="line">                &lt;/graph_item&gt;</span><br><span class="line">                &lt;graph_item&gt;</span><br><span class="line">                    &lt;sortorder&gt;2&lt;/sortorder&gt;</span><br><span class="line">                    &lt;drawtype&gt;0&lt;/drawtype&gt;</span><br><span class="line">                    &lt;color&gt;0000C8&lt;/color&gt;</span><br><span class="line">                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;</span><br><span class="line">                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;item&gt;</span><br><span class="line">                        &lt;host&gt;Template nginx_status&lt;/host&gt;</span><br><span class="line">                        &lt;key&gt;nginx.connections.waiting&lt;/key&gt;</span><br><span class="line">                    &lt;/item&gt;</span><br><span class="line">                &lt;/graph_item&gt;</span><br><span class="line">                &lt;graph_item&gt;</span><br><span class="line">                    &lt;sortorder&gt;3&lt;/sortorder&gt;</span><br><span class="line">                    &lt;drawtype&gt;0&lt;/drawtype&gt;</span><br><span class="line">                    &lt;color&gt;C800C8&lt;/color&gt;</span><br><span class="line">                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;</span><br><span class="line">                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;item&gt;</span><br><span class="line">                        &lt;host&gt;Template nginx_status&lt;/host&gt;</span><br><span class="line">                        &lt;key&gt;nginx.connections.writing&lt;/key&gt;</span><br><span class="line">                    &lt;/item&gt;</span><br><span class="line">                &lt;/graph_item&gt;</span><br><span class="line">                &lt;graph_item&gt;</span><br><span class="line">                    &lt;sortorder&gt;4&lt;/sortorder&gt;</span><br><span class="line">                    &lt;drawtype&gt;0&lt;/drawtype&gt;</span><br><span class="line">                    &lt;color&gt;00EE00&lt;/color&gt;</span><br><span class="line">                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;</span><br><span class="line">                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;item&gt;</span><br><span class="line">                        &lt;host&gt;Template nginx_status&lt;/host&gt;</span><br><span class="line">                        &lt;key&gt;nginx.accepts&lt;/key&gt;</span><br><span class="line">                    &lt;/item&gt;</span><br><span class="line">                &lt;/graph_item&gt;</span><br><span class="line">                &lt;graph_item&gt;</span><br><span class="line">                    &lt;sortorder&gt;5&lt;/sortorder&gt;</span><br><span class="line">                    &lt;drawtype&gt;0&lt;/drawtype&gt;</span><br><span class="line">                    &lt;color&gt;EE0000&lt;/color&gt;</span><br><span class="line">                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;</span><br><span class="line">                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;item&gt;</span><br><span class="line">                        &lt;host&gt;Template nginx_status&lt;/host&gt;</span><br><span class="line">                        &lt;key&gt;nginx.handled&lt;/key&gt;</span><br><span class="line">                    &lt;/item&gt;</span><br><span class="line">                &lt;/graph_item&gt;</span><br><span class="line">                &lt;graph_item&gt;</span><br><span class="line">                    &lt;sortorder&gt;6&lt;/sortorder&gt;</span><br><span class="line">                    &lt;drawtype&gt;0&lt;/drawtype&gt;</span><br><span class="line">                    &lt;color&gt;EEEE00&lt;/color&gt;</span><br><span class="line">                    &lt;yaxisside&gt;0&lt;/yaxisside&gt;</span><br><span class="line">                    &lt;calc_fnc&gt;2&lt;/calc_fnc&gt;</span><br><span class="line">                    &lt;type&gt;0&lt;/type&gt;</span><br><span class="line">                    &lt;item&gt;</span><br><span class="line">                        &lt;host&gt;Template nginx_status&lt;/host&gt;</span><br><span class="line">                        &lt;key&gt;nginx.requests&lt;/key&gt;</span><br><span class="line">                    &lt;/item&gt;</span><br><span class="line">                &lt;/graph_item&gt;</span><br><span class="line">            &lt;/graph_items&gt;</span><br><span class="line">        &lt;/graph&gt;</span><br><span class="line">    &lt;/graphs&gt;</span><br><span class="line">&lt;/zabbix_export&gt;</span><br></pre></td></tr></table></figure>
+
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/Learn/zabbix/fpm/" data-toggle="tooltip" data-placement="left" title="zabbix 监控php-fpm">&larr; 上一篇</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/Learn/zabbix/chinese/" data-toggle="tooltip" data-placement="top" title="zabbix解决中文乱码">下一篇&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  
+
+
+      </div>
+      <!-- sidebar-profile.ejs -->
+<div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+    <section class="visible-md visible-lg" style="padding: 0 18px">
+        <div class="short-about">
+            
+                <img src="https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true" class="avatar">
+            
+            <h3>Neo</h3>
+            
+                <p>data scientist</p>
+            
+            <hr>
+            <ul class="list-inline">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
+            
+        </div>
+    </section>
+</div>
+
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        目录
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">配置nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">在agentd上编写监控脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">导入模版</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+          
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2019
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            neo
+        <br>
+          
+              由 <a target="_blank" href="https://hexo.io">Hexo</a> 强力驱动
+          
+          
+            |
+          
+          
+              主题 - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/Learn/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
