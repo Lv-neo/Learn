@@ -29,6 +29,9 @@
 - [数据库与缓存](#)
     - [redis](#)
     - [mysql](#)
-- [数据结构与算法](/source/_posts/algorithm/README.md)
+- [数据结构与算法](#)
     - [二叉树](/source/_posts/algorithm/tree/README.md)
+    - [常见分布式唯一id生成方法](http://www.cnblogs.com/haoxinyue/p/5208136.html)
+        - [SNOWFLAKE](/source/_posts/algorithm/snowflake.md)
+        - [美团lefa算法](https://tech.meituan.com/2017/04/21/mt-leaf.html)
 <!-- - [架构](#) -->

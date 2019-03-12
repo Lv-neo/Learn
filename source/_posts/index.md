@@ -34,4 +34,7 @@ title: 资料目录
     - [mysql](#)
 - [数据结构与算法](/Learn/algorithm/README/)
     - [二叉树](/Learn/algorithm/tree/README/)
+    - [常见分布式唯一id生成方法](http://www.cnblogs.com/haoxinyue/p/5208136.html)
+        - [SNOWFLAKE](/Learn/algorithm/snowflake/)
+        - [美团lefa算法](https://tech.meituan.com/2017/04/21/mt-leaf.html)
 <!-- - [架构](#) -->
