@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="欢迎光临Neo的博客">
+    <meta name="author" content="Neo">
+    <meta name="keyword" content="">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/ops/zabbix/found/">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        zabbix主被动模式｜Neo&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/Learn/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/Learn/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/Learn/css/arsnippet.css">
+    <script src="/Learn/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/Learn/">
+            Neo's Blog
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/Learn/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/tags/">tags</a>
+                </li>
+              
+                <li>
+                  <a href="/Learn/categories/">categories</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('https://raw.githubusercontent.com/Lv-neo/Learn/master/sky-clouds-moon-horizon.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>zabbix主被动模式</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Neo</span>
+                               <span class="meta-item">Date: Dec 17, 2018</span>
+                               
+                                 <span class="meta-item">Updated On: Feb 22, 2019</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/Learn/categories/#zabbix" title="zabbix">zabbix</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/Learn/tags/#zabbix" title="zabbix">zabbix</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          
+          <h1><span id="zabbix主被动模式">zabbix主被动模式</span></h1><p>使用zabbix代理有很多好处，一方面可以监控不可达的远程区域；另一方面当监控项目数以万计的时候使用代理可以有效分担zabbix server压力，也简化分布式监控的维护。</p>
+<h2><span id="区别">区别</span></h2><p>主动、被动模式都是相对于proxy来说的。proxy主动发送数据就是主动模式；proxy等待server的请求，再发送数据就是被动模式。因为主动模式可以有效减轻zabbix server压力，需要监控的东西很多时一定要把监控模式更改为主动监控</p>
+<h3><span id="zabbix客户端主被动模式">zabbix客户端主被动模式</span></h3><p>zabbix客户端分数据给服务端分为主被动两种模式,主动模式是zabbix客户端主动向服务端发送数据,被动模式是被动等待客户端来取数据</p>
+<p>主动模式的流程是 客户端每隔一段时间主动向服务端发起连接请求–&gt;服务端收到请求,查询客户端需要取的item信息,发送给客户端–&gt;客户端收集数据发送服务端–&gt;结束</p>
+<p>而被动模式是客户端开一个端口默认10050,等待服务端来取数据,然后客户端收集数据发送到服务端,后结束</p>
+<h3><span id="实践">实践</span></h3><p>zabbix_server端当主机数量过多的时候，由Server端去收集数据，Zabbix会出现严重的性能问题，主要表现如下：<br>1、当被监控端到达一个量级的时候，Web操作很卡，容易出现502<br>2、图层断裂<br>3、开启的进程（Pollar）太多，即使减少item数量，以后加入一定量的机器也会有问题</p>
+<p>所以下面主要往两个优化方向考虑：<br>1、添加Proxy节点或者Node模式做分布式监控<br>2、调整Agentd为主动模式<br>由于第一个方案需要增加物理机器，所以首先尝试第二方案。</p>
+<ul>
+<li>服务端配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ListenPort=10051</span><br><span class="line">LogFile=/usr/local/logs/zabbix/zabbix_server.log</span><br><span class="line">DBHost=127.0.0.1</span><br><span class="line">DBName=zabbix</span><br><span class="line">DBUser=zabbix</span><br><span class="line">DBPassword=zabbix</span><br><span class="line">StartTrappers=200</span><br><span class="line">Timeout=5</span><br><span class="line">LogSlowQueries=3000</span><br></pre></td></tr></table></figure>
+<p>zabbix_server.conf 配置调整：<br>StartPollers=100<br>首先把这个主动收集数据进程减少，原来开到700多<br>StartTrappers=200<br>然后把这个负责处理Agentd推送过来的数据的进程开大一些，就可以了</p>
+<ul>
+<li>被监控端 zabbix_Agentd.conf 的配置调整：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LogFile=/usr/local/logs/zabbix/zabbix_agent.log</span><br><span class="line">StartAgents=0          #客户端agent模式，仅为主动模式,值为0的时候，被监控端的zabbix_agentd 不监听本地端口，所以无法在 netstat -tunpl 中查看到zabbix_agentd进程</span><br><span class="line">ServerActive=**.**.**.**    #zabbix_server的ip</span><br><span class="line">Hostname=test_host    #重要：主机名,唯一/</span><br><span class="line">RefreshActiveChecks=1800    #被监控端到服务器获取监控项的周期</span><br><span class="line">BufferSize=200        #被监控端存储监控信息的空间大小</span><br><span class="line">Timeout=10            #超时时间</span><br></pre></td></tr></table></figure>
+<p>比较重要的参数是ServerActive和Hostname，ServerActive是指定Agentd收集的数据往哪里发送，Hostname是必须要和Server端添加主机时的主机名一样，这样Server端接收到数据才能找到对应关系。</p>
+
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/Learn/ops/zabbix/chinese/" data-toggle="tooltip" data-placement="left" title="zabbix解决中文乱码">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/Learn/ops/zabbix/install/" data-toggle="tooltip" data-placement="top" title="zabbix安装">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  
+
+
+      </div>
+      <!-- sidebar-profile.ejs -->
+<div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+    <section class="visible-md visible-lg" style="padding: 0 18px">
+        <div class="short-about">
+            
+                <img src="https://github.com/Lv-neo/Learn/blob/master/me.jpg?raw=true" class="avatar">
+            
+            <h3>Neo</h3>
+            
+                <p>data scientist</p>
+            
+            <hr>
+            <ul class="list-inline">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
+            
+        </div>
+    </section>
+</div>
+
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">zabbix主被动模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.</span> <span class="toc-text">zabbix客户端主被动模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.2.</span> <span class="toc-text">实践</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+          
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2019
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            neo
+        <br>
+          
+              Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+          
+          
+            |
+          
+          
+              Theme - <a href="https://github.com/huyingjie/hexo-theme-A-RSnippet" target="_blank">A-RSnippet</a> v0.1.0
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/Learn/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
