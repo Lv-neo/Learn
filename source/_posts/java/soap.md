@@ -44,3 +44,5 @@ curl --user "username:password" -k "https://domain/example?wsdl" > example.wsdl
 ## 延伸阅读
 
 * [Springboot jar 环境下只能使用流引入resource 解决SSLContext证书问题](https://stackoverflow.com/questions/27724544/specifying-trust-store-information-in-spring-boot-application-properties)
+
+* [构建soap请求设置连接超时的顺序异常](https://stackoverflow.com/questions/49744638/java-lang-unsupportedoperationexception-when-set-connection-timeout-to-httpcompo)
