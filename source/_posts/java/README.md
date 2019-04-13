@@ -17,6 +17,7 @@ tags:
 	* [集合](#)
 		* [java容器类简介](source/_posts/Collection/README.md)
 		* [Serializable](source/_posts/lang/Serializable.md) 
+	* [序列化](#)
 * [多线程](#)
 	* [线程](#)
 		* [什么是线程](source/_posts/thread/thread.md)

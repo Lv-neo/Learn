@@ -34,4 +34,8 @@
     - [常见分布式唯一id生成方法](http://www.cnblogs.com/haoxinyue/p/5208136.html)
         - [SNOWFLAKE](/source/_posts/algorithm/snowflake.md)
         - [美团lefa算法](https://tech.meituan.com/2017/04/21/mt-leaf.html)
-<!-- - [架构](#) -->
+- [架构](#)
+    - [分布式](#)
+    - [Service Mesh](#)
+        - [Istio]()
+        
