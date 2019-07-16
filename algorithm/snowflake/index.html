@@ -170,6 +170,14 @@
 <h2><span id="snowflake-序列号">Snowflake – 序列号</span></h2><p>序列号就是一系列的自增id（多线程建议使用atomic），为了处理在同一毫秒内需要给多条消息分配id，若同一毫秒把序列号用完了，则“等待至下一毫秒”。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uint64_t waitNextMs(uint64_t lastStamp)</span><br><span class="line">&#123;</span><br><span class="line">    uint64_t cur = 0;</span><br><span class="line">    do &#123;</span><br><span class="line">        cur = generateStamp();</span><br><span class="line">    &#125; while (cur &lt;= lastStamp);</span><br><span class="line">    return cur;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>总体来说，是一个很高效很方便的GUID产生算法，一个int64_t字段就可以胜任，不像现在主流128bit的GUID算法，即使无法保证严格的id序列性，但是对于特定的业务，比如用做游戏服务器端的GUID产生会很方便。另外，在多线程的环境下，序列号使用atomic可以在代码实现上有效减少锁的密度。</p>
+<h2><span id="优点">优点</span></h2><ul>
+<li>毫秒数在高位，自增序列在低位，整个ID都是趋势递增的。</li>
+<li>不依赖数据库等第三方系统，以服务的方式部署，稳定性更高，生成ID的性能也是非* 常高的。</li>
+<li>可以根据自身业务特性分配bit位，非常灵活。</li>
+</ul>
+<h2><span id="缺点">缺点</span></h2><ul>
+<li>强依赖机器时钟，如果机器上时钟回拨，会导致发号重复或者服务会处于不可用状态。</li>
+</ul>
 <h2><span id="附录">附录</span></h2><p>现在twitter已经退出snowflake的初始版本，并且在重写之中，目的是不依赖于twitter也可以提供给任意环境使用，目前thift里有在用。</p>
 <p>并且提供了老板代码参考</p>
 <p><a href="https://github.com/twitter-archive/snowflake/releases/tag/snowflake-2010" target="_blank" rel="noopener">https://github.com/twitter-archive/snowflake/releases/tag/snowflake-2010</a></p>
@@ -177,6 +185,10 @@
           
           <hr>
           <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/Learn/algorithm/README/" data-toggle="tooltip" data-placement="left" title="数据结构 & 算法">&larr; Previous Post</a>
+              </li>
               
               
               <li class="next">
@@ -237,7 +249,7 @@
     <div class="toc-wrap">
         Table of Contents
         
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">分布式唯一id：snowflake算法思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Snowflake算法核心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">Snowflake – 时间戳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">Snowflake – 工作机器id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">Snowflake – 序列号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">附录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">java版参考代码</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">分布式唯一id：snowflake算法思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Snowflake算法核心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">Snowflake – 时间戳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">Snowflake – 工作机器id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">Snowflake – 序列号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text">附录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">9.</span> <span class="toc-text">java版参考代码</span></a></li></ol>
         
     </div>
   </div>
