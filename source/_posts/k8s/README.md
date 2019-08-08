@@ -15,6 +15,7 @@ tags:
     * [Horizontal Pod Autoscaling](/Learn/k8s/hpa/)
     * [kubernetes rollout](/Learn/k8s/rollout/)
     * [kubernetes 回滚方案和思路](/Learn/k8s/rollback)
+* [minikube安装](/Learn/k8s/minikube/)
 * [阿里云k8s](#)
     * [如何支持私有镜像](/Learn/k8s/aliyun/private_secret/) 
 

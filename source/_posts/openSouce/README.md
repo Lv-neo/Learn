@@ -1,11 +1,9 @@
 ---
-title: 运维类
+title: 开源系统
 date: 2019-02-22 17:58:55
-categories:
-tags:
+categories: open source
+tags: open source
 ---
-
-> 由于作者定位在devOps，所以会有一些倾向性的运维，并不是什么高大上的分布式运维系统。
 
 ## 推荐一些好的运维工具，适合基础团队开发和搭建
 

@@ -5,27 +5,19 @@ title: 资料目录
 - [语言类](#)
     - [java](/Learn/java/README/)
     - [php](#)
-    <!-- [python](#) -->
-    <!-- [node](https://lv-neo.github.io/Learn-node/) -->
-    <!-- [golang](#) -->
-    <!-- [ios](#) -->
-    <!-- [android](#) -->
-    <!-- [lua](#) -->
 - [网络](#)
     - [http](#)
     - [socket开发](#)
     - [webservices](/Learn/webservice/README/)
         - [soap](/Learn/java/soap/)
     - [mqtt](https://www.jianshu.com/p/5c42cb0ed1e9)
-- [操作系统]()
+- [操作系统](#)
     - [Linux](/Learn/Linux/README/)
-- [运维类](/Learn/ops/README/)
-    - [nginx](/Learn/ops/nginx/README/)
-    - [docker](/Learn/ops/docker/README/)
-    - [k8s](/Learn/k8s/README/)
-    - [vagrant](/Learn/ops/vagrant/README/) <!-- 不再更新 -->
-    - [zabbix](/Learn/ops/zabbix/README/) <!-- 不再更新 -->
-    <!-- - [日志服务](#) -->
+- [nginx](/Learn/nginx/README/)
+- [docker](/Learn/docker/README/)
+- [k8s](/Learn/k8s/README/)
+- [vagrant](/Learn/vagrant/README/) <!-- 不再更新 -->
+- [zabbix](/Learn/zabbix/README/) <!-- 不再更新 -->
 - [测试类](#)
     - [jmeter](#)
 - [数据库与缓存](#)
@@ -41,4 +33,5 @@ title: 资料目录
     - [Service Mesh](/Learn/mesh/README/)
         - [sidecar](/Learn/mesh/sidecar/README/s)
         - [istio](/Learn/istio/README/)
-        
+- [开源系统](#)
+    - [运维篇](/Learn/openSource/README/)
