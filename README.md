@@ -33,5 +33,6 @@ title: 资料目录
     - [Service Mesh](/source/_post/mesh/README.md)
         - [sidecar](/source/_post/mesh/sidecar/README.md)
         - [istio](/source/_post/istio/README.md)
-- [开源系统](#)
-    - [运维篇](/source/_post/openSource/README.md)
+- [真香系列](#)
+    - [运维篇](/source/_post/xiang/ops.md)
+    - [网络篇](/source/_post/xiang/network.md)
