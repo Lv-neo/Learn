@@ -9,7 +9,7 @@
     <meta name="description" content="欢迎光临Neo的博客">
     <meta name="author" content="Neo">
     <meta name="keyword" content="">
-    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/java/soap/">
+    <link rel="canonical" href="https://lv-neo.github.io/Learn/Learn/k8s/minikube/">
     <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="Neo&#39;s Blog" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -21,7 +21,7 @@
 
     <title>
         
-        springboot中的soap｜Neo&#39;s Blog
+        minikube｜Neo&#39;s Blog
         
     </title>
 
@@ -118,26 +118,24 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                     <div class="site-heading">
-                        <h1>springboot中的soap</h1>
+                        <h1>minikube</h1>
                         
                         
                           <span class="meta">
                                <span class="meta-item">Author: Neo</span>
-                               <span class="meta-item">Date: Dec 29, 2018</span>
+                               <span class="meta-item">Date: Jul 16, 2019</span>
                                
-                                 <span class="meta-item">Updated On: Apr 2, 2019</span>
+                                 <span class="meta-item">Updated On: Jul 17, 2019</span>
                                
                           </span>
                           <div class="tags text-center">
                               Categories: 
-                              <a class="tag" href="/Learn/categories/#soap" title="soap">soap</a>
+                              <a class="tag" href="/Learn/categories/#k8s" title="k8s">k8s</a>
                               
                           </div>
                           <div class="tags text-center">
                               Tags: 
-                              <a class="tag" href="/Learn/tags/#java" title="java">java</a>
-                              
-                              <a class="tag" href="/Learn/tags/#soap" title="soap">soap</a>
+                              <a class="tag" href="/Learn/tags/#-- k8s -- minikube" title="-- k8s -- minikube">-- k8s -- minikube</a>
                               
                           </div>
                         
@@ -157,49 +155,15 @@
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
           
-          <h1><span id="springboot中的soap">springboot中的soap</span></h1><h2><span id="什么是soap">什么是soap？</span></h2><ul>
-<li>参考阅读<a href="https://zh.wikipedia.org/wiki/%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E8%AE%BF%E9%97%AE%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener">简单对象访问协议</a></li>
-</ul>
-<h2><span id="什么是wsdl">什么是wsdl？</span></h2><ul>
-<li>参考阅读<a href="http://www.w3school.com.cn/wsdl/index.asp" target="_blank" rel="noopener">WSDL教程</a></li>
-</ul>
-<h2><span id="linux下通过curl获取wsdl">Linux下通过curl获取wsdl</span></h2><ul>
-<li>通过curl方式获取<ul>
-<li>如果需要用户名和密码通过–user设定</li>
-<li>如果要证书，使用-k忽略证书验证</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --user &quot;username:password&quot; -k &quot;https://domain/example?wsdl&quot; &gt; example.wsdl</span><br></pre></td></tr></table></figure>
-<h2><span id="springboot构建soap服务">springboot构建soap服务</span></h2><ul>
-<li><a href="https://spring.io/guides/gs/producing-web-service/" target="_blank" rel="noopener">springboot编写soap服务端-官方示例</a></li>
-<li><a href="https://spring.io/guides/gs/consuming-web-service/" target="_blank" rel="noopener">springboot编写soap客户端-官方示例</a><!-- * [springboot Ws Basic Authentication](/Learn/java/ws/basic/) --></li>
-<li><a href="https://codenotfound.com/spring-ws-basic-authentication-example.html" target="_blank" rel="noopener">springboot Ws Basic Authentication</a></li>
-<li><a href="https://codenotfound.com/spring-ws-soap-header-example.html" target="_blank" rel="noopener">springboot WS - SOAP Header</a></li>
-<li><a href="https://codenotfound.com/spring-ws-https-client-server-example.html" target="_blank" rel="noopener">springboot WS - HTTPS Client-Server Example</a></li>
-</ul>
-<h2><span id="系列阅读">系列阅读</span></h2><ul>
-<li><a href="https://codenotfound.com/categories/#spring-ws" target="_blank" rel="noopener">https://codenotfound.com/categories/#spring-ws</a></li>
-<li><a href="https://memorynotfound.com/category/spring-framework/spring-ws/" target="_blank" rel="noopener">https://memorynotfound.com/category/spring-framework/spring-ws/</a></li>
-</ul>
-<h2><span id="延伸阅读">延伸阅读</span></h2><ul>
-<li><p><a href="https://stackoverflow.com/questions/27724544/specifying-trust-store-information-in-spring-boot-application-properties" target="_blank" rel="noopener">Springboot jar 环境下只能使用流引入resource 解决SSLContext证书问题</a></p>
-</li>
-<li><p><a href="https://stackoverflow.com/questions/49744638/java-lang-unsupportedoperationexception-when-set-connection-timeout-to-httpcompo" target="_blank" rel="noopener">构建soap请求设置连接超时的顺序异常</a></p>
-</li>
-</ul>
+          <h1><span id="minikube">minikube</span></h1><h2><span id="安装好docker">安装好docker</span></h2><h2><span id="安装脚本mac版本">安装脚本(MAC版本)</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># !/bin/sh</span><br><span class="line"></span><br><span class="line">echo &quot;install kubectl&quot;</span><br><span class="line"></span><br><span class="line">curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl</span><br><span class="line"></span><br><span class="line">kubectl version</span><br><span class="line"></span><br><span class="line">echo &quot;install minikube&quot;</span><br><span class="line"></span><br><span class="line">curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \</span><br><span class="line">  &amp;&amp; chmod +x minikube</span><br><span class="line"></span><br><span class="line">sudo cp minikube /usr/local/bin &amp;&amp; rm minikube</span><br><span class="line"></span><br><span class="line">minikube version</span><br><span class="line"></span><br><span class="line">echo &quot;minikube start&quot;</span><br><span class="line"></span><br><span class="line">minikube start --registry-mirror=https://registry.docker-cn.com</span><br></pre></td></tr></table></figure>
 
           
           <hr>
           <ul class="pager">
               
-              <li class="previous">
-                  <a href="/Learn/xiang/ops/" data-toggle="tooltip" data-placement="left" title="开源系统">&larr; Previous Post</a>
-              </li>
-              
               
               <li class="next">
-                  <a href="/Learn/index/" data-toggle="tooltip" data-placement="top" title="资料目录">Next Post&rarr;</a>
+                  <a href="/Learn/nginx/stream/" data-toggle="tooltip" data-placement="top" title="ngx_stream_core_module模块">Next Post&rarr;</a>
               </li>
               
           </ul>
@@ -256,7 +220,7 @@
     <div class="toc-wrap">
         Table of Contents
         
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">springboot中的soap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">什么是soap？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">什么是wsdl？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">Linux下通过curl获取wsdl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">springboot构建soap服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.5.</span> <span class="toc-text">系列阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.6.</span> <span class="toc-text">延伸阅读</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">minikube</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">安装好docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">安装脚本(MAC版本)</span></a></li></ol></li></ol>
         
     </div>
   </div>
