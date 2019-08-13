@@ -10,7 +10,7 @@ timezone:
 
 # custom Site settings
 SEOTitle: Neo's Blog 
-keyword: "" # seo key words
+keyword: "php,java,blog,article,mysql,redis,docker,linux,kubernetes,k8s,computer,nginx,network" # seo key words
 
 favicon: # your favicon png
 # custom end
@@ -241,9 +241,9 @@ mathjax:
 # Analytics settings
 # ---------------------------------------------------------------
 # Baidu Analytics
-# baidu_analytics:
+baidu_analytics: 24b3f27c793afaf041e6fb4ea7fb6625
 # Google Analytics
-# google_analytics: UA-38355881-1            # Format: UA-xxxxxx-xx
+google_analytics: UA-145583574-1           # Format: UA-xxxxxx-xx
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
 # Click "Alternative methods" => Select "HTML tag" => copy the string in the "content" property of "meta" element
