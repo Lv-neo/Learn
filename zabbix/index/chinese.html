@@ -1,6 +1,0 @@
-<hr>
-<p>title: zabbix解决中文乱码<br>date: 2018-12-17 18:41:27<br>categories: zbixabbix</p>
-<h2 id="tags-zab"><a href="#tags-zab" class="headerlink" title="tags: zab"></a>tags: zab</h2><h1 id="解决中文乱码"><a href="#解决中文乱码" class="headerlink" title="解决中文乱码"></a>解决中文乱码</h1><h2 id="选择字体"><a href="#选择字体" class="headerlink" title="选择字体"></a>选择字体</h2><p>在windows下C:\Windows\Fonts\simkai.ttf（楷体）上传到服务器zabbix网站目录fonts目录下。<br><a href="zabbix/files/SIMKAI.ttf">SIMKAI.ttf</a>本站下载</p>
-<h2 id="修改zabbix-php配置文件"><a href="#修改zabbix-php配置文件" class="headerlink" title="修改zabbix php配置文件"></a>修改zabbix php配置文件</h2><p>//define(‘ZBX_FONT_NAME’, ‘DejaVuSans’);<br>define(‘ZBX_FONT_NAME’, ‘SIMKAI’);</p>
-<p>//define(‘ZBX_GRAPH_FONT_NAME’, ‘DejaVuSans’); // font file name<br>define(‘ZBX_GRAPH_FONT_NAME’, ‘SIMKAI’);<br>// font file name</p>
-<h2 id="刷新页面"><a href="#刷新页面" class="headerlink" title="刷新页面"></a>刷新页面</h2><p>中文乱码就解决了</p>
