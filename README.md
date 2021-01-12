@@ -20,7 +20,7 @@ title: 资料目录
 - [zabbix](/source/_post/zabbix/README.md) <!-- 不再更新 -->
 - [测试类](#)
     - [jmeter](#)
-- [数据库与缓存](#)
+- [数据库与缓存](#)
     - [redis](#)
     - [mysql](#)
 - [数据结构与算法](/source/_post/algorithm/README.md)
